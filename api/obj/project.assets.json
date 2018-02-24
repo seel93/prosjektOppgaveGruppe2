@@ -12859,11 +12859,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/thinkpad/personalWork/api/api.csproj",
+      "projectUniqueName": "/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/api.csproj",
       "projectName": "api",
-      "projectPath": "/home/thinkpad/personalWork/api/api.csproj",
+      "projectPath": "/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/api.csproj",
       "packagesPath": "/home/thinkpad/.nuget/packages/",
-      "outputPath": "/home/thinkpad/personalWork/api/obj/",
+      "outputPath": "/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"

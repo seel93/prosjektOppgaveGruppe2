@@ -8,3 +8,8 @@
 /home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.pdb
 /home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.dll
 /home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.pdb
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.csproj.CoreCompileInputs.cache
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.AssemblyInfoInputs.cache
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.AssemblyInfo.cs
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.dll
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.pdb

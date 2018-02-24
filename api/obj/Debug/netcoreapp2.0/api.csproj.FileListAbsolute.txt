@@ -1,0 +1,10 @@
+/home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.csproj.CoreCompileInputs.cache
+/home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.AssemblyInfoInputs.cache
+/home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.AssemblyInfo.cs
+/home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.deps.json
+/home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.runtimeconfig.json
+/home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.runtimeconfig.dev.json
+/home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.dll
+/home/thinkpad/personalWork/api/bin/Debug/netcoreapp2.0/api.pdb
+/home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.dll
+/home/thinkpad/personalWork/api/obj/Debug/netcoreapp2.0/api.pdb

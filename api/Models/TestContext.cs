@@ -11,6 +11,7 @@ namespace api.Models
         public TestContext(string connectionString)
         {
             this.ConnectionString =  connectionString;
+            GetTest();
         }
 
         private MySqlConnection GetConnection(){

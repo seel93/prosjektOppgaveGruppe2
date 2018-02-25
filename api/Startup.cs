@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace api
 {
@@ -30,7 +31,9 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
+            //services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddDbContext<DbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -54,7 +57,7 @@ namespace api
             {
                 routes.MapRoute(
                     name: "Default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
+                    template: "{controller=Test}/{action=Index}/{id?}"
                 );
             });
         }

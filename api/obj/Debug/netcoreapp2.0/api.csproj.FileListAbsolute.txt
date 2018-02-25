@@ -13,3 +13,8 @@
 /home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.AssemblyInfo.cs
 /home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.dll
 /home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/obj/Debug/netcoreapp2.0/api.pdb
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/bin/Debug/netcoreapp2.0/api.deps.json
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/bin/Debug/netcoreapp2.0/api.runtimeconfig.json
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/bin/Debug/netcoreapp2.0/api.runtimeconfig.dev.json
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/bin/Debug/netcoreapp2.0/api.dll
+/home/thinkpad/personalWork/prosjektOppgaveGruppe2/api/bin/Debug/netcoreapp2.0/api.pdb

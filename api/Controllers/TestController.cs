@@ -26,7 +26,13 @@ namespace api.Controllers
                 .RequestServices
                 .GetService(typeof(api.Models.TestContext)) as TestContext;
             context.postTest(test);
-            return null;
+            if(test == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
     }
 }

@@ -22,6 +22,9 @@ namespace api.Models
             List<Test> list = new List<Test>();
 
             using(MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            //new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            //GetConnection()) 
+            //server=mysql.stud.iie.ntnu.no;port=3306;Database=stud-svendah;user=stud-svendah;password=hemmelig;SslMode=none"
             //server=localhost;
             {
                 conn.Open();
@@ -36,7 +39,6 @@ namespace api.Models
                     {
                         list.Add(new Test
                         {
-                            Id = Convert.ToInt32(reader["Id"]),
                             Name = reader["Name"].ToString(),
                             Email = reader["Email"].ToString(),
                             Phone = Convert.ToInt32(reader["Phone"]),
@@ -46,6 +48,26 @@ namespace api.Models
                 conn.Close();
             }
             return list;
+        }
+
+        public void postTest(Test test)
+        {
+            if (test == null)
+            {
+                throw new ArgumentNullException(nameof(test));
+            }
+
+            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "insert into Test(Name, Email, Phone) values(@test.Name, @test.Email, @test.Phone);";
+                cmd.Parameters.AddWithValue("@test.Name", test.Name);
+                cmd.Parameters.AddWithValue("@test.Email", test.Email);
+                cmd.Parameters.AddWithValue("@test.Phone", test.Phone);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
         }
     }    
 }

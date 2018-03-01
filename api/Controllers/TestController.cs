@@ -10,19 +10,23 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class TestController : Controller
     {
+        [HttpGet]
          public IActionResult Index()  
         {  
-            TestContext context = HttpContext.RequestServices.GetService(typeof(api.Models.TestContext)) as TestContext;  
-  
+            TestContext context = HttpContext
+                .RequestServices
+                .GetService(typeof(api.Models.TestContext)) as TestContext;  
             return Ok(context.GetTest());  
         }  
-        /* TestEntities db = new TestEntities();
 
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult Create([FromBody] Test test)
         {
-            var test = from m in db.Test select m;
-
-            return test.ToList();
-        } */
+            TestContext context = HttpContext
+                .RequestServices
+                .GetService(typeof(api.Models.TestContext)) as TestContext;
+            context.postTest(test);
+            return null;
+        }
     }
 }

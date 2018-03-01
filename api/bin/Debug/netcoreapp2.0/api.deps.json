@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "840d8acc47cef323f2a220e4786641c83904e75d"
+    "signature": "98887205656153a836d5773ca771c5e23d04bed5"
   },
   "compilationOptions": {
     "defines": [
@@ -23,15 +23,27 @@
     ".NETCoreApp,Version=v2.0": {
       "api/1.0.0": {
         "dependencies": {
+          "EntityFramework": "6.2.0",
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.NETCore.App": "2.0.0",
-          "MySql.Data": "8.0.10-rc"
+          "MySql.Data": "8.0.10-rc",
+          "MySql.Data.EntityFrameworkCore": "8.0.8-dmr"
         },
         "runtime": {
           "api.dll": {}
         },
         "compile": {
           "api.dll": {}
+        }
+      },
+      "EntityFramework/6.2.0": {
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
         }
       },
       "Google.Protobuf/3.3.0": {
@@ -2356,6 +2368,24 @@
           "lib/netcoreapp2.0/MySql.Data.dll": {}
         }
       },
+      "MySql.Data.EntityFrameworkCore/8.0.8-dmr": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.0.1",
+          "Microsoft.EntityFrameworkCore.Relational": "2.0.1",
+          "Microsoft.Extensions.Caching.Memory": "2.0.0",
+          "Microsoft.Extensions.DependencyInjection": "2.0.0",
+          "Microsoft.Extensions.Logging": "2.0.0",
+          "MySql.Data": "8.0.10-rc",
+          "NETStandard.Library": "2.0.0",
+          "System.Collections.Immutable": "1.4.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/MySql.Data.EntityFrameworkCore.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/MySql.Data.EntityFrameworkCore.dll": {}
+        }
+      },
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -4053,6 +4083,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "EntityFramework/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw==",
+      "path": "entityframework/6.2.0",
+      "hashPath": "entityframework.6.2.0.nupkg.sha512"
+    },
     "Google.Protobuf/3.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5200,6 +5237,13 @@
       "sha512": "sha512-0mhrtUXLBEliXgaKEFEiw9vvwJ4L6V8ecF6zX7yTT38xT1HNrhzlasyB01wYhbiz80ROEM7Z4KxmBLe5qp9GXA==",
       "path": "mysql.data/8.0.10-rc",
       "hashPath": "mysql.data.8.0.10-rc.nupkg.sha512"
+    },
+    "MySql.Data.EntityFrameworkCore/8.0.8-dmr": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CfZ+k4mTOYFI8gewR23wIbH2yiZrB+FXAMottnAWJCaXT/wLMirYhFUUIhhJXY8nxjkIZIAy19CbEKsr8owBJA==",
+      "path": "mysql.data.entityframeworkcore/8.0.8-dmr",
+      "hashPath": "mysql.data.entityframeworkcore.8.0.8-dmr.nupkg.sha512"
     },
     "Newtonsoft.Json/10.0.1": {
       "type": "package",

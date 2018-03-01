@@ -29,8 +29,8 @@ namespace api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
             services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

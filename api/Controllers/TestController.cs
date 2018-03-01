@@ -14,7 +14,7 @@ namespace api.Controllers
         {  
             TestContext context = HttpContext.RequestServices.GetService(typeof(api.Models.TestContext)) as TestContext;  
   
-            return View(context.GetTest());  
+            return Ok(context.GetTest());  
         }  
         /* TestEntities db = new TestEntities();
 

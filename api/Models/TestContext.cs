@@ -69,5 +69,44 @@ namespace api.Models
                 conn.Close();
             }
         }
+
+        public List<Test> GetTest(int id)
+        {
+            List<Test> list = new List<Test>();
+            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select * from Test where id = @id;";
+                 cmd.Parameters.AddWithValue("@id", id);
+                using(var reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        list.Add(new Test
+                        {
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Phone = Convert.ToInt32(reader["Phone"]),
+                        });
+                    }
+                }
+                 conn.Close();
+            }
+            return list;
+        }
+
+        public void deleteTest(int id)
+        {
+            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "delete from Test where id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
     }    
 }

@@ -34,5 +34,31 @@ namespace api.Controllers
                 return Ok();
             }
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            TestContext context = HttpContext
+                .RequestServices
+                .GetService(typeof(api.Models.TestContext)) as TestContext;
+            context.GetTest(id);
+            if(context.GetTest(id) == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(context.GetTest(id));
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteById(int id)
+        {
+            TestContext context = HttpContext
+                .RequestServices
+                .GetService(typeof(api.Models.TestContext)) as TestContext;
+            context.deleteTest(id);
+            return Ok();
+        }
     }
 }

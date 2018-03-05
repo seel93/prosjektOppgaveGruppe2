@@ -105,5 +105,21 @@ namespace api.Models
                 conn.Close();
             }
         }
+
+        public void UpdateTest(int id, Test test)
+        {
+             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "update Test set name=@test.Name, email=@test.Email, Phone=@test.phone where id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@test.Name", test.Name);
+                cmd.Parameters.AddWithValue("@test.Email", test.Email);
+                cmd.Parameters.AddWithValue("@test.Phone", test.Phone);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
     }    
 }

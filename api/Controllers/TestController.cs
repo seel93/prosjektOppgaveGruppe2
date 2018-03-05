@@ -32,7 +32,7 @@ namespace api.Controllers
             }
             else
             {
-                return Ok();
+                return Ok("Data created");
             }
         }
 
@@ -53,7 +53,15 @@ namespace api.Controllers
         public IActionResult DeleteById(int id)
         {
             _context.deleteTest(id);
-            return Ok();
+            return Ok("Data was deleted");
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Test test)
+        {
+
+            _context.UpdateTest(id, test);
+            return Ok("object updated");
         }
     }
 }

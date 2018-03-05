@@ -10,22 +10,23 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class TestController : Controller
     {
+        private readonly TestContext _context;
+       public TestController(TestContext context)
+       {
+           _context = context;
+       }
+
+
         [HttpGet]
          public IActionResult Index()  
         {  
-            TestContext context = HttpContext
-                .RequestServices
-                .GetService(typeof(api.Models.TestContext)) as TestContext;  
-            return Ok(context.GetTest());  
+            return Ok(_context.GetTest());  
         }  
 
         [HttpPost]
         public IActionResult Create([FromBody] Test test)
         {
-            TestContext context = HttpContext
-                .RequestServices
-                .GetService(typeof(api.Models.TestContext)) as TestContext;
-            context.postTest(test);
+            _context.postTest(test);
             if(test == null){
                 return BadRequest();
             }
@@ -38,26 +39,20 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            TestContext context = HttpContext
-                .RequestServices
-                .GetService(typeof(api.Models.TestContext)) as TestContext;
-            context.GetTest(id);
-            if(context.GetTest(id) == null){
+            _context.GetTest(id);
+            if(_context.GetTest(id) == null){
                 return BadRequest();
             }
             else
             {
-                return Ok(context.GetTest(id));
+                return Ok(_context.GetTest(id));
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            TestContext context = HttpContext
-                .RequestServices
-                .GetService(typeof(api.Models.TestContext)) as TestContext;
-            context.deleteTest(id);
+            _context.deleteTest(id);
             return Ok();
         }
     }

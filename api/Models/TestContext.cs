@@ -6,6 +6,7 @@ namespace api.Models
 {
     public class TestContext
     {
+        
         public string ConnectionString {get; set;}
 
         public TestContext(string connectionString)
@@ -21,11 +22,7 @@ namespace api.Models
         {
             List<Test> list = new List<Test>();
 
-            using(MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
-            //new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
-            //GetConnection()) 
-            //server=mysql.stud.iie.ntnu.no;port=3306;Database=stud-svendah;user=stud-svendah;password=hemmelig;SslMode=none"
-            //server=localhost;
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
@@ -57,7 +54,7 @@ namespace api.Models
                 throw new ArgumentNullException(nameof(test));
             }
 
-            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
@@ -73,7 +70,7 @@ namespace api.Models
         public List<Test> GetTest(int id)
         {
             List<Test> list = new List<Test>();
-            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
@@ -98,7 +95,7 @@ namespace api.Models
 
         public void deleteTest(int id)
         {
-            using (MySqlConnection conn = new MySqlConnection("server=localhost;port=3306;Database=testDb;user=root;password=password123;SslMode=none"))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();

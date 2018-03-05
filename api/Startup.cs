@@ -30,6 +30,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
+            //services.AddTransient(new TestContext(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 

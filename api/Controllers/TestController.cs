@@ -63,5 +63,20 @@ namespace api.Controllers
             _context.UpdateTest(id, test);
             return Ok("object updated");
         }
+
+        [HttpPost("{auth}")]
+        public IActionResult Auth([FromBody] Creds cred)
+        {
+
+            if(_context.Authenticate(cred))
+            {
+                return Ok("user authenticated");
+
+            }
+            else 
+            {
+                return BadRequest("invalid credentials");
+            }
+        }
     }
 }

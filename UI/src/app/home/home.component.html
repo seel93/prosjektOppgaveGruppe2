@@ -1,0 +1,24 @@
+<h4>Logg inn</h4>
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <p class="h5 text-center mb-4">Logg inn </p>
+
+  <div class="md-form">
+      <i class="fa fa-user prefix grey-text"></i>
+      <input type="text" id="form3" class="form-control" name="name" ngModel mdbActive>
+      <label for="form3">Brukernavn</label>
+  </div>
+
+  <div class="md-form">
+      <i class="fa fa-dollar prefix grey-text"></i>
+      <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
+      <label for="form2">Passord</label>
+  </div>
+
+  <div class="text-center">
+      <button class="btn btn-primary" mdbRippleRadius>
+          <i class="fa fa-send mr-1"></i> Logg inn</button>
+      </div>
+      
+  </form>
+  <!--Subscription Form-->

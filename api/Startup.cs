@@ -15,20 +15,22 @@ namespace api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
+            /* var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional:false, reloadOnChange: true)
                 .AddJsonFile($"apssettings.{env.EnvironmentName}.json", optional:true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = builder.Build(); */
+             Configuration = configuration;
         }
 
         public IConfiguration Configuration {get;}
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
             services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
             //services.AddTransient(new TestContext(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
@@ -50,6 +52,7 @@ namespace api
             }
 
             app.UseStaticFiles(); 
+            app.UseCors("AllowAll");
 
             app.UseMvc( routes =>
             {

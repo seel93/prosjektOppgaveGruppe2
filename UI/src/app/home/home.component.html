@@ -1,11 +1,12 @@
-<h4>Logg inn</h4>
+<h4 *ngIf="!auth">Logg inn</h4>
+<h4 *ngIf="auth">Velkommen</h4>
 
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth"> 
   <p class="h5 text-center mb-4">Logg inn </p>
 
   <div class="md-form">
       <i class="fa fa-user prefix grey-text"></i>
-      <input type="text" id="form3" class="form-control" name="name" ngModel mdbActive>
+      <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
       <label for="form3">Brukernavn</label>
   </div>
 
@@ -21,4 +22,17 @@
       </div>
       
   </form>
-  <!--Subscription Form-->
+  <!--Logginn Form-->
+<div class="dropdown col" dropdown *ngIf="auth">
+    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
+        Velg område:
+    </button>
+
+    <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+</div>                  
+            
+                

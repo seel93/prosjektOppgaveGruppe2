@@ -8,16 +8,19 @@ import { HttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { EquipmentComponent } from './equipment/equipment.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'equipment', component : EquipmentComponent }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    EquipmentComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
   const path = require('path')
   const url = require('url')
   
@@ -12,7 +12,7 @@ const {app, BrowserWindow} = require('electron')
   
     // and load the index.html of the app.
     win.loadURL(url.format({
-      pathname: path.join(__dirname, './dist/index.html'),
+      pathname: path.join(__dirname, './build/index.html'),
       protocol: 'file:',
       slashes: true
     }))

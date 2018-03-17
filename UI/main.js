@@ -14,7 +14,8 @@ const {app, BrowserWindow, ipcMain} = require('electron')
     win.loadURL(url.format({
       pathname: path.join(__dirname, './build/index.html'),
       protocol: 'file:',
-      slashes: true
+      slashes: true,
+      icon: path.join(__dirname, 'assets/icon.png')
     }))
   
     // Open the DevTools.

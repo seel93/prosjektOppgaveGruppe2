@@ -1,12 +1,63 @@
 
-kilder som er brukt så langt:
+# ProsjektOppgave IINI1010 og IFUD1110 Objektorientert programmering med systemarbeid (2018 VÅR):
 
-db connection for databasen:
-http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
-Setup for mysql:
-https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
+# Technologies:
+1. .Net core
+2. Angular
+3. Electron
+4. Mysql
 
-Viktige punkter:
+# Dependencies:
+1. .Net sdk
+2. Angular
+3. Npm
+4. Node
+5. Mysql
 
-Veldig viktig at vi dokumenterer arbiedet vårt så nøye som mulig!
+# Setup
+```shell
+    git clone https://github.com/seel93/prosjektOppgaveGruppe2.git
+```
+Setup for UI:
+
+```shell
+    cd prosjektOppgaveGruppe2/UI
+```
+If you dont have Angular CLI installed you can find it [here](https://angular.io/):
+
+```shell
+    npm install
+```
+
+Setup for Api:
+```shell
+    cd prosjektOppgaveGruppe2/api
+```
+If you don't have .net core sdk installed, you can find it [here](https://www.microsoft.com/net/download/):
+
+```shell
+    dotnet build
+```
+If you dont have mysql on your machine you can find i [here](https://dev.mysql.com/downloads/)
+
+Setup for Database: 
+```shell
+    mysql -u <your-username> -p < init.sql
+```
+
+#Running the App: 
+UI:
+
+```shell
+    ng build 
+```
+```shell
+    npm run electron
+```
+
+Api: 
+
+```shell
+    dotnet run
+```

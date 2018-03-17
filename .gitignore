@@ -3,3 +3,6 @@ init.sql
 
 #vscode
 .vscode
+
+#build folder for angular
+/UI/build

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -18,6 +18,12 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class HomeComponent implements OnInit {
+  userName: string = "";
+
+  @Output() messageEvent = new EventEmitter<string>();
+
+
+
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -53,6 +59,8 @@ export class HomeComponent implements OnInit {
           if (err.status == 200) {
             console.log("a ok");
             this.auth = true;
+            this.messageEvent.emit(this.userName);
+            console.log(this.userName);
           } else {
             console.log("invalid credentials");
           }

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EquipmentComponent } from './equipment/equipment.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 const appRoutes: Routes = [
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    EquipmentComponent
+    EquipmentComponent,
+    NavbarComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

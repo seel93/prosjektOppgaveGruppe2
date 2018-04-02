@@ -7,9 +7,17 @@ import {remote, ipcRenderer} from 'electron'; //for å lage menyer filer osv.
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  public isAuthenticated:  boolean = false;
+
+  userName : string = "Gjest";
 
   constructor(){
     
+  }
+
+  recieveUserName($event){
+    console.log("event triggered");
+    this.userName = $event;
   }
 }

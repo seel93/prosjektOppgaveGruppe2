@@ -1,3 +1,133 @@
-<p>
-  equipment works!
-</p>
+<h1>
+  Bestllingsskjema
+</h1>
+
+<form class="" id="OrderForm" action="">
+
+  <div id="adult-bike-order" class="col-sm-4">
+    <p>
+      Voksensykkel. Vennligst velg antall av hver sykkeltype:
+    </p>
+
+    <label for="adult-terrain" class="label"> Terreng : </label>
+    <input type="text" id="adult-terrain" class="order-input" name="adult-bike" value="" onchange="refreshPrice()">
+    </input>
+    <label for="adult-terrain" class="label"> stk </label>
+    <br>
+    <br>
+
+    <label for="adult-downhill" class="label"> Downhill : </label>
+    <input type="text" id="adult-downhill" class="order-input" name="adult-bike" value="" onchange="refreshPrice()">
+    </input>
+    <label for="adult-downhill" class="label"> stk </label>
+    <br>
+    <br>
+
+    <label for="adult-racer" class="label"> Racer : </label>
+    <input type="text" id="adult-racer" class="order-input" name="adult-bike" value="" onchange="refreshPrice()">
+    </input>
+    <label for="adult-racer" class="label"> stk </label>
+    <br>
+    <br>
+
+  </div>
+  <br>
+  <br>
+
+  <div id="child-bike-order" class="col-sm-4">
+    <p>
+      Barnesykkel. Vennligst velg antall av hver sykkeltype:
+    </p>
+
+    <label for="child-bike" class="label"> Barnesykkel : </label>
+    <input type="text" id="child-bike" class="order-input" name="child-bike" value="" onchange="refreshPrice()">
+    </input>
+    <label for="child-bike" class="label"> stk </label>
+    <br>
+    <br>
+
+  </div>
+  <br>
+  <br>
+
+  <div id="tandem-bike-order" class="col-sm-4" style="visibility: hidden">
+    <!-- visibility : hidden -->
+    <p>
+      Tandemsykkel. Vennligst velg antall av hver sykkeltype:
+    </p>
+  </div>
+  <br>
+  <br>
+
+  <div id="additional-order" class="col-sm-4">
+    <p>
+      Vi kan også tilby følgende:
+    </p>
+
+    <label for="bike-pack" class="label"> Sykkelvæske : </label>
+    <input type="text" id="bike-pack" class="order-input" value="" onchange="refreshPrice()">
+    </input>
+    <label for="bike-pack" class="label"> stk </label>
+    <br>
+    <br>
+
+    <label for="trailer" class="label"> Barnehenger/lastehenger : </label>
+    <input type="text" id="trailer" class="order-input" value="" onchange="refreshPrice()">
+    </input>
+    <label for="trailer" class="label"> stk </label>
+    <br>
+    <br>
+
+    <label for="baby-seat" class="label"> Barnesete : </label>
+    <input type="text" id="baby-seat" class="order-input" value="" onchange="refreshPrice()">
+    </input>
+    <label for="baby-seat" class="label"> stk </label>
+    <br>
+    <br>
+
+    <label for="safety-bundle" class="label"> Beskyttelsespakke (hjelm/beskytter/lås) : </label>
+    <input type="text" id="safety-bundle" class="order-input" value="" onchange="refreshPrice()">
+    </input>
+    <label for="safety-bundle" class="label"> stk </label>
+    <br>
+    <br>
+
+  </div>
+  <br>
+  <br>
+
+
+  <label for="comment" class="label">Kommentar </label>
+  <br>
+  <textarea name="comment" id="comment" style="font-family:sans-serif;font-size:1.2em;">
+    </textarea>
+  <br>
+
+  <div class="bonus-option">
+    <p style="color:blue">Er du registrert i medlemsrogrammet?</p>
+    <input type="radio" id="Yes" name="membership" value="" onchange="addPrice()">
+    <label for="Yes" class="label">Ja</label>
+
+    <input type="radio" id="No" name="membership" value="" onchange="refreshPrice()" checked>
+    <label for="No" class="label">Nei</label>
+
+  </div>
+
+  <div>
+    <p id="price">
+      <!-- the price is changes here by refreshPrice() -->
+      Prisen er: 0 NOK
+    </p>
+  </div>
+
+
+  <script type="text/javascript">
+    refreshPrice();
+  </script>
+
+  <div class="" style="text-align: center;">
+    <button id="submit-button" type="submit" name="" value="Bestill" required=false>Bestill nå</button>
+    <button type="reset" class="signupbtn">Start på nytt</button>
+  </div>
+
+</form>

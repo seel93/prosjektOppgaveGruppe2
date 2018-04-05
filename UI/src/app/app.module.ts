@@ -5,16 +5,20 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { AdminComponent } from './admin/admin.component';
+import {AuthService} from './auth.service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'equipment', component : EquipmentComponent }
+  {path: 'equipment', component : EquipmentComponent },
+  {path: 'admin', component : AdminComponent }
 ]
 
 @NgModule({
@@ -22,7 +26,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     EquipmentComponent,
-    NavbarComponent
+    NavbarComponent,
+    AdminComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -33,10 +38,9 @@ const appRoutes: Routes = [
     ),
     BrowserModule,
     FormsModule,
-    HttpClientModule
-
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

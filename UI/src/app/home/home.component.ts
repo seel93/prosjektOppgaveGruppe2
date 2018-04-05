@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import {AuthService} from '../auth.service';
 
 
 @Component({
@@ -18,12 +19,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class HomeComponent implements OnInit {
-  userName: string = "";
-
-  @Output() messageEvent = new EventEmitter<string>();
-
-
-
+  message: string = "hei";
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -33,14 +29,17 @@ export class HomeComponent implements OnInit {
   };
   url = "http://localhost:5000/api/test/auth"; // api logg inn url
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  sendMessage(name: string): void {
+    // send message to subscribers via observable subject
+    this.authService.sendMessage(name);
+}
+
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
-    console.log(f.value);
-    console.log(f.valid);
     this.loggIn(f.value);
   }
 
@@ -57,15 +56,12 @@ export class HomeComponent implements OnInit {
         },
         (err) => {
           if (err.status == 200) {
-            console.log("a ok");
             this.auth = true;
-            this.messageEvent.emit(this.userName);
-            console.log(this.userName);
           } else {
-            console.log("invalid credentials");
           }
         }
       )
-  }
+      this.sendMessage(data.username);
+    }
 }
 

@@ -23,4 +23,10 @@ export class AppComponent {
     });
   }
 
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
+  }
+
 }

@@ -1,0 +1,67 @@
+
+<div class="row">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="col-md-6 padd"> 
+    <div class="md-form">
+      <input type="text" id="form1" class="form-control">
+      <label for="form1" >Brukernavn</label>
+    </div>
+  
+    <div class="md-form">
+      <input type="password" id="form1" class="form-control">
+      <label for="form1" >Passord</label>
+    </div>
+  
+    <div class="md-form">
+      <input type="password" id="form1" class="form-control">
+      <label for="form1" >Gjenta passord</label>
+    </div>
+  
+    <div class="text-center">
+      <button class="btn btn-primary" mdbRippleRadius>
+          <i class="fa fa-send mr-1"></i> Registrer</button>
+      </div>
+  </form>
+  <div class="col-md-6">
+    <!--Card Danger-->
+    <!-- <div class="card pink lighten-2 text-center z-depth-2">
+        <div class="card-body">
+          <ul>
+            <li>
+              <p class="white-text mb-0">
+                Husk å lage ett passord som har mer enn 6 symboler
+              </p>
+            </li>
+            <li>
+              <p class="white-text mb-0">
+                Bruk gjerne symboler og store bokstaver
+              </p>
+            </li>
+
+          </ul>
+        </div>
+    </div> -->
+    <!--/.Card Danger-->
+    <div class="card-deck">
+        <!--Panel-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Panel title</h5>
+                <p class="card-text">This is a longer panel with supporting text below as a natural lead-in to additional content.
+                                                    This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <!--/.Panel-->
+    
+        <!--Panel-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Panel title</h5>
+                <p class="card-text">This panel has supporting text below as a natural lead-in to additional content.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <!--/.Panel-->q
+  </div>
+
+</div>

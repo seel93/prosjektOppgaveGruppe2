@@ -1,3 +1,5 @@
+//source: http://jasonwatmore.com/post/2016/12/01/angular-2-communicating-between-components-with-observable-subject
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';

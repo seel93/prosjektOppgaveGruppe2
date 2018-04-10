@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import {AuthService} from '../auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,6 +22,7 @@ import {AuthService} from '../auth.service';
 export class HomeComponent implements OnInit {
   message: string = "hei";
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
+  isAuthAsAdmin: boolean = true; 
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -29,14 +31,20 @@ export class HomeComponent implements OnInit {
   };
   url = "http://localhost:5000/api/test/auth"; // api logg inn url
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
   sendMessage(name: string): void {
     // send message to subscribers via observable subject
-    this.authService.sendMessage(name);
+    if(this.isAuthAsAdmin){
+      this.authService.sendMessage("logged in as employee " + name);
+      this.router.navigate(['/admin']);
+
+    }else{
+      this.authService.sendMessage("logged in as user " + name);
+    }
 }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord

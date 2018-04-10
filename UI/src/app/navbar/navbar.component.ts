@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
+  message: string;
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
   }
 
+  logOff() : void {
+    console.log("logg of reauested"); 
+    this.authService.clearMessage();
+  }
 }

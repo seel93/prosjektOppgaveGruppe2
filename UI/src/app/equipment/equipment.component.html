@@ -1,21 +1,79 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth"> 
-    <p class="h5 text-center mb-4">Logg inn </p>
-  
-    <div class="md-form">
-        <i class="fa fa-user prefix grey-text"></i>
-        <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
-        <label for="form3">Brukernavn</label>
-    </div>
-  
-    <div class="md-form">
-        <i class="fa fa-dollar prefix grey-text"></i>
-        <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
-        <label for="form2">Passord</label>
-    </div>
-  
-    <div class="text-center">
-        <button class="btn btn-primary" mdbRippleRadius>
-            <i class="fa fa-send mr-1"></i> Logg inn</button>
-        </div>
-        
-    </form>
+
+<!--Table-->
+<table class="table">
+
+    <!--Table head-->
+    <thead class="blue-grey lighten-4">
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+        </tr>
+    </tbody>
+    <!--Table body-->
+</table>
+<!--Table-->
+
+<!--Table-->
+<table class="table">
+
+    <!--Table head-->
+    <thead class="mdb-color darken-3">
+        <tr class="text-white">
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+        </tr>
+    </tbody>
+    <!--Table body-->
+</table>
+<!--Table-->
+                                    

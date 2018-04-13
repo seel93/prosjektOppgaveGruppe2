@@ -1,6 +1,23 @@
-<h4 *ngIf="!auth">Logg inn</h4>
-<h4 *ngIf="auth">Velkommen</h4>
+<h4 *ngIf="!auth" class="HomeTittle">Brukerinnlogging</h4>
+<h4 *ngIf="auth" class="HomeTittle">Velkommen</h4>
 
+<br />
+<div class="card text-center NewUserPanel" *ngIf="!auth">
+    <div class="card-header success-color white-text">
+        Featured
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Har du ikke bruker hos oss ennå?</h4>
+        <p class="card-text">
+            Det er raskt og enkelt
+        </p>
+        <a class="btn btn-success btn-sm" href="#register">Gå til registrering</a>
+    </div>
+    <div class="card-footer text-muted success-color white-text">
+    </div>
+</div>
+
+<br />
 <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth"> 
   <p class="h5 text-center mb-4">Logg inn </p>
 
@@ -22,6 +39,9 @@
       </div>
       
   </form>
+
+
+
   <!--Logginn Form-->
 <div class="dropdown col" dropdown *ngIf="auth">
     <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
+using Microsoft.Extensions.Logging;
 
 namespace api.Controllers
 {
@@ -11,9 +12,12 @@ namespace api.Controllers
     public class TestController : Controller
     {
         private readonly TestContext _context;
-       public TestController(TestContext context)
+        private readonly ILogger _logger;
+
+       public TestController(TestContext context, ILogger<TestController> logger)
        {
            _context = context;
+           _logger = logger;
        }
 
 
@@ -70,11 +74,13 @@ namespace api.Controllers
 
             if(_context.Authenticate(cred))
             {
+                _logger.LogInformation("User authenticated");
                 return Ok("user authenticated");
 
             }
             else 
             {
+                _logger.LogWarning("invalid logg inn attempt");
                 return BadRequest("invalid credentials");
             }
         }

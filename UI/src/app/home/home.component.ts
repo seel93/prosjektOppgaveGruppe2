@@ -1,10 +1,10 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import {AuthService} from '../auth.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   message: string = "hei";
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
-  isAuthAsAdmin: boolean = true; 
+  isAuthAsAdmin: boolean = false;
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -34,18 +34,28 @@ export class HomeComponent implements OnInit {
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    Notification.requestPermission().then(function(result) {
+      console.log(result);
+    });
   }
 
   sendMessage(name: string): void {
     // send message to subscribers via observable subject
-    if(this.isAuthAsAdmin){
+    if (this.isAuthAsAdmin) {
       this.authService.sendMessage("logged in as employee " + name);
       this.router.navigate(['/admin']);
 
-    }else{
+    } else {
       this.authService.sendMessage("logged in as user " + name);
     }
-}
+  }
+
+  notify() {
+    let validLogging = new Notification("Du er logget inn", {
+      body: "Nå kan du velge område og tidsrom du vil leie utstyr i"
+    });
+    setTimeout(validLogging.close.bind(validLogging), 5000);
+  }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
     this.loggIn(f.value);
@@ -65,11 +75,12 @@ export class HomeComponent implements OnInit {
         (err) => {
           if (err.status == 200) {
             this.auth = true;
+            this.notify();
           } else {
           }
         }
       )
-      this.sendMessage(data.username);
-    }
+    this.sendMessage(data.username);
+  }
 }
 

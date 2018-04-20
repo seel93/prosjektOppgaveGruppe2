@@ -29,13 +29,12 @@ export class HomeComponent implements OnInit {
       'Authorization': 'my-auth-token'
     })
   };
-  url = "http://localhost:5000/api/test/auth"; // api logg inn url
+  url = "http://localhost:5000/api/auth"; // api logg inn url
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     Notification.requestPermission().then(function(result) {
-      console.log(result);
     });
   }
 
@@ -50,7 +49,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  notify() {
+  notifyUponSubmission() {
     let validLogging = new Notification("Du er logget inn", {
       body: "Nå kan du velge område og tidsrom du vil leie utstyr i"
     });
@@ -58,13 +57,19 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
+    console.log(f.value);
     this.loggIn(f.value);
+  }
+
+  onDateSubmit(d: NgForm){
+    console.log(d.value);
   }
 
   loggIn(data) {
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
-      Password: data.password
+      Password: data.password,
+      IsEmployee: data.isEmployee
     }
     console.log(payload);
     this.httpClient.post(this.url, payload, this.httpOptions) // http-post
@@ -75,7 +80,7 @@ export class HomeComponent implements OnInit {
         (err) => {
           if (err.status == 200) {
             this.auth = true;
-            this.notify();
+            this.notifyUponSubmission();
           } else {
           }
         }

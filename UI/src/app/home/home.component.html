@@ -18,47 +18,61 @@
 </div>
 
 <br />
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth"> 
-  <p class="h5 text-center mb-4">Logg inn </p>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth">
+    <p class="h5 text-center mb-4">Logg inn </p>
 
-  <div class="md-form">
-      <i class="fa fa-user prefix grey-text"></i>
-      <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
-      <label for="form3">Brukernavn</label>
-  </div>
-
-  <div class="md-form">
-      <i class="fa fa-dollar prefix grey-text"></i>
-      <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
-      <label for="form2">Passord</label>
-  </div>
-
-  <div class="text-center">
-      <button class="btn btn-primary" mdbRippleRadius>
-          <i class="fa fa-send mr-1"></i> Logg inn</button>
-      </div>
-      
-  </form>
-
-
-
-  <!--Logginn Form-->
-<div class="dropdown col" dropdown *ngIf="auth">
-    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
-        Velg område:
-    </button>
-
-    <div class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+    <div class="md-form">
+        <i class="fa fa-user prefix grey-text"></i>
+        <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
+        <label for="form3">Brukernavn</label>
     </div>
-</div>     
 
+    <div class="md-form">
+        <i class="fa fa-dollar prefix grey-text"></i>
+        <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
+        <label for="form2">Passord</label>
+    </div>
 
-<div class="md-form" *ngIf="auth">
-    <input mdbActive type="date" id="form1" class="form-control">
+    <!-- ansatt logg inn burde være en side for seg selv -->
+    <!-- <div class="md-form">
+        <input class="form-control" type="checkbox" name="isEmployee" ngModel mdbActive>
+        <label class="form-check-label" for="checkbox1">Ansatt</label>
+    </div> -->
+
+    <div class="text-center">
+        <button class="btn btn-primary" mdbRippleRadius>
+            <i class="fa fa-send mr-1"></i> Logg inn</button>
+    </div>
+
+</form>
+<!--Logginn Form-->
+<div class="row" *ngIf="auth">
+
+    <div class="dropdown col-md-4" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
+            Velg område:
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <form #d="ngForm" (ngSubmit)="onDateSubmit(d)">
+            <div class="md-form">
+                <p>Fra:</p>
+                <input mdbActive type="date" id="form1" class="form-control">
+            </div>
+            <div class="md-form">
+                <p>Til:</p>
+                <input mdbActive type="date" id="form1" class="form-control">
+            </div>
+            <div class="md-form">
+                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect mdbRippleRadius>Primary</button>
+            </div>    
+        </form>
+    </div>
 </div>
-
-            
-                

@@ -8,10 +8,10 @@ using api.Models;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class CustomerController : Controller
     {
-        private readonly OrderContext _context;
-       public OrderController(OrderContext context)
+        private readonly CustomerContext _context;
+       public CustomerController(CustomerContext context)
        {
            _context = context;
        }
@@ -20,14 +20,14 @@ namespace api.Controllers
         [HttpGet]
          public IActionResult Index()  
         {  
-            return Ok(_context.GetOrder());  
+            return Ok(_context.GetCustomer());  
         }  
 
         [HttpPost]
-        public IActionResult Create([FromBody] Order Order)
+        public IActionResult Create([FromBody] Customer Customer)
         {
-            _context.postOrder(Order);
-            if(Order == null){
+            _context.postCustomer(Customer);
+            if(Customer == null){
                 return BadRequest();
             }
             else
@@ -39,28 +39,28 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetOrder(id);
-            if(_context.GetOrder(id) == null){
+            _context.GetCustomer(id);
+            if(_context.GetCustomer(id) == null){
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetOrder(id));
+                return Ok(_context.GetCustomer(id));
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            _context.deleteOrder(id);
+            _context.deleteCustomer(id);
             return Ok("Data was deleted");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Order Order)
+        public IActionResult Update(int id, [FromBody] Customer Customer)
         {
 
-            _context.UpdateOrder(id, Order);
+            _context.UpdateCustomer(id, Customer);
             return Ok("object updated");
         }
 

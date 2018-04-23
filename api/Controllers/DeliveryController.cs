@@ -8,10 +8,10 @@ using api.Models;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class DeliveryController : Controller
     {
-        private readonly OrderContext _context;
-       public OrderController(OrderContext context)
+        private readonly DeliveryContext _context;
+       public DeliveryController(DeliveryContext context)
        {
            _context = context;
        }
@@ -20,14 +20,14 @@ namespace api.Controllers
         [HttpGet]
          public IActionResult Index()  
         {  
-            return Ok(_context.GetOrder());  
+            return Ok(_context.GetDelivery());  
         }  
 
         [HttpPost]
-        public IActionResult Create([FromBody] Order Order)
+        public IActionResult Create([FromBody] Delivery Delivery)
         {
-            _context.postOrder(Order);
-            if(Order == null){
+            _context.postDelivery(Delivery);
+            if(Delivery == null){
                 return BadRequest();
             }
             else
@@ -39,28 +39,28 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetOrder(id);
-            if(_context.GetOrder(id) == null){
+            _context.GetDelivery(id);
+            if(_context.GetDelivery(id) == null){
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetOrder(id));
+                return Ok(_context.GetDelivery(id));
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            _context.deleteOrder(id);
+            _context.deleteDelivery(id);
             return Ok("Data was deleted");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Order Order)
+        public IActionResult Update(int id, [FromBody] Delivery Delivery)
         {
 
-            _context.UpdateOrder(id, Order);
+            _context.UpdateDelivery(id, Delivery);
             return Ok("object updated");
         }
 

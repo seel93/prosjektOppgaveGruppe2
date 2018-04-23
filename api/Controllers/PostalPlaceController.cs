@@ -8,10 +8,10 @@ using api.Models;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class PostalPlaceController : Controller
     {
-        private readonly OrderContext _context;
-       public OrderController(OrderContext context)
+        private readonly PostalPlaceContext _context;
+       public PostalPlaceController(PostalPlaceContext context)
        {
            _context = context;
        }
@@ -20,14 +20,14 @@ namespace api.Controllers
         [HttpGet]
          public IActionResult Index()  
         {  
-            return Ok(_context.GetOrder());  
+            return Ok(_context.GetPostalPlace());  
         }  
 
         [HttpPost]
-        public IActionResult Create([FromBody] Order Order)
+        public IActionResult Create([FromBody] PostalPlace PostalPlace)
         {
-            _context.postOrder(Order);
-            if(Order == null){
+            _context.postPostalPlace(PostalPlace);
+            if(PostalPlace == null){
                 return BadRequest();
             }
             else
@@ -39,28 +39,28 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetOrder(id);
-            if(_context.GetOrder(id) == null){
+            _context.GetPostalPlace(id);
+            if(_context.GetPostalPlace(id) == null){
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetOrder(id));
+                return Ok(_context.GetPostalPlace(id));
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            _context.deleteOrder(id);
+            _context.deletePostalPlace(id);
             return Ok("Data was deleted");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Order Order)
+        public IActionResult Update(int id, [FromBody] PostalPlace PostalPlace)
         {
 
-            _context.UpdateOrder(id, Order);
+            _context.UpdatePostalPlace(id, PostalPlace);
             return Ok("object updated");
         }
 

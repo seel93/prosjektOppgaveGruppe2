@@ -4,7 +4,6 @@ namespace api.Models
     {
         public string Username {get; set;}
         public string Password {get; set;}
-        //public Boolean IsEmployee {get; set;}
         
     }
 }

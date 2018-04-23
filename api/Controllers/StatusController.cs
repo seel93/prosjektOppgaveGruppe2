@@ -8,10 +8,10 @@ using api.Models;
 namespace api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class StatusController : Controller
     {
-        private readonly OrderContext _context;
-       public OrderController(OrderContext context)
+        private readonly StatusContext _context;
+       public StatusController(StatusContext context)
        {
            _context = context;
        }
@@ -20,14 +20,14 @@ namespace api.Controllers
         [HttpGet]
          public IActionResult Index()  
         {  
-            return Ok(_context.GetOrder());  
+            return Ok(_context.GetStatus());  
         }  
 
         [HttpPost]
-        public IActionResult Create([FromBody] Order Order)
+        public IActionResult Create([FromBody] Status Status)
         {
-            _context.postOrder(Order);
-            if(Order == null){
+            _context.postStatus(Status);
+            if(Status == null){
                 return BadRequest();
             }
             else
@@ -39,28 +39,29 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetOrder(id);
-            if(_context.GetOrder(id) == null){
+            _context.GetStatus(id);
+            if(_context.GetStatus(id) == null)
+            {
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetOrder(id));
+                return Ok(_context.GetStatus(id));
             }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
-            _context.deleteOrder(id);
+            _context.deleteStatus(id);
             return Ok("Data was deleted");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Order Order)
+        public IActionResult Update(int id, [FromBody] Status Status)
         {
 
-            _context.UpdateOrder(id, Order);
+            _context.UpdateStatus(id, Status);
             return Ok("object updated");
         }
 

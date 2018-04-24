@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   message: string = "hei";
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
-  isAuthAsAdmin: boolean = false;
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -40,13 +39,7 @@ export class HomeComponent implements OnInit {
 
   sendMessage(name: string): void {
     // send message to subscribers via observable subject
-    if (this.isAuthAsAdmin) {
-      this.authService.sendMessage("logged in as employee " + name);
-      this.router.navigate(['/admin']);
-
-    } else {
-      this.authService.sendMessage("logged in as user " + name);
-    }
+    this.authService.sendMessage("logged in as user " + name);
   }
 
   notifyUponSubmission() {

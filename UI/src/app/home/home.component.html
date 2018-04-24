@@ -18,7 +18,7 @@
 </div>
 
 <br />
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth">
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth" class="logginForm">
     <p class="h5 text-center mb-4">Logg inn </p>
 
     <div class="md-form">
@@ -32,12 +32,6 @@
         <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
         <label for="form2">Passord</label>
     </div>
-
-    <!-- ansatt logg inn burde være en side for seg selv -->
-    <!-- <div class="md-form">
-        <input class="form-control" type="checkbox" name="isEmployee" ngModel mdbActive>
-        <label class="form-check-label" for="checkbox1">Ansatt</label>
-    </div> -->
 
     <div class="text-center">
         <button class="btn btn-primary" mdbRippleRadius>

@@ -15,12 +15,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminComponent } from './admin/admin.component';
 import {AuthService} from './auth.service';
 import { RegisterComponent } from './register/register.component';
+import { OrderComponent } from './order/order.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'equipment', component : EquipmentComponent },
   {path: 'admin', component : AdminComponent },
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: 'order', component: OrderComponent}
 ]
 
 @NgModule({
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
     NavbarComponent,
     AdminComponent,
     RegisterComponent,
+    OrderComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

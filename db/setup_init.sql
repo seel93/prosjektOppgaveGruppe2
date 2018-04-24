@@ -24,8 +24,8 @@ USE `AS_SykkelUtleie` ;
 -- Table `AS_SykkelUtleie`.`poststed`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`poststed` (
-  `poststed` CHAR(4) NULL,
-  `postnr` INT(4) NOT NULL,
+  `poststed` VARCHAR(45) NULL,
+  `postnr` CHAR(4) NOT NULL,
   PRIMARY KEY (`postnr`))
 ENGINE = InnoDB;
 

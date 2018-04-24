@@ -78,11 +78,11 @@ namespace api.Controllers
             //inserting values into "utstyr_has_bestilling"
             foreach(var bike_id in bike_ids)
             {
-                Create(new BikeAndOrder
+                /* Create(new BikeAndOrder
                 {
                     Bike_id = bike_id;
                     Order_id = order_id;
-                }));
+                })); */
 
                 // // updating status of the each ordered bike/equipment
                 // BikeController.UpdateStatus(bike_id...) // //use bike_id here

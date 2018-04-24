@@ -1,8 +1,9 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic; 
+using api.Models;
 
-Employee_idspace api.Models
+namespace api
 {
     public class EmployeeContext
     {
@@ -53,7 +54,9 @@ Employee_idspace api.Models
         {
             if (Employee == null)
             {
-                throw new ArgumentNullException(Employee_idof(Employee));
+                throw new ArgumentNullException(
+                //    Employee_idof(Employee)
+                );
             }
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))

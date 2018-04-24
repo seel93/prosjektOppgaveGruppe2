@@ -36,7 +36,7 @@ namespace api.Models
                     {
                         list.Add(new PostalPlace
                         {
-                            PostalPlace = reader["poststed"].ToString(),
+                            PostPlace = reader["poststed"].ToString(),
                             PostalNumber = Convert.ToInt32(reader["postnr"])
                         });
                     }
@@ -58,7 +58,7 @@ namespace api.Models
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "insert into poststed(poststed, postnr) values(@PostalPlace.PostalPlace, @PostalPlace.PostalNumber);";
-                cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostalPlace);
+                cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostPlace);
                 cmd.Parameters.AddWithValue("@PostalPlace.PostalNumber", PostalPlace.PostalNumber);
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -80,7 +80,7 @@ namespace api.Models
                     {
                         list.Add(new PostalPlace
                         {
-                            PostalPlace = reader["poststed"].ToString(),
+                            PostPlace = reader["poststed"].ToString(),
                             PostalNumber = Convert.ToInt32(reader["postnr"])
                         });
                     }
@@ -111,7 +111,7 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "update poststed set poststed=@PostalPlace.PostalPlace where postnr=@id";
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostalPlace);
+                cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostPlace);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }

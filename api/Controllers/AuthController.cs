@@ -38,7 +38,7 @@ namespace api
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
-            cred.Password = hasher((byte[])cred.Password);
+            var testHash = hasher(cred.Password);
 
             if (_context.Authenticate(cred))
             {

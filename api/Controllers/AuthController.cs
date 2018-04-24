@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Cryptography;
+using System.Text;
 
 namespace api
 {
@@ -22,18 +23,30 @@ namespace api
             _context = context;
         }
 
-        
+        public byte[] hasher(string PasswordToHash)
+        {
+            byte[] hash;
+            var dataForHash = Encoding.UTF8.GetBytes(PasswordToHash);
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                hash = shaM.ComputeHash(dataForHash);
+            }
+
+            return hash;
+        }
+
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
+            cred.Password = hasher((byte[])cred.Password);
 
-            if(_context.Authenticate(cred))
+            if (_context.Authenticate(cred))
             {
                 _logger.LogInformation("User authenticated");
-                return Ok("user authenticated"); 
+                return Ok("user authenticated");
 
             }
-            else 
+            else
             {
                 _logger.LogWarning("invalid logg inn attempt");
                 return BadRequest("invalid credentials");

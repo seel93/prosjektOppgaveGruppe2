@@ -26,7 +26,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.Add(new ServiceDescriptor(typeof(TestContext), new TestContext(Configuration.GetConnectionString("DefaultConnection"))));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+       /*      services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
@@ -61,7 +61,7 @@ namespace api
             // the path to /Account/AccessDenied.
             options.AccessDeniedPath = "/Account/AccessDenied";
                     options.SlidingExpiration = true;
-            });
+            }); */
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
             services.AddMvc();
         }

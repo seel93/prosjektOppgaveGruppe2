@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`steder` (
   `sted_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'kunne vært koblet direkte til bestilling, men er gjerne ikke nødvendig, siden den har 2 relasjoner som kan kobles mot bestilling.',
   `stedsnavn` VARCHAR(45) NULL,
-  `poststed_postnr` INT(4) NOT NULL,
+  `poststed_postnr` CHAR(4) NOT NULL,
   PRIMARY KEY (`sted_id`),
   UNIQUE INDEX `sted_id_UNIQUE` (`sted_id` ASC),
   INDEX `fk_steder_poststed1_idx` (`poststed_postnr` ASC),

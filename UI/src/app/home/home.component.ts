@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 
 export class HomeComponent implements OnInit {
   message: string = "hei";
+  employee: boolean = false;
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -37,9 +38,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  sendMessage(name: string): void {
+  sendMessage(name: string, employee: boolean): void {
     // send message to subscribers via observable subject
-    this.authService.sendMessage("logged in as user " + name);
+    this.authService.sendMessage("logged in as user " + name, employee);
   }
 
   notifyUponSubmission() {
@@ -78,7 +79,7 @@ export class HomeComponent implements OnInit {
           }
         }
       )
-    this.sendMessage(data.username);
+    this.sendMessage(data.username, this.employee);
   }
 }
 

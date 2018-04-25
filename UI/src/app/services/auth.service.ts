@@ -10,8 +10,11 @@ export class AuthService {
   constructor() { }
   private subject = new Subject<any>();
  
-  sendMessage(message: string) {
-      this.subject.next({ text: message });
+  sendMessage(message: string, employee: boolean) {
+      this.subject.next({ 
+          text: message,
+          status: employee  
+        });
   }
 
   clearMessage() {

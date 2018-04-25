@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  employee: boolean = true;
   auth: boolean = false;
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -36,9 +37,9 @@ export class AdminComponent implements OnInit {
     this.loggIn(f.value);
   }
   
-  sendMessage(name: string): void {
+  sendMessage(name: string, employee: boolean): void {
     // send message to subscribers via observable subject
-    this.authService.sendMessage("logged in as user " + name);
+    this.authService.sendMessage("logged in as user " + name, employee);
   }
 
   loggIn(data) {
@@ -61,7 +62,7 @@ export class AdminComponent implements OnInit {
           }
         }
       )
-    this.sendMessage(data.username);
+    this.sendMessage(data.username, this.employee);
   }
 
 }

@@ -12,6 +12,6 @@ namespace  api.Models
         public int BelongsToPlace {get; set;} //FK
         public string WheelSize {get; set;}
         public string Frame {get; set;}
-        public int STATUS {get; set;} //FK
+        public string STATUS {get; set;}
     }
 }

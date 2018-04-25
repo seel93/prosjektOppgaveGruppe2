@@ -36,8 +36,8 @@ namespace api.Models
                     {
                         list.Add(new Place
                         {
-                            Place_id = Convert.Int32(reader["sted_id"]),
-                            Name = reade["stedsnavntedsnavn"].ToString(),
+                            Place_id = Convert.ToInt32(reader["sted_id"]),
+                            Name = reader["stedsnavntedsnavn"].ToString(),
                             PostalCode = Convert.ToInt32(reader["poststed_postnr"])
                         });
                     }
@@ -59,7 +59,7 @@ namespace api.Models
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "insert into steder(sted_id, stedsnavn, poststed_postnr) values(@Place.Place_id, @Place.Name, @Place.PostalCode);";
-                cmd.Parameters.AddWithValue("@Place.Place_id", Place_id);
+                cmd.Parameters.AddWithValue("@Place.Place_id", Place.Place_id);
                 cmd.Parameters.AddWithValue("@Place.Name", Place.Name);
                 cmd.Parameters.AddWithValue("@Place.PostalCode", Place.PostalCode);
                 cmd.ExecuteNonQuery();

@@ -64,65 +64,51 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateStatus(int id, int STATUS)
+        public IActionResult UpdateStatus(int bike_id, string STATUS)
         {
-            _context.UpdateBikeStatus(id, STATUS);
+            _context.UpdateBikeStatus(bike_id, STATUS);
             return Ok("object updated");
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBikeStatusAsString(int id)
+        public IActionResult GetBikeStatus(int id)
         {
-            _context.GetBikeStatusAsString(id);
-            if(_context.GetBikeStatusAsString(id) == null)
+            _context.GetBikeStatus(id);
+            if(_context.GetBikeStatus(id) == null)
             {
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetBikeStatusAsString(id));
+                return Ok(_context.GetBikeStatus(id));
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBikeStatusAsString(Bike bike)
+        public IActionResult  GetBikeOriginalLocation(int id)
         {
-            _context.GetBikeStatusAsString(bike);
-            if(_context.GetBikeStatusAsString(bike) == null)
+            _context.GetBikeOriginalLocation(id);
+            if(_context.GetBikeOriginalLocation(id) == null)
             {
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetBikeStatusAsString(bike));
+                return Ok(_context.GetBikeOriginalLocation(id));
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBikeStatusAsInt(Bike bike)
+        public IActionResult GetBikeLastSeenLocation(int id)
         {
-            _context.GetBikeStatusAsInt(bike);
-            if(_context.GetBikeStatusAsInt(bike) == null)
+            _context.GetBikeLastSeenLocation(id);
+            if(_context.GetBikeLastSeenLocation(id) == null)
             {
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetBikeStatusAsInt(bike));
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetBikeStatusAsInt(int id)
-        {
-            _context.GetBikeStatusAsInt(id);
-            if(_context.GetBikeStatusAsInt(id) == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetBikeStatusAsInt(id));
+                return Ok(_context.GetBikeLastSeenLocation(id));
             }
         } 
     }

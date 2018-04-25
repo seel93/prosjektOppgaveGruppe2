@@ -1,0 +1,39 @@
+
+<div class="btn-group" dropdown>
+    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+        Basic dropdown
+    </button>
+
+    <div class="dropdown-menu dropdown-primary">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="divider dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+</div>
+
+<hr>
+
+<h5>Antall personer:</h5>
+<div class="btn-group">
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(1)"  mdbRadio="1" mdbWavesEffect>
+        1
+    </label>
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(2)"  mdbRadio="2"  mdbWavesEffect>
+        2
+    </label>
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(3)"  mdbRadio="3"  mdbWavesEffect>
+        3
+    </label>
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(4)"  mdbRadio="4"  mdbWavesEffect>
+        4
+    </label>
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(5)"  mdbRadio="5"  mdbWavesEffect>
+        5
+    </label>
+    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(6)"  mdbRadio="6"  mdbWavesEffect>
+        6
+    </label>
+</div>
+

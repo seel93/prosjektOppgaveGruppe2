@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using api.Models;
-using System.Collections.Generic; 
+using api.Models; 
 
 namespace api.Controllers
 {
@@ -70,28 +69,28 @@ namespace api.Controllers
         //----------------------------------------------------------------------------------//
         //don't know 100% where these functions will be
 
-        public void CreateCompledeOrder(List<int> bike_ids)
-        {
-            //make it random
-            int order_id = 5;
+        // // public void CreateCompledeOrder(List<int> bike_ids)
+        // // {
+        // //     //make it random
+        // //     int order_id = 5;
 
-            //inserting values into "utstyr_has_bestilling"
-            foreach(var bike_id in bike_ids)
-            {
-                /* Create(new BikeAndOrder
-                {
-                    Bike_id = bike_id;
-                    Order_id = order_id;
-                })); */
+        // //     //inserting values into "utstyr_has_bestilling"
+        // //     foreach(var bike_id in bike_ids)
+        // //     {
+        // //         /* Create(new BikeAndOrder
+        // //         {
+        // //             Bike_id = bike_id;
+        // //             Order_id = order_id;
+        // //         })); */
 
-                // // updating status of the each ordered bike/equipment
-                // BikeController.UpdateStatus(bike_id...) // //use bike_id here
-            } 
+        // //         // // updating status of the each ordered bike/equipment
+        // //         // BikeController.UpdateStatus(bike_id...) // //use bike_id here
+        // //     } 
 
-            // //inserting one value into "bestilling"
-            // OrderController.create(new order {...}) // //use order_id here
+        // //     // //inserting one value into "bestilling"
+        // //     // OrderController.create(new order {...}) // //use order_id here
             
-        }
+        // // }
 
     }
 }

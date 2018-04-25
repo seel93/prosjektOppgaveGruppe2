@@ -37,7 +37,7 @@ namespace api.Models
                         list.Add(new Status
                         {
                             Status_id = Convert.ToInt32(reader["idstatus"]),
-                            Status = reader["status"].ToString()
+                            Current_Status = reader["status"].ToString()
                         });
                     }
                 }
@@ -59,7 +59,7 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "insert into status(idstatus, status) values(@Status.Status_id,@Status.Status);";
                 cmd.Parameters.AddWithValue("@Status.Status_id", Status.Status_id);
-                cmd.Parameters.AddWithValue("@Status.Status", Status.Status);
+                cmd.Parameters.AddWithValue("@Status.Status", Status.Current_Status);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -81,7 +81,7 @@ namespace api.Models
                         list.Add(new Status
                         {
                             Status_id = Convert.ToInt32(reader["idstatus"]),
-                            Status = reader["status"].ToString()
+                            Current_Status = reader["status"].ToString()
                         });
                     }
                 }
@@ -111,7 +111,7 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "update status set status=@Status.Status where idstatus=@id";
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Status.Status", Status.Status);
+                cmd.Parameters.AddWithValue("@Status.Status", Status.Current_Status);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }

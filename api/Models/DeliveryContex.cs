@@ -37,7 +37,7 @@ namespace api.Models
                         list.Add(new Delivery
                         {
                             Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"]),
-                            DeliveryDate = reader["leveringsdato"].ToString(),
+                            DeliveryDate = (DateTime)reader["leveringsdato"],
                             DeliveryLocation = Convert.ToInt32(reader["leveringssted"])
                         });
                     }
@@ -83,7 +83,7 @@ namespace api.Models
                         list.Add(new Delivery
                         {
                             Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"]),
-                            DeliveryDate = reader["leveringsdato"].ToString(),
+                            DeliveryDate = (DateTime)reader["leveringsdato"],
                             DeliveryLocation = Convert.ToInt32(reader["leveringssted"])
                         });
                     }

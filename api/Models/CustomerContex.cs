@@ -91,9 +91,9 @@ namespace api.Models
                             Customer_id = Convert.ToInt32(reader["kunde_id"]),
                             FirstName = reader["fnavn"].ToString(),
                             LastName = reader["enavn"].ToString(),
-                            LastName = reader["mob_nr"].ToString(),
-                            FirstName = reader["e-post"].ToString(),
-                            Customer_id = Convert.ToInt32(reader["steder_sted_id"])
+                            Phone = reader["mob_nr"].ToString(),
+                            Email = reader["e-post"].ToString(),
+                            Location = Convert.ToInt32(reader["steder_sted_id"])
                         });
                     }
                 }

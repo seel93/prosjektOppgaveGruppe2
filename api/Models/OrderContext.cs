@@ -41,9 +41,9 @@ namespace api.Models
                             IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
                             Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
                             Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = reader["bestillingsdato"].ToString(),
-                            IsAvailableFrom = reader["kan_hentes"].ToString(),
-                            MustBeDeliveredBefore = reader["maa_leveres_foer"].ToString()
+                            OrderDate = (DateTime)reader["bestillingsdato"],
+                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
+                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
                         });
                     }
                 }
@@ -68,7 +68,7 @@ namespace api.Models
                 cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
                 cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
                 cmd.Parameters.AddWithValue("@Order.Customer_id", Order.Customer_id);
-                cmd.Parameters.AddWithValue("@Order.EMployee_id", Order.EMployee_id);
+                cmd.Parameters.AddWithValue("@Order.Employee_id", Order.Employee_id);
                 cmd.Parameters.AddWithValue("@Order.OrderDate", Order.OrderDate);
                 cmd.Parameters.AddWithValue("@Order.IsAvailableFrom", Order.IsAvailableFrom);
                 cmd.Parameters.AddWithValue("@Order.MustBeDeliveredBefore", Order.MustBeDeliveredBefore);
@@ -97,9 +97,9 @@ namespace api.Models
                             IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
                             Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
                             Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = reader["bestillingsdato"].ToString(),
-                            IsAvailableFrom = reader["kan_hentes"].ToString(),
-                            MustBeDeliveredBefore = reader["maa_leveres_foer"].ToString()
+                            OrderDate = (DateTime)reader["bestillingsdato"],
+                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
+                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
                         });
                     }
                 }
@@ -133,7 +133,7 @@ namespace api.Models
                 cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
                 cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
                 cmd.Parameters.AddWithValue("@Order.Customer_id", Order.Customer_id);
-                cmd.Parameters.AddWithValue("@Order.EMployee_id", Order.EMployee_id);
+                cmd.Parameters.AddWithValue("@Order.Employee_id", Order.Employee_id);
                 cmd.Parameters.AddWithValue("@Order.OrderDate", Order.OrderDate);
                 cmd.Parameters.AddWithValue("@Order.IsAvailableFrom", Order.IsAvailableFrom);
                 cmd.Parameters.AddWithValue("@Order.MustBeDeliveredBefore", Order.MustBeDeliveredBefore);

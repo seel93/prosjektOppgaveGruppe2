@@ -45,7 +45,7 @@ namespace api.Models
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = Convert.ToInt32(reader["status_idstatus"])
+                            STATUS = reader["STATUS"].ToString()
                         });
                     }
                 }
@@ -106,7 +106,7 @@ namespace api.Models
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = Convert.ToInt32(reader["status_idstatus"])
+                            STATUS = reader["STATUS"].ToString()
                         });
                     }
                 }
@@ -155,7 +155,7 @@ namespace api.Models
 //------------------------------------------------------------------------------------------------------//
 
 
-        public void UpdateBikeStatus(int id, int STATUS)
+        public void UpdateBikeStatus(int id, string STATUS)
         {
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
@@ -169,23 +169,9 @@ namespace api.Models
             }
         }
 
-        public void UpdateBikeStatus(Bike bike, int STATUS)
+        public string GetBikeStatus(int id)
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Utstyr set status_idstatus=@Bike.STATUS where utstyr_id=@id";
-                cmd.Parameters.AddWithValue("@id", bike.id);
-                cmd.Parameters.AddWithValue("@Bike.STATUS", STATUS);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-        public string GetBikeStatusAsString(int id)
-        {
-            string result;
+            string result="";
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
@@ -205,75 +191,10 @@ namespace api.Models
             return result;
         }
 
-        public string GetBikeStatusAsString(Bike bike)
-        {
-            string result;
 
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select status from Utstyr left join status ON utstyr.status_idstatus=idstatus where utstyr_id=@id";
-                cmd.Parameters.AddWithValue("@id", bike.id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        result = reader["status"].ToString();
-                    }
-                }
-                conn.Close();
-            }
-            return result;
-        }
-
-        public int GetBikeStatusAsInt(int id)
-        {
-            int result;
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select status_idstatus from Utstyr where utstyr_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        result = Convert.ToInt32(reader["status_idstatus"]);
-                    }
-                }
-                conn.Close();
-            }
-            return result;
-        }
-
-        public int GetBikeStatusAsInt(Bike bike)
-        {
-            int result;
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select status_idstatus from Utstyr where utstyr_id=@id";
-                cmd.Parameters.AddWithValue("@id", bike.id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        result = Convert.ToInt32(reader["status_idstatus"]);
-                    }
-                }
-                conn.Close();
-            }
-            return result;
-        }
-        
         public int GetBikeOriginalLocation(int id)
         {
-            int result;
+            int result = -1;
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
@@ -295,7 +216,7 @@ namespace api.Models
 
         public int GetBikeLastSeenLocation(int id)
         {
-            int result;
+            int result = -1;
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {

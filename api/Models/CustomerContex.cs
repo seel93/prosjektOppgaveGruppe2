@@ -40,7 +40,7 @@ namespace api.Models
                             FirstName = reader["fnavn"].ToString(),
                             LastName = reader["enavn"].ToString(),
                             Phone = reader["mob_nr"].ToString(),
-                            Email = reader["e-post"].ToString(),
+                            Email = reader["epost"].ToString(),
                             Location = Convert.ToInt32(reader["steder_sted_id"])
                         });
                     }

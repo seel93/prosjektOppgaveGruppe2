@@ -11,7 +11,7 @@ insert into ansatt(ansatt_id, Jobb, fulltid, loenn, ansatt_password, stedet_sted
 
 insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansatt_id, bestllingsdato, kan_hentes, maa_leveres_foer) values();
 
-insert into kunde(kunde_id, fnavn, enavn, mob_nr, e-post, kunde_password, steder_sted_id) values();
+insert into kunde(kunde_id, fnavn, enavn, mob_nr, epost, kunde_password, steder_sted_id) values();
 
 insert into poststed(poststed, postnr) values();
 

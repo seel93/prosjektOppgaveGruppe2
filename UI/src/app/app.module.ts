@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminComponent } from './admin/admin.component';
-import {AuthService} from './auth.service';
+import {AuthService} from './services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { OrderComponent } from './order/order.component';
 

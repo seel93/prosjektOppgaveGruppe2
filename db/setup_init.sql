@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`kunde` (
   `fnavn` VARCHAR(45) NULL,
   `enavn` VARCHAR(45) NULL,
   `mob_nr` VARCHAR(18) NULL,
-  `e-post` VARCHAR(60) NULL,
+  `epost` VARCHAR(60) NULL,
   `kunde_password` VARCHAR(256) NOT NULL,
   `steder_sted_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`kunde_id`),

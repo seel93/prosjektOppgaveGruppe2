@@ -128,7 +128,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`bestilling` (
   `bestilling_id` VARCHAR(45) NOT NULL,
   `pris` VARCHAR(45) NULL,
-  `(gruppe)` TINYINT NULL COMMENT 'BOOLEAN?',
+  `gruppe` TINYINT(1) NULL COMMENT 'BOOLEAN?',
   `kunde_kunde_id` INT UNSIGNED NOT NULL,
   `ansatt_ansatt_id` INT UNSIGNED NOT NULL,
   `bestillingsdato` DATETIME NULL COMMENT 'Datoer burde være i bestilling, fordi alt utstyr innen en bestilling har felles dato. Slik unngår vi dobbeltlagring.',

@@ -85,7 +85,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`ansatt` (
   `ansatt_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Kunne laget underdelinger av ansatte, om det er hensikt. F.eks lagerarbeider, transportør, salgsperson, administrerende ansatt.',
   `Jobb` VARCHAR(45) NULL,
-  `fulltid` TINYINT NOT NULL COMMENT 'BOOLEAN!?!??!??',
+  `fulltid` TINYINT(1) NOT NULL COMMENT 'BOOLEAN!?!??!??',
   `loenn` VARCHAR(45) NULL,
   `ansatt_password` VARCHAR(256) NOT NULL,
   `steder_sted_id` INT UNSIGNED NOT NULL,

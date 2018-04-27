@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr` (
   `tilhoerer_sted` INT UNSIGNED NOT NULL,
   `hjulstoerrelse` VARCHAR(45) NULL,
   `ramme` VARCHAR(45) NULL,
-  `utstyr_status` VARCHAR(45) NULL,
+  `status` VARCHAR(45) NULL,
   PRIMARY KEY (`utstyr_id`),
   UNIQUE INDEX `utstyr_id_UNIQUE` (`utstyr_id` ASC),
   INDEX `fk_Utstyr_steder3_idx` (`var_sist_paa_sted` ASC),

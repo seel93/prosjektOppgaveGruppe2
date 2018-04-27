@@ -12,7 +12,6 @@ import {AuthService} from './services/auth.service';
 export class AppComponent {
   subscription: Subscription;
   public isAuthenticated:  boolean = false;
-
   userName : string = "Gjest";
 
 
@@ -26,7 +25,6 @@ export class AppComponent {
         this.userName = message.text; 
     });
   }
-
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks

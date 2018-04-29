@@ -1,39 +1,115 @@
+<div class="orderInputFields">
 
-<div class="btn-group" dropdown>
-    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
-        Basic dropdown
-    </button>
+    <p>Er det fler som skal ha utstyr?</p>
+    <button type="button" class="btn btn-primary waves-light" (click)="multiplePeople('yes')" mdbWavesEffect>Ja</button>
+    <button type="button" class="btn btn-primary waves-light" (click)="multiplePeople('no')" mdbWavesEffect>Nei</button>
 
-    <div class="dropdown-menu dropdown-primary">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-        <div class="divider dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
+    <h5 *ngIf="groups">Antall Personer:</h5>
+    <div class="btn-group" *ngIf="groups">
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(1)" mdbRadio="1" mdbWavesEffect>
+            1
+        </label>
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(2)" mdbRadio="2" mdbWavesEffect>
+            2
+        </label>
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(3)" mdbRadio="3" mdbWavesEffect>
+            3
+        </label>
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(4)" mdbRadio="4" mdbWavesEffect>
+            4
+        </label>
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(5)" mdbRadio="5" mdbWavesEffect>
+            5
+        </label>
+        <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(6)" mdbRadio="6" mdbWavesEffect>
+            6
+        </label>
     </div>
+
+    <br/>
+    <br/>
+    <p>Skal dere leie i timer eller dager?</p>
+    <button type="button" class="btn btn-primary waves-light" (click)="daysOrHours('hours')" mdbWavesEffect>Timer</button>
+    <button type="button" class="btn btn-primary waves-light" (click)="daysOrHours('days')" mdbWavesEffect>Dager</button>
+
+    <br/>
+    <br/>
+    <div *ngIf="days">
+
+        <h5>Antall dager:</h5>
+        <div class="btn-group">
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(1)" mdbRadio="1" mdbWavesEffect>
+                1
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(2)" mdbRadio="2" mdbWavesEffect>
+                2
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(3)" mdbRadio="3" mdbWavesEffect>
+                3
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(4)" mdbRadio="4" mdbWavesEffect>
+                4
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(5)" mdbRadio="5" mdbWavesEffect>
+                5
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(6)" mdbRadio="6" mdbWavesEffect>
+                6
+            </label>
+        </div>
+    </div>
+    <div *ngIf="hours">
+        <h5>Antall timer:</h5>
+        <div class="btn-group">
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(1)" mdbRadio="1" mdbWavesEffect>
+                1
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(2)" mdbRadio="2" mdbWavesEffect>
+                2
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(3)" mdbRadio="3" mdbWavesEffect>
+                3
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(4)" mdbRadio="4" mdbWavesEffect>
+                4
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(5)" mdbRadio="5" mdbWavesEffect>
+                5
+            </label>
+            <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(6)" mdbRadio="6" mdbWavesEffect>
+                6
+            </label>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="btn-group" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+            Type sykkel
+        </button>
+
+        <div class="dropdown-menu dropdown-primary">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="divider dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+    </div>
+    <div class="btn-group" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+            Type utstyr for denne sykkelen
+        </button>
+
+        <div class="dropdown-menu dropdown-primary">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="divider dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary waves-light" mdbWavesEffect>
+        <i class="fa fa-plus-circle" aria-hidden="true"></i> Legg til utstyr og sykkel
+    </button>
 </div>
-
-<hr>
-
-<h5>Antall personer:</h5>
-<div class="btn-group">
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(1)"  mdbRadio="1" mdbWavesEffect>
-        1
-    </label>
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(2)"  mdbRadio="2"  mdbWavesEffect>
-        2
-    </label>
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(3)"  mdbRadio="3"  mdbWavesEffect>
-        3
-    </label>
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(4)"  mdbRadio="4"  mdbWavesEffect>
-        4
-    </label>
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(5)"  mdbRadio="5"  mdbWavesEffect>
-        5
-    </label>
-    <label class="btn btn-primary waves-light" [(ngModel)]="radioModel" (click)="addPerson(6)"  mdbRadio="6"  mdbWavesEffect>
-        6
-    </label>
-</div>
-

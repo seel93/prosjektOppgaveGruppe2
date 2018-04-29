@@ -53,6 +53,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr` (
   `utstyr_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `utstyr_Navn` VARCHAR(45) NOT NULL,
   `utstyr_Type` VARCHAR(45) NULL,
   `utstyr_navn` VARCHAR(45) NULL,
   `dagspris` DECIMAL NULL,

@@ -21,10 +21,10 @@
     <!--Table head-->
     <thead class="blue-grey lighten-4">
         <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Utstyr navn:</th>
+            <th>Tilgjengelighet:</th>
+            <th>Status:</th>
+            <th>Tilgjengelig ved:</th>
         </tr>
     </thead>
     <!--Table head-->
@@ -32,64 +32,71 @@
     <!--Table body-->
     <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
-    </tbody>
-    <!--Table body-->
-</table>
-<!--Table-->
-
-<!--Table-->
-<table class="table equipmentTable">
-
-    <!--Table head-->
-    <thead class="mdb-color darken-3">
-        <tr class="text-white">
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-        </tr>
-    </thead>
-    <!--Table head-->
-
-    <!--Table body-->
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <td>navn:</td>
+            <td>
+                <button 
+                type="button" 
+                class="btn btn-primary relative waves-light" 
+                (click)="avaliableModal.show()" 
+                mdbWavesEffect
+                >
+                    Sjekk Tilgjengelighet
+                </button>
+            </td>
+            <td>
+                <button 
+                    type="button" 
+                    class="btn btn-primary relative waves-light" 
+                    (click)="statusModal.show()" 
+                    mdbWavesEffect
+                >
+                    Endre status
+                </button>
+            </td>
+            <td>Sted</td>
         </tr>
     </tbody>
     <!--Table body-->
 </table>
 <!--Table-->
+
+<div mdbModal #statusModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mystatusModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Endre status på</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
+                <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #avaliableModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="avaliableModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="avaliableModal.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Tilgjengelighet</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="avaliableModal.hide()" mdbWavesEffect>Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+            
                                     

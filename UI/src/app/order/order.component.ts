@@ -20,14 +20,17 @@ export class OrderComponent implements OnInit {
   
   addPerson(numOfPeople){
     this.personModel = numOfPeople.toString();
+    return numOfPeople;
   }
 
   addDays(numOfDays){
     this.daysModel = numOfDays.toString();
+    return numOfDays;
   }
 
   addHour(numOfHours){
     this.hourModel = numOfHours.toString();
+    return numOfHours;
   }
 
   daysOrHours(choice){
@@ -45,6 +48,12 @@ export class OrderComponent implements OnInit {
       this.groups = true;
     }else{
       this.groups = false;
+    }
+  }
+
+  preparePayload(){
+    let payload = {
+      
     }
   }
 

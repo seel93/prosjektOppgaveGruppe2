@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-equipment',
@@ -7,8 +9,16 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./equipment.component.scss']
 })
 export class EquipmentComponent implements OnInit {
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(private authService: AuthService){
+    this.subscription = this.authService.getMessage().subscribe(
+      (message) => { 
+        if(message.status){
+          console.log(message);
+        }
+    });
+  }
 
   ngOnInit() {
   }

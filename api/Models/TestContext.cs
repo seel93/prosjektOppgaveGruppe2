@@ -6,7 +6,6 @@ namespace api.Models
 {
     public class TestContext
     {
-        
         public string ConnectionString {get; set;}
 
         public TestContext(string connectionString)
@@ -122,7 +121,7 @@ namespace api.Models
             }
         }
 
-        public Boolean Authenticate(Creds cred)
+/*         public Boolean Authenticate(Creds cred)
         {
             List<Creds> UserList = new List<Creds>();
               using (MySqlConnection conn = new MySqlConnection(ConnectionString))
@@ -154,6 +153,6 @@ namespace api.Models
                     return false;
                 }
             }
-        }
+        } */
     }    
 }

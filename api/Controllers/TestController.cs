@@ -20,7 +20,9 @@ namespace api.Controllers
         [HttpGet]
          public IActionResult Index()  
         {  
-            return Ok(_context.GetTest());  
+            return Ok("ok"
+                //_context.GetTest()
+                );  
         }  
 
         [HttpPost]
@@ -68,7 +70,7 @@ namespace api.Controllers
         public IActionResult Auth([FromBody] Creds cred)
         {
 
-            if(_context.Authenticate(cred))
+           /*  if(_context.Authenticate(cred))
             {
                 return Ok("user authenticated");
 
@@ -76,7 +78,8 @@ namespace api.Controllers
             else 
             {
                 return BadRequest("invalid credentials");
-            }
+            } */
+            return Ok();
         }
     }
 }

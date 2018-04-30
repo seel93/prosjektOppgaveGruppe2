@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
+      //'Authorization': 'my-auth-token'
     })
   };
   url = "http://localhost:5000/api/auth"; // api logg inn url

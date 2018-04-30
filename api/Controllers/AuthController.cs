@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using api.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 using System.Text;
+using api.Models;
 
 namespace api
 {
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly ILogger _logger;
-        private readonly TestContext _context;
+        private readonly CredContext _context;
+        //private readonly ILogger _logger;
 
-        public AuthController(TestContext context, ILogger<AuthController> logger)
+        public AuthController(CredContext context
+        //ILogger<AuthController> logger
+        )
         {
-            _logger = logger;
             _context = context;
+            //_logger = logger;
         }
 
-        public byte[] hasher(string PasswordToHash)
+       /*  public byte[] hasher(string PasswordToHash)
         {
             byte[] hash;
             var dataForHash = Encoding.UTF8.GetBytes(PasswordToHash);
@@ -33,14 +35,21 @@ namespace api
             }
 
             return hash;
+        } */
+
+        [HttpGet]
+        public IActionResult testAuth()
+        {
+            return Ok("auth works");
         }
 
+            /*
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
             var testHash = hasher(cred.Password);
 
-            if (_context.Authenticate(cred))
+             if (_context.Authenticate(cred))
             {
                 _logger.LogInformation("User authenticated");
                 return Ok("user authenticated");
@@ -51,7 +60,8 @@ namespace api
                 _logger.LogWarning("invalid logg inn attempt");
                 return BadRequest("invalid credentials");
             }
-        }
+        } 
+        */
 
 
 

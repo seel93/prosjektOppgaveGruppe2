@@ -79,9 +79,9 @@ export class HomeComponent implements OnInit {
             error => {
               if(error.status = "200"){
                 this.auth = true;
-              this.notifyUponSubmission();
-              this.sendMessage(data.username, this.employee);
-              resolve();
+                this.notifyUponSubmission();
+                this.sendMessage(data.username, this.employee);
+                resolve();
             }
           }
         );

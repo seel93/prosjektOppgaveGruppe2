@@ -1,22 +1,133 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate *ngIf="!auth" class="logginForm">
-  <p class="h5 text-center mb-4">Logg inn </p>
+    <p class="h5 text-center mb-4">Logg inn </p>
 
-  <div class="md-form">
-      <i class="fa fa-user prefix grey-text"></i>
-      <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
-      <label for="form3">Brukernavn</label>
-  </div>
+    <div class="md-form">
+        <i class="fa fa-user prefix grey-text"></i>
+        <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
+        <label for="form3">Brukernavn</label>
+    </div>
 
-  <div class="md-form">
-      <i class="fa fa-dollar prefix grey-text"></i>
-      <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
-      <label for="form2">Passord</label>
-  </div>
+    <div class="md-form">
+        <i class="fa fa-dollar prefix grey-text"></i>
+        <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
+        <label for="form2">Passord</label>
+    </div>
 
-  <div class="text-center">
-      <button class="btn btn-primary" mdbRippleRadius>
-          <i class="fa fa-send mr-1"></i> Logg inn</button>
-  </div>
+    <div class="text-center">
+        <button class="btn btn-primary" mdbRippleRadius>
+            <i class="fa fa-send mr-1"></i> Logg inn</button>
+    </div>
 
 </form>
 <!--Logginn Form-->
+
+<div *ngIf="auth">
+
+    <table class="table equipmentTable">
+
+        <!--Table head-->
+        <thead class="blue-grey lighten-4">
+            <tr>
+                <th>Utstyr navn:</th>
+                <th>Tilgjengelighet:</th>
+                <th>Status:</th>
+                <th>Tilgjengelig ved:</th>
+                <th>pris  time:</th>
+                <th>pris dag:</th>
+                <th>Ramme</th>
+                <th>Hjulstørrelse</th>
+            </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+            <tr *ngFor="let equipment of equipmentList">
+                <td>{{equipment.name}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show()" mdbWavesEffect>
+                        Sjekk Tilgjengelighet
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
+                        Endre status
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
+                        Endre sted
+                    </button>
+                </td>
+                <td>{{equipment.hourPrice}}</td>
+                <td>{{equipment.dailyPrice}}</td>
+                <td>{{equipment.frame}}</td>
+                <td>{{equipment.wheelSize}}</td>
+            </tr>
+        </tbody>
+        <!--Table body-->
+    </table>
+    <!--Table-->
+
+    <div mdbModal #statusModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mystatusModalLabel"
+        aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Endre status på</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
+                    <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div mdbModal #avaliableModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="avaliableModalLabel"
+        aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="avaliableModal.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Tilgjengelighet</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="avaliableModal.hide()" mdbWavesEffect>Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div mdbModal #locationModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel"
+        aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="locationModal.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Endre sted</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="locationModal.hide()" mdbWavesEffect>Lukk</button>
+                    <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

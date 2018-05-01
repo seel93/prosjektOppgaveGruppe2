@@ -37,15 +37,16 @@ namespace api.Models
                         list.Add(new Bike
                         {
                             Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Type = reader["Type"].ToString(),
+                            Name = reader["utstyr_Navn"].ToString(),
+                            Type = reader["utstyr_Type"].ToString(),
                             DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timespris"]),
-                            EquipmentCode = reader["utstyrskode"].ToString(),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
                             LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = reader["STATUS"].ToString()
+                            STATUS = reader["status"].ToString()
                         });
                     }
                 }

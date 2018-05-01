@@ -62,7 +62,6 @@ namespace api.Models
 
         public Boolean AuthenticateEmployee(Creds cred)
         {
-            Boolean ValidCredentials; 
             List<Creds> UserList = new List<Creds>();
                   using (MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
@@ -86,13 +85,11 @@ namespace api.Models
                     conn.Close();
                     if(UserList.Count > 0)
                     {
-                        ValidCredentials = true; 
-                        return ValidCredentials;
+                        return true;
                     }
                     else
                     {
-                        ValidCredentials = false; 
-                        return ValidCredentials;
+                        return false;
                     }
                 }
         }

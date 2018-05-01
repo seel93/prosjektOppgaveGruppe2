@@ -10,46 +10,47 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  public equipmentList : any [];
   employee: boolean = true;
   auth: boolean = false;
+
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'my-auth-token'
     })
   };
-  url = "http://localhost:5000/api/auth"; // api logg inn url
-
+  
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
-
+  
   ngOnInit() {
   }
-
+  
   notifyUponSubmission() {
     let validLogging = new Notification("Du er logget inn", {
-      body: "Nå kan du velge område og tidsrom du vil leie utstyr i"
+      body: "Sjekk/endre status på utstyr"
     });
     setTimeout(validLogging.close.bind(validLogging), 5000);
   }
-
+  
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
     console.log(f.value);
     this.loggIn(f.value);
   }
   
   sendMessage(name: string, employee: boolean): void {
-    // send message to subscribers via observable subject
-    this.authService.sendMessage("logged in as user " + name, employee);
+    this.authService.sendMessage("logget inn som ansatt " + name, employee);
   }
-
+  
   loggIn(data) {
+    let loggInnUrl = "http://localhost:5000/api/auth"; // api logg inn url
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
       Password: data.password,
       IsEmployee: this.employee
     }
     console.log(payload);
-    this.httpClient.post(this.url, payload, this.httpOptions) // http-post
+    this.httpClient.post(loggInnUrl, payload, this.httpOptions) // http-post
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -58,11 +59,37 @@ export class AdminComponent implements OnInit {
           if (err.status == 200) {
             this.auth = true;
             this.notifyUponSubmission();
+            this.fetchEquipment();
           } else {
           }
         }
       )
     this.sendMessage(data.username, this.employee);
   }
+
+  fetchEquipment(){
+    let equipmentEndpoint = "http://localhost:5000/api/bike";
+    /* let Promise = this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      .toPromise()
+      .then(
+        (res : any) => {
+          console.log(res);
+          this.equipmentList.push(res);
+          console.log(this.equipmentList);
+        },
+        error => {
+          console.log(error);
+        }
+      ); */
+
+      this.httpClient.get(equipmentEndpoint, this.httpOptions)
+        .subscribe(
+          (data : any) => {
+            this.equipmentList = data;
+          }
+        )
+
+  }
+  
 
 }

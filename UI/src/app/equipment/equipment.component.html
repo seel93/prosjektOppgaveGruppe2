@@ -25,44 +25,34 @@
             <th>Tilgjengelighet:</th>
             <th>Status:</th>
             <th>Tilgjengelig ved:</th>
+            <th>pris  time:</th>
+            <th>pris dag:</th>
+            <th>Ramme</th>
+            <th>Hjulstørrelse</th>
         </tr>
     </thead>
     <!--Table head-->
 
     <!--Table body-->
     <tbody>
-        <tr>
-            <td>navn:</td>
+        <tr *ngFor="let equipment of equipmentList">
+            <td>{{equipment.name}}</td>
             <td>
                 <button 
                 type="button" 
                 class="btn btn-primary relative waves-light" 
-                (click)="avaliableModal.show()" 
+                (click)="statusModal.show()" 
                 mdbWavesEffect
                 >
                     Sjekk Tilgjengelighet
                 </button>
             </td>
-            <td>
-                <button 
-                    type="button" 
-                    class="btn btn-primary relative waves-light" 
-                    (click)="statusModal.show()" 
-                    mdbWavesEffect
-                >
-                    Endre status
-                </button>
-            </td>
-            <td>
-                    <button 
-                    type="button" 
-                    class="btn btn-primary relative waves-light" 
-                    (click)="locationModal.show()" 
-                    mdbWavesEffect
-                >
-                    Endre sted
-                </button>
-            </td>
+            <td>{{equipment.status}}</td>
+            <td>{{placesList[equipment.belongsToPlace].name}}</td>
+            <td>{{equipment.hourPrice}}</td>
+            <td>{{equipment.dailyPrice}}</td>
+            <td>{{equipment.frame}}</td>
+            <td>{{equipment.wheelSize}}</td>
         </tr>
     </tbody>
     <!--Table body-->
@@ -76,56 +66,18 @@
                 <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">Endre status på</h4>
+                <h4 class="modal-title w-100" id="myModalLabel">sjekk status på</h4>
             </div>
             <div class="modal-body">
-                ...
+                {{eqipment}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
-                <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
             </div>
         </div>
     </div>
 </div>
 
-<div mdbModal #avaliableModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="avaliableModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="avaliableModal.hide()">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title w-100" id="myModalLabel">Tilgjengelighet</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="avaliableModal.hide()" mdbWavesEffect>Lukk</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div mdbModal #locationModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close pull-right" aria-label="Close" (click)="locationModal.hide()">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h4 class="modal-title w-100" id="myModalLabel">Endre sted</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="locationModal.hide()" mdbWavesEffect>Lukk</button>
-                        <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
             
                                     

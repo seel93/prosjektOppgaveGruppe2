@@ -45,13 +45,11 @@ namespace api
         public IActionResult Auth([FromBody] Creds cred)
         {
             var testHash = hasher(cred.Password);
-            Boolean logginAttempt = _context.AuthenticateEmployee(cred);
-            try
+            
+             if (_context.AuthenticateEmployee(cred))
             {
-             if (logginAttempt)
-            {
-                _logger.LogInformation("User authenticated");
-                return Ok("user authenticated");
+                _logger.LogInformation("Employee authenticated");
+                return Ok("Employee authenticated");
 
             }
             else
@@ -60,12 +58,6 @@ namespace api
                 return BadRequest("invalid credentials");
             }
 
-            }
-            catch(Exception e)
-            {
-                _logger.LogWarning(e.ToString());
-                return BadRequest(e.ToString());
-            }
         } 
     }
 }

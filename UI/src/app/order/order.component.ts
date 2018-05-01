@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit {
       this.groups = true;
     }else{
       this.groups = false;
+      this.personModel = "1";
     }
   }
 

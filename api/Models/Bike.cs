@@ -4,6 +4,7 @@ namespace  api.Models
     public class Bike
     {
         public int Bike_id {get; set;}
+        public string Name {get; set;}
         public string Type {get; set;}
         public double DailyPrice {get; set;}
         public double HourPrice {get; set;}

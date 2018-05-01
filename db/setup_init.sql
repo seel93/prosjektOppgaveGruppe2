@@ -127,7 +127,7 @@ ENGINE = InnoDB;
 -- Table `AS_SykkelUtleie`.`bestilling`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`bestilling` (
-  `bestilling_id` VARCHAR(45) NOT NULL,
+  `bestilling_id` INT NOT NULL AUTO_INCREMENT,
   `pris` VARCHAR(45) NULL,
   `gruppe` TINYINT(1) NULL COMMENT 'BOOLEAN?',
   `kunde_kunde_id` INT UNSIGNED NOT NULL,
@@ -155,7 +155,7 @@ ENGINE = InnoDB;
 -- Table `AS_SykkelUtleie`.`Levering`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Levering` (
-  `bestilling_bestilling_id` VARCHAR(45) NOT NULL,
+  `bestilling_bestilling_id` INT NOT NULL,
   `leveringsdato` DATETIME NULL,
   `leveringssted` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`bestilling_bestilling_id`),
@@ -178,7 +178,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr_has_bestilling` (
   `Utstyr_utstyr_id` INT UNSIGNED NOT NULL,
-  `bestilling_bestilling_id` VARCHAR(45) NOT NULL,
+  `bestilling_bestilling_id` INT NOT NULL,
   PRIMARY KEY (`Utstyr_utstyr_id`, `bestilling_bestilling_id`),
   INDEX `fk_Utstyr_has_bestilling_bestilling1_idx` (`bestilling_bestilling_id` ASC),
   INDEX `fk_Utstyr_has_bestilling_Utstyr1_idx` (`Utstyr_utstyr_id` ASC),

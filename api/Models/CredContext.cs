@@ -19,37 +19,82 @@ namespace api.Models
 
         public Boolean Authenticate(Creds cred)
         {
-            List<Creds> UserList = new List<Creds>();
-              using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            if(cred.IsEmployee)
             {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from kunde where epost=@cred.Username and password=@cred.Password";
-                cmd.Parameters.AddWithValue("@cred.Username", cred.Username);
-                cmd.Parameters.AddWithValue("@cred.Password", cred.Password);
-
-                using(var read = cmd.ExecuteReader())
+                AuthenticateEmployee(cred);
+            }
+            else
+            {
+                List<Creds> UserList = new List<Creds>();
+                  using (MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
-                    while(read.Read())
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "select * from kunde where epost=@cred.Username and kunde_password=@cred.Password";
+                    cmd.Parameters.AddWithValue("@cred.Username", cred.Username);
+                    cmd.Parameters.AddWithValue("@cred.Password", cred.Password);
+
+                    using(var read = cmd.ExecuteReader())
                     {
-                        UserList.Add(new Creds
+                        while(read.Read())
                         {
-                            Username = read["Username"].ToString(),
-                            Password = read["Password"].ToString(),
-                            //IsEmployee = read["employee"]
-                        });
+                            UserList.Add(new Creds
+                            {
+                                Username = read["epost"].ToString(),
+                                Password = read["kunde_password"].ToString(),
+                                //IsEmployee = read["employee"]
+                            });
+                        }
+                    }
+                    conn.Close();
+                    if(UserList.Count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
-                conn.Close();
-                if(UserList.Count > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
+            return false;
+        }
+
+        public Boolean AuthenticateEmployee(Creds cred)
+        {
+            Boolean ValidCredentials; 
+            List<Creds> UserList = new List<Creds>();
+                  using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "select * from ansatt where ansatt_id=@cred.Username and ansatt_password=@cred.Password";
+                    cmd.Parameters.AddWithValue("@cred.Username", Int32.Parse(cred.Username));
+                    cmd.Parameters.AddWithValue("@cred.Password", cred.Password);
+
+                    using(var read = cmd.ExecuteReader())
+                    {
+                        while(read.Read())
+                        {
+                            UserList.Add(new Creds
+                            {
+                                Username = read["ansatt_id"].ToString(),
+                                Password = read["ansatt_password"].ToString(),
+                            });
+                        }
+                    }
+                    conn.Close();
+                    if(UserList.Count > 0)
+                    {
+                        ValidCredentials = true; 
+                        return ValidCredentials;
+                    }
+                    else
+                    {
+                        ValidCredentials = false; 
+                        return ValidCredentials;
+                    }
+                }
         }
     }
 }

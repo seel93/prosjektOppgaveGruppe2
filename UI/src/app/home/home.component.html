@@ -23,15 +23,14 @@
 
   <div class="md-form">
       <i class="fa fa-user prefix grey-text"></i>
-      <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
-      <label for="form3">Brukernavn</label>
+      <input type="text" id="logginForm" class="form-control" name="username" ngModel mdbActive>
+      <label for="logginForm">Brukernavn</label>
   </div>
-
+  
   <div class="md-form">
-      <i class="fa fa-asterisk" aria-hidden="true"></i>
-      <input type="password" id="form2" class="form-control" name="password" ngModel mdbActive>
-      <label for="form2">Passord</label>
-  </div>
+        <input type="password" id="logginForm" class="form-control" name="password" ngModel mdbActive>
+        <label for="logginForm">passord</label>
+    </div>
 
     <div class="text-center">
         <button class="btn btn-primary" mdbRippleRadius>
@@ -39,6 +38,13 @@
     </div>
 
 </form>
+
+<button class="btn btn-primary waves-light" mdbRippleRadius *ngIf="auth">Se ordrehistorikken din</button>
+
+<hr>
+<br/>
+<h6 *ngIf="auth">Ny bestilling</h6>
+<br/>
 <!--Logginn Form-->
 <div class="row" *ngIf="auth">
 
@@ -46,26 +52,28 @@
         <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
             Velg område:
         </button>
-
+        
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
         </div>
     </div>
-
-    <div class="col-md-8">
-        <form #d="ngForm" (ngSubmit)="onDateSubmit(d)">
+    
+    <div class="col-md-6">
+        <form #d="ngForm" (ngSubmit)="onDateSubmit(d)" novalidate>
             <div class="md-form">
                 <p>Fra:</p>
-                <input mdbActive type="date" id="form1" class="form-control">
+                <input mdbActive type="date" id="form1" name="dateFrom" class="form-control" ngModel mdbActive>
             </div>
             <div class="md-form">
                 <p>Til:</p>
-                <input mdbActive type="date" id="form1" class="form-control">
+                <input mdbActive type="date" id="form1" name="dateTo" class="form-control" ngModel mdbActive>
             </div>
             <div class="md-form">
-                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect mdbRippleRadius>Primary</button>
+                <button class="btn btn-primary waves-light" mdbRippleRadius>
+                        <i class="fa fa-send mr-1"></i> Gå til bestilling
+                </button>
             </div>    
         </form>
     </div>

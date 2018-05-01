@@ -15,17 +15,15 @@ namespace api
     public class AuthController : Controller
     {
         private readonly CredContext _context;
-        //private readonly ILogger _logger;
+        private readonly ILogger _logger;
 
-        public AuthController(CredContext context
-        //ILogger<AuthController> logger
-        )
+        public AuthController(CredContext context, ILogger<AuthController> logger)
         {
             _context = context;
-            //_logger = logger;
+            _logger = logger;
         }
 
-       /*  public byte[] hasher(string PasswordToHash)
+       public byte[] hasher(string PasswordToHash)
         {
             byte[] hash;
             var dataForHash = Encoding.UTF8.GetBytes(PasswordToHash);
@@ -35,7 +33,7 @@ namespace api
             }
 
             return hash;
-        } */
+        } 
 
         [HttpGet]
         public IActionResult testAuth()
@@ -43,13 +41,14 @@ namespace api
             return Ok("auth works");
         }
 
-            /*
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
             var testHash = hasher(cred.Password);
-
-             if (_context.Authenticate(cred))
+            Boolean logginAttempt = _context.AuthenticateEmployee(cred);
+            try
+            {
+             if (logginAttempt)
             {
                 _logger.LogInformation("User authenticated");
                 return Ok("user authenticated");
@@ -60,11 +59,13 @@ namespace api
                 _logger.LogWarning("invalid logg inn attempt");
                 return BadRequest("invalid credentials");
             }
+
+            }
+            catch(Exception e)
+            {
+                _logger.LogWarning(e.ToString());
+                return BadRequest(e.ToString());
+            }
         } 
-        */
-
-
-
-
     }
 }

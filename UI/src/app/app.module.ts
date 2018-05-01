@@ -1,3 +1,4 @@
+//Dependencies
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -7,15 +8,19 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
-
+//Components:
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminComponent } from './admin/admin.component';
-import {AuthService} from './services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { OrderComponent } from './order/order.component';
+
+//services:
+import {AuthService} from './services/auth.service';
+import {OrderService} from './services/order.service';
+ 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -46,7 +51,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

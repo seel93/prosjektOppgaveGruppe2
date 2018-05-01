@@ -46,7 +46,7 @@ export class AdminComponent implements OnInit {
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
       Password: data.password,
-      IsEmployee: data.isEmployee
+      IsEmployee: this.employee
     }
     console.log(payload);
     this.httpClient.post(this.url, payload, this.httpOptions) // http-post

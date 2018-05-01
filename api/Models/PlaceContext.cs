@@ -37,7 +37,7 @@ namespace api.Models
                         list.Add(new Place
                         {
                             Place_id = Convert.ToInt32(reader["sted_id"]),
-                            Name = reader["stedsnavntedsnavn"].ToString(),
+                            Name = reader["stedsnavn"].ToString(),
                             PostalCode = Convert.ToInt32(reader["poststed_postnr"])
                         });
                     }

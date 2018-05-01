@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -63,23 +62,31 @@ export class HomeComponent implements OnInit {
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
       Password: data.password,
-      IsEmployee: data.isEmployee
+      IsEmployee: this.employee
     }
     console.log(payload);
-    this.httpClient.post(this.url, payload, this.httpOptions) // http-post
-      .subscribe(
-        (data: any[]) => {
-          console.log(data);
-        },
-        (err) => {
-          if (err.status == 200) {
-            this.auth = true;
-            this.notifyUponSubmission();
-          } else {
+    let promise = new Promise((resolve, reject) =>{
+        this.httpClient.post(this.url, payload, this.httpOptions) // http-post
+          .toPromise()
+          .then(
+            res => {
+              this.auth = true;
+              this.notifyUponSubmission();
+              this.sendMessage(data.username, this.employee);
+              console.log(res);
+              resolve();
+            }, 
+            error => {
+              if(error.status = "200"){
+                this.auth = true;
+              this.notifyUponSubmission();
+              this.sendMessage(data.username, this.employee);
+              resolve();
+            }
           }
-        }
-      )
-    this.sendMessage(data.username, this.employee);
+        );
+    });
+    return promise;
   }
 }
 

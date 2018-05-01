@@ -11,19 +11,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema AS_SykkelUtleie
+-- Schema AS_sykkelUtleie
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema AS_SykkelUtleie
+-- Schema AS_sykkelUtleie
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `AS_SykkelUtleie` ;
-USE `AS_SykkelUtleie` ;
+CREATE SCHEMA IF NOT EXISTS `AS_sykkelUtleie` ;
+USE `AS_sykkelUtleie` ;
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`poststed`
+-- Table `AS_sykkelUtleie`.`poststed`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`poststed` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`poststed` (
   `poststed` VARCHAR(45) NULL,
   `postnr` CHAR(4) NOT NULL,
   PRIMARY KEY (`postnr`))
@@ -31,9 +31,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`steder`
+-- Table `AS_sykkelUtleie`.`steder`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`steder` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`steder` (
   `sted_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'kunne vært koblet direkte til bestilling, men er gjerne ikke nødvendig, siden den har 2 relasjoner som kan kobles mot bestilling.',
   `stedsnavn` VARCHAR(45) NULL,
   `poststed_postnr` CHAR(4) NOT NULL,
@@ -42,16 +42,16 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`steder` (
   INDEX `fk_steder_poststed1_idx` (`poststed_postnr` ASC),
   CONSTRAINT `fk_steder_poststed1`
     FOREIGN KEY (`poststed_postnr`)
-    REFERENCES `AS_SykkelUtleie`.`poststed` (`postnr`)
+    REFERENCES `AS_sykkelUtleie`.`poststed` (`postnr`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`Utstyr`
+-- Table `AS_sykkelUtleie`.`Utstyr`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`Utstyr` (
   `utstyr_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `utstyr_Navn` VARCHAR(45) NOT NULL,
   `utstyr_Type` VARCHAR(45) NULL,
@@ -69,21 +69,21 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr` (
   INDEX `fk_Utstyr_steder1_idx` (`tilhoerer_sted` ASC),
   CONSTRAINT `fk_Utstyr_steder3`
     FOREIGN KEY (`var_sist_paa_sted`)
-    REFERENCES `AS_SykkelUtleie`.`steder` (`sted_id`)
+    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Utstyr_steder1`
     FOREIGN KEY (`tilhoerer_sted`)
-    REFERENCES `AS_SykkelUtleie`.`steder` (`sted_id`)
+    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`ansatt`
+-- Table `AS_sykkelUtleie`.`ansatt`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`ansatt` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`ansatt` (
   `ansatt_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Kunne laget underdelinger av ansatte, om det er hensikt. F.eks lagerarbeider, transportør, salgsperson, administrerende ansatt.',
   `Jobb` VARCHAR(45) NULL,
   `fulltid` TINYINT(1) NOT NULL COMMENT 'BOOLEAN!?!??!??',
@@ -95,16 +95,16 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`ansatt` (
   INDEX `fk_ansatt_steder1_idx` (`steder_sted_id` ASC),
   CONSTRAINT `fk_ansatt_steder1`
     FOREIGN KEY (`steder_sted_id`)
-    REFERENCES `AS_SykkelUtleie`.`steder` (`sted_id`)
+    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`kunde`
+-- Table `AS_sykkelUtleie`.`kunde`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`kunde` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`kunde` (
   `kunde_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fnavn` VARCHAR(45) NULL,
   `enavn` VARCHAR(45) NULL,
@@ -117,16 +117,16 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`kunde` (
   INDEX `fk_kunde_steder1_idx` (`steder_sted_id` ASC),
   CONSTRAINT `fk_kunde_steder1`
     FOREIGN KEY (`steder_sted_id`)
-    REFERENCES `AS_SykkelUtleie`.`steder` (`sted_id`)
+    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`bestilling`
+-- Table `AS_sykkelUtleie`.`bestilling`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`bestilling` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`bestilling` (
   `bestilling_id` INT NOT NULL AUTO_INCREMENT,
   `pris` VARCHAR(45) NULL,
   `gruppe` TINYINT(1) NULL COMMENT 'BOOLEAN?',
@@ -140,21 +140,21 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`bestilling` (
   INDEX `fk_bestilling_ansatt1_idx` (`ansatt_ansatt_id` ASC),
   CONSTRAINT `fk_bestilling_kunde1`
     FOREIGN KEY (`kunde_kunde_id`)
-    REFERENCES `AS_SykkelUtleie`.`kunde` (`kunde_id`)
+    REFERENCES `AS_sykkelUtleie`.`kunde` (`kunde_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_bestilling_ansatt1`
     FOREIGN KEY (`ansatt_ansatt_id`)
-    REFERENCES `AS_SykkelUtleie`.`ansatt` (`ansatt_id`)
+    REFERENCES `AS_sykkelUtleie`.`ansatt` (`ansatt_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`Levering`
+-- Table `AS_sykkelUtleie`.`Levering`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Levering` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`Levering` (
   `bestilling_bestilling_id` INT NOT NULL,
   `leveringsdato` DATETIME NULL,
   `leveringssted` INT UNSIGNED NOT NULL,
@@ -162,21 +162,21 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Levering` (
   INDEX `fk_Levering_steder1_idx` (`leveringssted` ASC),
   CONSTRAINT `fk_Levering_bestilling1`
     FOREIGN KEY (`bestilling_bestilling_id`)
-    REFERENCES `AS_SykkelUtleie`.`bestilling` (`bestilling_id`)
+    REFERENCES `AS_sykkelUtleie`.`bestilling` (`bestilling_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Levering_steder1`
     FOREIGN KEY (`leveringssted`)
-    REFERENCES `AS_SykkelUtleie`.`steder` (`sted_id`)
+    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_SykkelUtleie`.`Utstyr_has_bestilling`
+-- Table `AS_sykkelUtleie`.`Utstyr_has_bestilling`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr_has_bestilling` (
+CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`Utstyr_has_bestilling` (
   `Utstyr_utstyr_id` INT UNSIGNED NOT NULL,
   `bestilling_bestilling_id` INT NOT NULL,
   PRIMARY KEY (`Utstyr_utstyr_id`, `bestilling_bestilling_id`),
@@ -184,12 +184,12 @@ CREATE TABLE IF NOT EXISTS `AS_SykkelUtleie`.`Utstyr_has_bestilling` (
   INDEX `fk_Utstyr_has_bestilling_Utstyr1_idx` (`Utstyr_utstyr_id` ASC),
   CONSTRAINT `fk_Utstyr_has_bestilling_Utstyr1`
     FOREIGN KEY (`Utstyr_utstyr_id`)
-    REFERENCES `AS_SykkelUtleie`.`Utstyr` (`utstyr_id`)
+    REFERENCES `AS_sykkelUtleie`.`Utstyr` (`utstyr_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Utstyr_has_bestilling_bestilling1`
     FOREIGN KEY (`bestilling_bestilling_id`)
-    REFERENCES `AS_SykkelUtleie`.`bestilling` (`bestilling_id`)
+    REFERENCES `AS_sykkelUtleie`.`bestilling` (`bestilling_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

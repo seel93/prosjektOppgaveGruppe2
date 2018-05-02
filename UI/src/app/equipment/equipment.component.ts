@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-equipment',
@@ -11,8 +12,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./equipment.component.scss']
 })
 export class EquipmentComponent implements OnInit {
-  public equipmentList : any [];
-  public placesList : any [];
+  public equipmentList: any[];
+  public placesList: any[];
+  apiUrl = environment.ApiUrl;
   subscription: Subscription;
 
   httpOptions = { // http-headers for API
@@ -22,45 +24,60 @@ export class EquipmentComponent implements OnInit {
     })
   };
 
-  constructor(private authService: AuthService, private httpClient: HttpClient){
+  constructor(private authService: AuthService, private httpClient: HttpClient) {
     this.subscription = this.authService.getMessage().subscribe(
-      (message) => { 
-        if(message.status){
+      (message) => {
+        if (message.status) {
           console.log(message);
         }
-    });
+      });
   }
 
   ngOnInit() {
-    this.fetchEquipment();
     this.fetchPlaces();
   }
 
-  fetchEquipment(){
-    /* let equipmentEndpoint = "http://localhost:5000/api/bike";
-      this.httpClient.get(equipmentEndpoint, this.httpOptions)
-        .subscribe(
-          (data : any) => {
-            this.equipmentList = data;
-          }
-        ); */
-  }
-
-  fetchPlaces(){
-    let placesUrl = "http://localhost:5000/api/place";
-    /* this.httpClient.get(placesUrl, this.httpOptions)
-    .subscribe(
-      (data : any) => {
-        this.placesList = data;
-        console.log(this.placesList);
+  fetchEquipment() {
+    let equipmentEndpoint = this.apiUrl + "/bike";
+    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.equipmentList = data;
+      },
+      error => () => {
+        console.log("error:" )
+      },
+      () => {
+        console.log("succes for equipment")
       }
-    ); */
-
+    );
   }
 
-  onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
-    console.log(f.value);
-    console.log(f.valid);
+  fetchPlaces() {
+    let placesUrl = this.apiUrl + "/place";
+    this.httpClient.get(placesUrl, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.placesList = data;
+        },
+        error => () => {
+          console.log("error:" )
+        },
+        () => {
+          this.notifyEquipmentRecieved();
+          this.fetchEquipment();
+          console.log("succes for places");
+        }
+    );
   }
 
+  notifyEquipmentRecieved() {
+    let validLogging = new Notification("Utstyr fra databasen er mottat", {
+      body: "Her har du oversikt over alt utstyret vi kan tilby",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validLogging.close.bind(validLogging), 8000);
+  }
 }

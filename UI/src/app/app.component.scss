@@ -1,4 +1,30 @@
+.headerContainer{
+    position: relative;
+}
+
 .userStatus{
     padding: 2.5%;
     width: 65%;
+    position: absolute;
+    bottom: 40%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.headerImage{
+    width: 100%;
+    height: 10%;
+    margin: 0 auto; 
+}
+
+.headerTitle{
+    padding: 2.5%;
+    width: 65%;
+    position: absolute;
+    bottom: 80%;
+    right: 0%;
+    padding-left: 2%;
+    padding-right: 2%;
+    color: white; 
+
 }

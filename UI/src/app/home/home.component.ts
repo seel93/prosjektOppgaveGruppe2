@@ -6,6 +6,8 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'app-home',
@@ -28,12 +30,12 @@ export class HomeComponent implements OnInit {
       //'Authorization': 'my-auth-token'
     })
   };
-  url = "http://localhost:5000/api/auth"; // api logg inn url
+  apiUrl = environment.ApiUrl; // api logg inn url
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    Notification.requestPermission().then(function(result) {
+    Notification.requestPermission().then((result) => {
     });
   }
 
@@ -44,9 +46,10 @@ export class HomeComponent implements OnInit {
 
   notifyUponSubmission() {
     let validLogging = new Notification("Du er logget inn", {
-      body: "Nå kan du velge område og tidsrom du vil leie utstyr i"
+      body: "Nå kan du velge område og tidsrom du vil leie utstyr i",
+      icon: '../assets/icons/bike-21-512.png'
     });
-    setTimeout(validLogging.close.bind(validLogging), 5000);
+    setTimeout(validLogging.close.bind(validLogging), 8000);
   }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
@@ -65,8 +68,9 @@ export class HomeComponent implements OnInit {
       IsEmployee: this.employee
     }
     console.log(payload);
+    let authUrl = this.apiUrl + "/auth";
     let promise = new Promise((resolve, reject) =>{
-        this.httpClient.post(this.url, payload, this.httpOptions) // http-post
+        this.httpClient.post(authUrl, payload, this.httpOptions) // http-post
           .toPromise()
           .then(
             res => {

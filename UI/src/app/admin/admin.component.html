@@ -29,6 +29,7 @@
         <thead class="blue-grey lighten-4">
             <tr>
                 <th>Utstyr navn:</th>
+                <th>Type:</th>
                 <th>Tilgjengelighet:</th>
                 <th>Status:</th>
                 <th>Tilgjengelig ved:</th>
@@ -44,6 +45,7 @@
         <tbody>
             <tr *ngFor="let equipment of equipmentList">
                 <td>{{equipment.name}}</td>
+                <td>{{equipment.type}}</td>
                 <td>
                     <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show()" mdbWavesEffect>
                         Sjekk Tilgjengelighet

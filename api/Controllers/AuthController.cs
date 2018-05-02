@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 using System.Text;
 using api.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace api
 {
@@ -17,13 +19,17 @@ namespace api
         private readonly CredContext _context;
         private readonly ILogger _logger;
 
+        const string SessionKeyName = "_Name";
+        const string SessionKeyYearsMember = "_YearsMember";
+        const string SessionKeyDate = "_Date";
+
         public AuthController(CredContext context, ILogger<AuthController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-       public byte[] hasher(string PasswordToHash)
+        public byte[] hasher(string PasswordToHash)
         {
             byte[] hash;
             var dataForHash = Encoding.UTF8.GetBytes(PasswordToHash);
@@ -33,23 +39,44 @@ namespace api
             }
 
             return hash;
-        } 
-
-        [HttpGet]
-        public IActionResult testAuth()
-        {
-            return Ok("auth works");
         }
+
+      /*   public IActionResult Index()
+        {
+            const string sessionKey = "FirstSeen";
+            DateTime dateFirstSeen;
+            var value = HttpContext.Session.GetString(sessionKey);
+            if (string.IsNullOrEmpty(value))
+            {
+                dateFirstSeen = DateTime.Now;
+                var serialisedDate = JsonConvert.SerializeObject(dateFirstSeen);
+                HttpContext.Session.SetString(sessionKey, serialisedDate);
+            }
+            else
+            {
+                dateFirstSeen = JsonConvert.DeserializeObject<DateTime>(value);
+            }
+
+            var model = new SessionStateViewModel
+            {
+                DateSessionStarted = dateFirstSeen,
+                Now = DateTime.Now
+            };
+
+            return View(model);
+        } */
+
 
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
             var testHash = hasher(cred.Password);
-            
-             if (_context.AuthenticateEmployee(cred))
+
+
+            if (_context.AuthenticateEmployee(cred))
             {
                 _logger.LogInformation("Employee authenticated");
-                return Ok("Employee authenticated");
+                return Ok("ok");
 
             }
             else
@@ -58,6 +85,6 @@ namespace api
                 return BadRequest("invalid credentials");
             }
 
-        } 
+        }
     }
 }

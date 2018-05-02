@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-order',
@@ -12,10 +16,20 @@ export class OrderComponent implements OnInit {
   public groups: boolean;
   public hours: boolean; 
   public days: boolean;
+  public equipmentList : any[];
+  subscription: Subscription;
+
+  httpOptions = { // http-headers for API
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'my-auth-token'
+    })
+  };
   
-  constructor() { }
+  constructor(private authService: AuthService, private httpClient: HttpClient) { }
   
   ngOnInit() {
+    this.fetchEquipment();
   }
   
   addPerson(numOfPeople){
@@ -41,6 +55,17 @@ export class OrderComponent implements OnInit {
       this.hours = false; 
       this.days = true;
     }
+  }
+
+  fetchEquipment() {
+    let equipmentEndpoint = "http://localhost:5000/api/bike";
+    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.equipmentList = data;
+      }
+    );
   }
 
   multiplePeople(choice){

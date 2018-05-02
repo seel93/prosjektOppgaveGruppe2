@@ -15,7 +15,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
       pathname: path.join(__dirname, './build/index.html'),
       protocol: 'file:',
       slashes: true,
-      icon: path.join(__dirname, 'assets/icon.png')
+      icon: path.join(__dirname, 'assets/icons/bike-21-512.png')
     }))
   
     // Open the DevTools.

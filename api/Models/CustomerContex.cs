@@ -61,7 +61,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into Kunde(kunde_id, fnavn, enavn,mob_nr,e-post,steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email,@Customer.Location);";
+                cmd.CommandText = "insert into Kunde(kunde_id, fnavn, enavn,mob_nr,epost,steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email,@Customer.Location);";
                 cmd.Parameters.AddWithValue("@Customer.Customer_id", Customer.Customer_id);
                 cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
                 cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
@@ -92,7 +92,7 @@ namespace api.Models
                             FirstName = reader["fnavn"].ToString(),
                             LastName = reader["enavn"].ToString(),
                             Phone = reader["mob_nr"].ToString(),
-                            Email = reader["e-post"].ToString(),
+                            Email = reader["epost"].ToString(),
                             Location = Convert.ToInt32(reader["steder_sted_id"])
                         });
                     }
@@ -121,7 +121,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Customer set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, e-post=@Customer.Email,steder_sted_id=@Customer.Location where kunde_id=@id";
+                cmd.CommandText = "update Customer set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email,steder_sted_id=@Customer.Location where kunde_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
                 cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);

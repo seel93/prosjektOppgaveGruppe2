@@ -63,7 +63,7 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into ansatt(ansatt_id, stilling, fulltid,loenn,steder_sted_id) values(@Employee.Employee_id, @Employee.Position, @Employee.IsFulltime,@Employee.Salary,@Employee.Location);";
+                cmd.CommandText = "insert into ansatt(ansatt_id, Jobb, fulltid,loenn,steder_sted_id) values(@Employee.Employee_id, @Employee.Position, @Employee.IsFulltime,@Employee.Salary,@Employee.Location);";
                 cmd.Parameters.AddWithValue("@Employee.Employee_id", Employee.Employee_id);
                 cmd.Parameters.AddWithValue("@Employee.Position", Employee.Position);
                 cmd.Parameters.AddWithValue("@Employee.IsFulltime", Employee.IsFulltime);
@@ -90,7 +90,7 @@ namespace api
                         list.Add(new Employee
                         {
                             Employee_id = Convert.ToInt32(reader["ansatt_id"]),
-                            Position = reader["stilling"].ToString(),
+                            Position = reader["Jobb"].ToString(),
                             IsFulltime = Convert.ToInt32(reader["fulltid"]),
                             Salary = Convert.ToInt32(reader["loenn"]),
                             Location = Convert.ToInt32(reader["steder_sted_id"])
@@ -121,7 +121,7 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update ansatt set  stilling=@Employee.Position, fulltid=@Employee.IsFulltime, loenn=@Employee.Salary, steder_sted_id=@Employee.Location  where ansatt_id=@id";
+                cmd.CommandText = "update ansatt set Jobb=@Employee.Position, fulltid=@Employee.IsFulltime, loenn=@Employee.Salary, steder_sted_id=@Employee.Location  where ansatt_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Employee.Position", Employee.Position);
                 cmd.Parameters.AddWithValue("@Employee.IsFulltime", Employee.IsFulltime);

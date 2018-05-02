@@ -61,12 +61,13 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into Kunde(kunde_id, fnavn, enavn,mob_nr,e-post,steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email,@Customer.Location);";
+                cmd.CommandText = "insert into kunde(kunde_id, fnavn, enavn,mob_nr,epost, kunde_password, steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email, @Customer.Password, @Customer.Location);";
                 cmd.Parameters.AddWithValue("@Customer.Customer_id", Customer.Customer_id);
                 cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
                 cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
                 cmd.Parameters.AddWithValue("@Customer.Phone", Customer.Phone);
                 cmd.Parameters.AddWithValue("@Customer.Email", Customer.Email);
+                cmd.Parameters.AddWithValue("@Customer.Password", Customer.Password);
                 cmd.Parameters.AddWithValue("@Customer.Location", Customer.Location);
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -80,7 +81,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Kunde where kunde_id = @id;";
+                cmd.CommandText = "select * from kunde where kunde_id = @id;";
                  cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -92,7 +93,8 @@ namespace api.Models
                             FirstName = reader["fnavn"].ToString(),
                             LastName = reader["enavn"].ToString(),
                             Phone = reader["mob_nr"].ToString(),
-                            Email = reader["e-post"].ToString(),
+                            Email = reader["epost"].ToString(),
+                            Password = reader["kunde_password"].ToString(),
                             Location = Convert.ToInt32(reader["steder_sted_id"])
                         });
                     }
@@ -108,7 +110,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Kunde where kunde_id=@id";
+                cmd.CommandText = "delete from kunde where kunde_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -121,12 +123,13 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Customer set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, e-post=@Customer.Email,steder_sted_id=@Customer.Location where kunde_id=@id";
+                cmd.CommandText = "update Customer set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email, kunde_password=@Customer.Password, steder_sted_id=@Customer.Location where kunde_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
                 cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
                 cmd.Parameters.AddWithValue("@Customer.Phone", Customer.Phone);
                 cmd.Parameters.AddWithValue("@Customer.Email", Customer.Email);
+                cmd.Parameters.AddWithValue("@Customer.Password", Customer.Password);
                 cmd.Parameters.AddWithValue("@Customer.Location", Customer.Location);
                 cmd.ExecuteNonQuery();
                 conn.Close();

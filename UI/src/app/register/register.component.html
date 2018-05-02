@@ -1,26 +1,54 @@
-
 <div class="row">
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="col-md-6 padd"> 
-    <div class="md-form">
-      <input type="text" id="form1" class="form-control">
-      <label for="form1" >Brukernavn</label>
+  <div class="col-md-6">
+
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+        Velg område:
+    </button>
+    
+    <div class="dropdown-menu dropdown-primary">
+      <a class="dropdown-item" *ngFor="let place of placesList" (click)="addPlace(place)">{{place.name}}</a>
     </div>
+  </div>
   
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="col-md-6 padd">
     <div class="md-form">
-      <input type="password" id="form1" class="form-control">
-      <label for="form1" >Passord</label>
+      <input type="text" class="form-control" mdbActive ngModel name="FirstName">
+      <label for="form1">Fornavn:</label>
     </div>
-  
+    
     <div class="md-form">
-      <input type="password" id="form1" class="form-control">
-      <label for="form1" >Gjenta passord</label>
+      <input type="text" class="form-control" mdbActive ngModel name="LastName">
+      <label for="form1">Etternavn:</label>
     </div>
-  
+    
+    <div class="md-form">
+      <input type="tel" class="form-control" mdbActive ngModel name="Phone">
+      <label for="form1">Telefon</label>
+    </div>
+    
+    <div class="md-form">
+      <input type="email" class="form-control" mdbActive ngModel name="Email">
+      <label for="form1">Brukernavn</label>
+    </div>
+    
+    
+    <div class="md-form">
+      <input type="password" class="form-control" mdbActive ngModel name="Password">
+      <label for="form1">Passord</label>
+    </div>
+    
+    <div class="md-form">
+      <input type="password" class="form-control" mdbActive ngModel name="">
+      <label for="form1">Gjenta passord</label>
+    </div>
+    
     <div class="text-center">
       <button class="btn btn-primary" mdbRippleRadius>
-          <i class="fa fa-send mr-1"></i> Registrer</button>
+        <i class="fa fa-send mr-1"></i> Registrer</button>
       </div>
-  </form>
+    </form>
+  </div>
   <div class="col-md-6">
     <!--Card Danger-->
     <!-- <div class="card pink lighten-2 text-center z-depth-2">
@@ -42,26 +70,34 @@
     </div> -->
     <!--/.Card Danger-->
     <div class="card-deck">
-        <!--Panel-->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Panel title</h5>
-                <p class="card-text">This is a longer panel with supporting text below as a natural lead-in to additional content.
-                                                    This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
+      <!--Panel-->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Valgt plass:</h5>
+          <p class="card-text">
+            {{place.name}}
+          </p>
+          <p class="card-text">
+            post nummer: {{place.postalCode}}
+          </p>
+          <p class="card-text">
+            <small class="text-muted">Last updated {{date}}</small>
+          </p>
         </div>
-        <!--/.Panel-->
-    
-        <!--Panel-->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Panel title</h5>
-                <p class="card-text">This panel has supporting text below as a natural lead-in to additional content.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-        </div>
-        <!--/.Panel-->q
-  </div>
+      </div>
+      <!--/.Panel-->
 
-</div>
+      <!--Panel-->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Brukerinfo: </h5>
+          <p class="card-text">This panel has supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text">
+            <small class="text-muted">Last updated {{date}}</small>
+          </p>
+        </div>
+      </div>
+      <!--/.Panel-->
+    </div>
+
+  </div>

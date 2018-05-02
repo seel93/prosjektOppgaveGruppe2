@@ -36,20 +36,20 @@ namespace api.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] BikeAndOrder[] BikeAndOrder)
-        {
-            foreach(var element in BikeAndOrder)
-            {
-                _context.postBikeAndOrder(BikeAndOrder);
-                if(BikeAndOrder == null)
-                {
-                    return BadRequest();
-                }    
-            }
+        // [HttpPost]
+        // public IActionResult Create([FromBody] BikeAndOrder[] BikeAndOrder)
+        // {
+        //     foreach(var element in BikeAndOrder)
+        //     {
+        //         _context.postBikeAndOrder(BikeAndOrder);
+        //         if(BikeAndOrder == null)
+        //         {
+        //             return BadRequest();
+        //         }    
+        //     }
 
-            return Ok("Data created");
-        }
+        //     return Ok("Data created");
+        // }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)

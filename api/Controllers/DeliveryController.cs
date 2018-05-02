@@ -36,20 +36,20 @@ namespace api.Controllers
             }
         }
 
-         [HttpPost]
-        public IActionResult Create([FromBody] Delivery[] Delivery)
-        {
-            foreach(var element in Delivery)
-            {
-                _context.postDelivery(Delivery);
-                if(Delivery == null)
-                {
-                    return BadRequest();
-                }    
-            }
+        // [HttpPost]
+        // public IActionResult Create([FromBody] Delivery[] Delivery)
+        // {
+        //     foreach(var element in Delivery)
+        //     {
+        //         _context.postDelivery(Delivery);
+        //         if(Delivery == null)
+        //         {
+        //             return BadRequest();
+        //         }    
+        //     }
 
-            return Ok("Data created");
-        }
+        //     return Ok("Data created");
+        // }
         
 
         [HttpGet("{id}")]

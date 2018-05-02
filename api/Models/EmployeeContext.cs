@@ -27,7 +27,7 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from Employee;";
+                var command = "select * from ansatt;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
                 
@@ -38,7 +38,7 @@ namespace api
                         list.Add(new Employee
                         {
                             Employee_id = Convert.ToInt32(reader["ansatt_id"]),
-                            Position = reader["stilling"].ToString(),
+                            Position = reader["Jobb"].ToString(),
                             IsFulltime = Convert.ToInt32(reader["fulltid"]),
                             Salary = Convert.ToInt32(reader["loenn"]),
                             Location = Convert.ToInt32(reader["steder_sted_id"])

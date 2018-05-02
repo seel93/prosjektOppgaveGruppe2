@@ -26,7 +26,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from Kunde;";
+                var command = "select * from kunde;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
                 

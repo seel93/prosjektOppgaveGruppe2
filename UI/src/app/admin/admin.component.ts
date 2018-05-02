@@ -88,6 +88,12 @@ export class AdminComponent implements OnInit {
         .subscribe(
           (data : any) => {
             this.equipmentList = data;
+          },
+          (error) =>{
+            console.log(error);
+          }, 
+          () => {
+            console.log("succes");
           }
         )
 

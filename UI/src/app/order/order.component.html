@@ -91,11 +91,7 @@
             </button>
             
             <div class="dropdown-menu dropdown-primary">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="divider dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+                <a class="dropdown-item" *ngFor="let bike of bikeEquipmnet" (click)="addEquipOrBike(bike, 'bike')" >{{bike.name}}</a>
             </div>
         </div>
         <div class="btn-group" dropdown>
@@ -104,11 +100,7 @@
             </button>
             
             <div class="dropdown-menu dropdown-primary">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="divider dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+                <a class="dropdown-item" *ngFor="let equipment of nonBikeEquipment" (click)="addEquipOrBike(equipment, 'equipment')">{{equipment.name}}</a>
             </div>
         </div>
         <button type="button" class="btn btn-primary waves-light" mdbWavesEffect>
@@ -127,6 +119,14 @@
         <p *ngIf="hours">bestilling for: {{hourModel}} timer</p>
         <br/>
         <p *ngIf="days">bestilling for: {{dayModel}} dager</p>
+        <p>Utstyr:</p>
+        <ul *ngFor="let equipment of selectedEquipment">
+            <li>{{equipment.name}}</li>
+        </ul>
+        <p>Sykkel:</p>
+        <ul *ngFor="let bike of selectedBike">
+            <li>{{bike['name']}}</li>
+        </ul>
         <br/>
     </div>
     <!--/.Panel-->

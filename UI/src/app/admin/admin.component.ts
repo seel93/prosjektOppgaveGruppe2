@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +14,7 @@ export class AdminComponent implements OnInit {
   public equipmentList : any [];
   employee: boolean = true;
   auth: boolean = false;
+  apiUrl : string = environment.ApiUrl;
 
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -43,7 +45,7 @@ export class AdminComponent implements OnInit {
   }
   
   loggIn(data) {
-    let loggInnUrl = "http://localhost:5000/api/auth"; // api logg inn url
+    let loggInnUrl = this.apiUrl + "/auth"; // api logg inn url
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
       Password: data.password,
@@ -68,7 +70,7 @@ export class AdminComponent implements OnInit {
   }
 
   fetchEquipment(){
-    let equipmentEndpoint = "http://localhost:5000/api/bike";
+    let equipmentEndpoint = this.apiUrl + "/bike";
     /* let Promise = this.httpClient.get(equipmentEndpoint, this.httpOptions)
       .toPromise()
       .then(

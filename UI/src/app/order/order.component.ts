@@ -3,6 +3,7 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs/Subscription';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-order',
@@ -17,6 +18,7 @@ export class OrderComponent implements OnInit {
   public hours: boolean; 
   public days: boolean;
   public equipmentList : any[];
+  apiUrl : string = environment.ApiUrl;
   subscription: Subscription;
 
   httpOptions = { // http-headers for API

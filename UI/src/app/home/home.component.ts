@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
       //'Authorization': 'my-auth-token'
     })
   };
-  apiUrl = environment.ApiUrl; // api logg inn url
+  apiUrl : string = environment.ApiUrl; // api logg inn url
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 

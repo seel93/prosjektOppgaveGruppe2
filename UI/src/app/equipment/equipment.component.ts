@@ -14,7 +14,7 @@ import {environment} from '../../environments/environment';
 export class EquipmentComponent implements OnInit {
   public equipmentList: any[];
   public placesList: any[];
-  apiUrl = environment.ApiUrl;
+  apiUrl : string = environment.ApiUrl;
   subscription: Subscription;
 
   httpOptions = { // http-headers for API

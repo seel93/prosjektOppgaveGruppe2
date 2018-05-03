@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit {
   public totalPrice : number;
 
   apiUrl: string = environment.ApiUrl;
+  userName : string = "Gjest";
   subscription: Subscription;
 
   httpOptions = { // http-headers for API
@@ -133,8 +134,57 @@ export class OrderComponent implements OnInit {
     return payload;
   }
 
-  submitOrder(){
+  checkCredentials(){
+    this.userName = this.authService.getUserCredentials();
+  }
 
+  submitOrder(){
+    this.checkCredentials();
+    console.log(this.userName);
+    if(this.userName == 'Gjest'){
+      this.notifyInvalidOrder();
+    }else{
+      this.getDayOrHours();
+      this.calculatePrice();
+    }
+  }
+
+  notifyInvalidOrder() {
+    let error = new Notification("Feil:", {
+      body: "Du kan ikke lagen en bestilling uten å være logget inn",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(error.close.bind(error), 8000);
+  }
+
+  getDayOrHours(){ 
+    if(this.hours){
+      return "hourPrice";
+    }else{
+      return "dailyPrice";
+    }
+  }
+
+  calculatePrice(){
+    let result : number = 0;
+    let price = this.getDayOrHours();
+    console.log(price); 
+
+    for(let i = 0; i < this.selectedBike.length; i++){
+      console.log(this.selectedBike[i].price);
+      result += this.selectedBike[i].price.toString;
+    }
+
+    for(let j = 0; j < this.selectedEquipment.length; j++){
+      result += this.selectedEquipment[j];
+    }
+
+    this.selectedBike.forEach(element => {
+      console.log(element.price.toString());
+    });
+
+    //console.log(result);
+    return result;
   }
 
 

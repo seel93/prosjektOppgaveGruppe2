@@ -52,12 +52,14 @@
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
+                    <span *ngIf="!auth">{{equipment.staus}}</span>
+                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
                         Endre status
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
+                    <span *ngIf="!auth">{{equipment.staus}}</span>
+                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
                         Endre sted
                     </button>
                 </td>

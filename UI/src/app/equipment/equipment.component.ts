@@ -15,6 +15,7 @@ export class EquipmentComponent implements OnInit {
   public equipmentList: any[];
   public placesList: any[];
   apiUrl : string = environment.ApiUrl;
+  userName : string = "Gjest";
   subscription: Subscription;
 
   httpOptions = { // http-headers for API

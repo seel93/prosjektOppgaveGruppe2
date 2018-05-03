@@ -9,9 +9,13 @@ export class AuthService {
 
   constructor() { }
   private subject = new Subject<any>();
+  public message: string; 
+  public employee: boolean; 
  
   sendMessage(message: string, employee: boolean) {
-      this.subject.next({ 
+    this.message = message;
+    this.employee = employee;  
+    this.subject.next({ 
           text: message,
           status: employee  
         });
@@ -19,6 +23,14 @@ export class AuthService {
 
   clearMessage() {
       this.subject.next();
+  }
+
+  getUserCredentials(){
+      return this.message;
+  }
+
+  checkEmployment(){
+      return this.employee;
   }
 
   getMessage(): Observable<any> {

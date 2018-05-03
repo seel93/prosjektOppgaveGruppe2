@@ -26,6 +26,8 @@ export class AdminComponent implements OnInit {
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
   
   ngOnInit() {
+    this.auth = this.authService.checkEmployment();
+    console.log(this.auth);
   }
   
   notifyUponSubmission() {

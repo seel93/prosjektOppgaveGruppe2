@@ -8,5 +8,6 @@ namespace  api.Models
         public int IsFulltime {get; set;}
         public int Salary {get; set;}
         public int Location {get; set;}
+        public string Password {get; set;}
     }
 }

@@ -41,7 +41,8 @@ namespace api
                             Position = reader["Jobb"].ToString(),
                             IsFulltime = Convert.ToInt32(reader["fulltid"]),
                             Salary = Convert.ToInt32(reader["loenn"]),
-                            Location = Convert.ToInt32(reader["steder_sted_id"])
+                            Location = Convert.ToInt32(reader["steder_sted_id"]),
+                            Password = reader["ansatt_password"].ToString()
                         });
                     }
                 }
@@ -63,12 +64,13 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into ansatt(ansatt_id, Jobb, fulltid,loenn,steder_sted_id) values(@Employee.Employee_id, @Employee.Position, @Employee.IsFulltime,@Employee.Salary,@Employee.Location);";
+                cmd.CommandText = "insert into ansatt(ansatt_id, Jobb, fulltid,loenn,ansatt_password,steder_sted_id) values(@Employee.Employee_id, @Employee.Position, @Employee.IsFulltime,@Employee.Salary,@Employee.Password,@Employee.Location);";
                 cmd.Parameters.AddWithValue("@Employee.Employee_id", Employee.Employee_id);
                 cmd.Parameters.AddWithValue("@Employee.Position", Employee.Position);
                 cmd.Parameters.AddWithValue("@Employee.IsFulltime", Employee.IsFulltime);
                 cmd.Parameters.AddWithValue("@Employee.Salary", Employee.Salary);
                 cmd.Parameters.AddWithValue("@Employee.Location", Employee.Location);
+                cmd.Parameters.AddWithValue("@Employee.Password", Employee.Password);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -93,7 +95,8 @@ namespace api
                             Position = reader["Jobb"].ToString(),
                             IsFulltime = Convert.ToInt32(reader["fulltid"]),
                             Salary = Convert.ToInt32(reader["loenn"]),
-                            Location = Convert.ToInt32(reader["steder_sted_id"])
+                            Location = Convert.ToInt32(reader["steder_sted_id"]),
+                            Password = reader["ansatt_password"].ToString()
                         });
                     }
                 }
@@ -121,12 +124,13 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update ansatt set Jobb=@Employee.Position, fulltid=@Employee.IsFulltime, loenn=@Employee.Salary, steder_sted_id=@Employee.Location  where ansatt_id=@id";
+                cmd.CommandText = "update ansatt set Jobb=@Employee.Position, fulltid=@Employee.IsFulltime, loenn=@Employee.Salary, ansatt_password=@Employee.Password ,steder_sted_id=@Employee.Location  where ansatt_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Employee.Position", Employee.Position);
                 cmd.Parameters.AddWithValue("@Employee.IsFulltime", Employee.IsFulltime);
                 cmd.Parameters.AddWithValue("@Employee.Salary", Employee.Salary);
                 cmd.Parameters.AddWithValue("@Employee.Location", Employee.Location);
+                cmd.Parameters.AddWithValue("@Employee.Password", Employee.Password);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }

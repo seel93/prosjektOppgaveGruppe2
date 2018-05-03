@@ -18,42 +18,17 @@ export class OrderComponent implements OnInit {
   public groups: boolean;
   public hours: boolean;
   public days: boolean;
-  public selectedEquipment: any[];
-  public selectedBike: any[];
+  
 
   //api data:
   public equipmentList: any[];
-  public nonBikeEquipment: any[];/*  {
-    id: number,
-    name: string
-    belongsToPlace: number,
-    bike_id: number,
-    dailyPrice: number,
-    equipmentCode: string,
-    frame: string,
-    hourPrice: number,
-    lastSeenOnPlace: number,
-    name: string,
-    type: string,
-    status: string
-    wheelSize: string,
-  }[]; */
+  public nonBikeEquipment: any[];
+  public bikeEquipmnet: any[]; 
 
-  public bikeEquipmnet: any[]; /* {
-    id: number,
-    name: string
-    belongsToPlace: number,
-    bike_id: number, 
-    dailyPrice: number,
-    equipmentCode: string, 
-    frame: string,
-    hourPrice: number, 
-    lastSeenOnPlace: number, 
-    name: string, 
-    type: string, 
-    status: string
-    wheelSize: string,
-  }[]; */
+  //payload variables for creating order:
+  public selectedEquipment: any[] = Array();
+  public selectedBike: any[] = Array();
+  public totalPrice : number;
 
   apiUrl: string = environment.ApiUrl;
   subscription: Subscription;
@@ -133,17 +108,27 @@ export class OrderComponent implements OnInit {
   }
 
   addEquipOrBike(item, dropdown) {
-    console.log(item["bike_id"]);
+    console.log(this.bikeEquipmnet);
+    console.log(item);
     if (dropdown == 'bike') {
-      this.selectedBike = item;
+      this.selectedBike.push(item);
     } else {
-      this.selectedEquipment.push(item.toString());
+      this.selectedEquipment.push(item);
     }
+
+    console.log(this.selectedBike);
+    console.log(this.selectedEquipment);
   }
 
   preparePayload() {
     let payload = {
-
+      Price: this.totalPrice,
+      IsGroupOrder: this.groups,
+      Customer_id: null, // denne er litt stress
+      Employee_id: null, // også en smule tricky
+      OrderDate: new Date(),
+      IsAvailableFrom: new Date(),
+      MustBeDeliveredBefore: null // denne må avgjøres basert på valg av timer eller dagr
     }
     return payload;
   }

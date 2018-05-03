@@ -19,9 +19,6 @@ namespace api
         private readonly CredContext _context;
         private readonly ILogger _logger;
 
-        const string SessionKeyName = "_Name";
-        const string SessionKeyYearsMember = "_YearsMember";
-        const string SessionKeyDate = "_Date";
 
         public AuthController(CredContext context, ILogger<AuthController> logger)
         {
@@ -41,48 +38,36 @@ namespace api
             return hash;
         }
 
-      /*   public IActionResult Index()
-        {
-            const string sessionKey = "FirstSeen";
-            DateTime dateFirstSeen;
-            var value = HttpContext.Session.GetString(sessionKey);
-            if (string.IsNullOrEmpty(value))
-            {
-                dateFirstSeen = DateTime.Now;
-                var serialisedDate = JsonConvert.SerializeObject(dateFirstSeen);
-                HttpContext.Session.SetString(sessionKey, serialisedDate);
-            }
-            else
-            {
-                dateFirstSeen = JsonConvert.DeserializeObject<DateTime>(value);
-            }
-
-            var model = new SessionStateViewModel
-            {
-                DateSessionStarted = dateFirstSeen,
-                Now = DateTime.Now
-            };
-
-            return View(model);
-        } */
-
-
         [HttpPost]
         public IActionResult Auth([FromBody] Creds cred)
         {
             var testHash = hasher(cred.Password);
-
-
-            if (_context.AuthenticateEmployee(cred))
+            if(!cred.IsEmployee)
             {
-                _logger.LogInformation("Employee authenticated");
-                return Ok("ok");
+                if (_context.Authenticate(cred) != null)
+                {
+                    _logger.LogInformation("Customer authenticated");
+                    return Ok(_context.Authenticate(cred));
 
+                }
+                else
+                {
+                    _logger.LogWarning("invalid logg inn attempt");
+                    return BadRequest("invalid credentials");
+                }
             }
-            else
-            {
-                _logger.LogWarning("invalid logg inn attempt");
-                return BadRequest("invalid credentials");
+            else{
+                if (_context.AuthenticateEmployee(cred) != null)
+                {
+                    _logger.LogInformation("Employee authenticated");
+                    return Ok(_context.AuthenticateEmployee(cred));
+    
+                }
+                else
+                {
+                    _logger.LogWarning("invalid logg inn attempt");
+                    return BadRequest("invalid credentials");
+                }
             }
 
         }

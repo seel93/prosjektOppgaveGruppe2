@@ -17,7 +17,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public Boolean Authenticate(Creds cred)
+        public Creds Authenticate(Creds cred)
         {
             if(cred.IsEmployee)
             {
@@ -49,18 +49,18 @@ namespace api.Models
                     conn.Close();
                     if(UserList.Count > 0)
                     {
-                        return true;
+                        return UserList[0];
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
                 }
             }
-            return false;
+            return null;
         }
 
-        public Boolean AuthenticateEmployee(Creds cred)
+        public Creds AuthenticateEmployee(Creds cred)
         {
             List<Creds> UserList = new List<Creds>();
                   using (MySqlConnection conn = new MySqlConnection(ConnectionString))
@@ -85,11 +85,11 @@ namespace api.Models
                     conn.Close();
                     if(UserList.Count > 0)
                     {
-                        return true;
+                        return UserList[0];
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
                 }
         }

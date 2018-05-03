@@ -99,7 +99,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Delivery where id=@id";
+                cmd.CommandText = "delete from Levering where bestilling_bestilling_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
                 conn.Close();

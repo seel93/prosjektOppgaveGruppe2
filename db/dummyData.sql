@@ -17,10 +17,10 @@ insert into steder(sted_id, stedsnavn, poststed_postnr) values(7, 'Tjernet', '94
 insert into steder(sted_id, stedsnavn, poststed_postnr) values(11, 'Stubben', '0988');
 
 #UTSTYRINSERT
-insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, status) values(1, 'Sykkel', 'testnavn1', 699, 149, 'kode1', 1, 2, '45', '45', 'flytt');
-insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, status) values(2, 'Hjelm', 'testnavn2', 99.99, 19.99, 'kode2', 3, 3, '', '', 'klar');
-insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, status) values(3, 'Lappesaker', 'testnavn3', 699, 149, 'kode3', 11, 7, NULL, NULL, 'flytt');
-insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, status) values(4, 'Sykkel', 'testnavn4', 899.99, 179.99, 'kode4', 11, 2, '30', '30', 'reparasjon');
+insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, utstyr_status) values(1, 'Sykkel', 'testnavn1', 699, 149, 'kode1', 1, 2, '45', '45', 'flytt');
+insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, utstyr_status) values(2, 'Hjelm', 'testnavn2', 99.99, 19.99, 'kode2', 3, 3, '', '', 'klar');
+insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, utstyr_status) values(3, 'Lappesaker', 'testnavn3', 699, 149, 'kode3', 11, 7, NULL, NULL, 'flytt');
+insert into Utstyr(utstyr_id, utstyr_Type, utstyr_navn, dagspris, timepris, utstyrkode, var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, utstyr_status) values(4, 'Sykkel', 'testnavn4', 899.99, 179.99, 'kode4', 11, 2, '30', '30', 'reparasjon');
 
 #KUNDEINSERT
 insert into kunde(kunde_id, fnavn, enavn, mob_nr, epost, kunde_password, steder_sted_id) values(1, 'Gilbert', 'Gerdsen', 12345323, 'GG@epost.no', 'gilgerd', 1 );

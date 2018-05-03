@@ -1,23 +1,17 @@
-
 <div class="btn-group sorterBtn" dropdown>
     <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
         Sorter etter:
     </button>
-
     <div class="dropdown-menu dropdown-primary">
         <a class="dropdown-item" href="#">Sted</a>
         <a class="dropdown-item" href="#">Tilgjengelig</a>
         <a class="dropdown-item" href="#">Ikke tilgjengelig</a>
     </div>
 </div>
-        
 <br />
-
 <hr>
-
 <!--Table-->
 <table class="table equipmentTable">
-
     <!--Table head-->
     <thead class="blue-grey lighten-4">
         <tr>
@@ -33,7 +27,6 @@
         </tr>
     </thead>
     <!--Table head-->
-
     <!--Table body-->
     <tbody>
         <tr *ngFor="let equipment of equipmentList">
@@ -43,14 +36,14 @@
                 <button 
                 type="button" 
                 class="btn btn-primary relative waves-light" 
-                (click)="statusModal.show()" 
+                (click)="statusModal.show(); modalTrigger()" 
                 mdbWavesEffect
                 >
                     Sjekk Tilgjengelighet
                 </button>
             </td>
             <td>{{equipment.status}}</td>
-            <td>{{placesList[equipment.belongsToPlace].name}}</td>
+            <td>{{placesList.name}}</td>
             <td>{{equipment.hourPrice}}</td>
             <td>{{equipment.dailyPrice}}</td>
             <td>{{equipment.frame}}</td>
@@ -68,7 +61,7 @@
                 <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">sjekk status på</h4>
+                <h4 class="modal-title w-100" id="myModalLabel">Sjekk status på</h4>
             </div>
             <div class="modal-body">
                 {{eqipment}}

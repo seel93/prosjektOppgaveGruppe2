@@ -72,8 +72,8 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from utstyr_has_bestilling where id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandText = "select * from utstyr_has_bestilling where bestilling_bestilling_id = @id;";
+                cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {
                     while(reader.Read())
@@ -104,13 +104,14 @@ namespace api.Models
             }
         }
 
+        //please note that this function updates ALL bike_ids given specific order_id. ANother similar function may be needed
         public void UpdateBikeAndOrder(int bikeId, BikeAndOrder BikeAndOrder)
         {
              using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where id=@id";
+                cmd.CommandText = "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where bestilling_bestilling_id=@id";
                 cmd.Parameters.AddWithValue("@id", bikeId);
                 cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
                 cmd.ExecuteNonQuery();

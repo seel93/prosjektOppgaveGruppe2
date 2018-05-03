@@ -18,7 +18,7 @@ namespace api.Controllers
 
 
         [HttpGet]
-         public IActionResult Index()  
+        public IActionResult Index()  
         {  
             return Ok(_context.GetBikeAndOrder());  
         }  

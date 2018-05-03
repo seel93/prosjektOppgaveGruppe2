@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+
 export class RegisterComponent implements OnInit {
   public placesList: any[];
   public place: string;
@@ -79,9 +80,16 @@ export class RegisterComponent implements OnInit {
           console.log("error:")
         },
         () => {
-          console.log("succes for equipment")
+          this.notifyCustomerCreated();
         }
       );
+  }
 
+  notifyCustomerCreated(){
+    let validCreation = new Notification("Brukeren er lagt", {
+      body: "Nå kan du leie utstyr",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validCreation.close.bind(validCreation), 8000);
   }
 }

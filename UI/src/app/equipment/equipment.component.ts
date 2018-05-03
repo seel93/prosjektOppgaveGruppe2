@@ -37,23 +37,6 @@ export class EquipmentComponent implements OnInit {
     this.fetchPlaces();
   }
 
-  fetchEquipment() {
-    let equipmentEndpoint = this.apiUrl + "/bike";
-    this.httpClient.get(equipmentEndpoint, this.httpOptions)
-      .subscribe(
-        (data: any[]) => {
-          console.log(data);
-          this.equipmentList = data;
-      },
-      error => () => {
-        console.log("error:" )
-      },
-      () => {
-        console.log("succes for equipment")
-      }
-    );
-  }
-
   fetchPlaces() {
     let placesUrl = this.apiUrl + "/place";
     this.httpClient.get(placesUrl, this.httpOptions)
@@ -73,11 +56,33 @@ export class EquipmentComponent implements OnInit {
     );
   }
 
+  fetchEquipment() {
+    let equipmentEndpoint = this.apiUrl + "/bike";
+    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.equipmentList = data;
+      },
+      error => () => {
+        console.log("error:" )
+      },
+      () => {
+        console.log("succes for equipment")
+      }
+    );
+  }
+
+
   notifyEquipmentRecieved() {
     let validLogging = new Notification("Utstyr fra databasen er mottat", {
       body: "Her har du oversikt over alt utstyret vi kan tilby",
       icon: '../assets/icons/bike-21-512.png'
     });
     setTimeout(validLogging.close.bind(validLogging), 8000);
+  }
+
+  modalTrigger(){
+    console.log("this works");
   }
 }

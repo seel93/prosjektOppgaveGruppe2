@@ -18,8 +18,7 @@ export class OrderComponent implements OnInit {
   public groups: boolean;
   public hours: boolean;
   public days: boolean;
-  public selectedEquipment: any[];
-  public selectedBike: any[];
+  
 
   //api data:
   public equipmentList: any[];
@@ -54,6 +53,8 @@ export class OrderComponent implements OnInit {
     status: string
     wheelSize: string,
   }[]; */
+  public selectedEquipment: any[] = Array();
+  public selectedBike: any[] = Array();
 
   apiUrl: string = environment.ApiUrl;
   subscription: Subscription;
@@ -133,12 +134,16 @@ export class OrderComponent implements OnInit {
   }
 
   addEquipOrBike(item, dropdown) {
-    console.log(item["bike_id"]);
+    console.log(this.bikeEquipmnet);
+    console.log(item);
     if (dropdown == 'bike') {
-      this.selectedBike = item;
+      this.selectedBike.push(item);
     } else {
-      this.selectedEquipment.push(item.toString());
+      this.selectedEquipment.push(item);
     }
+
+    console.log(this.selectedBike);
+    console.log(this.selectedEquipment);
   }
 
   preparePayload() {

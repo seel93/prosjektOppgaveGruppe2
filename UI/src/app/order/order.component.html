@@ -87,6 +87,7 @@
         <br />
         <div class="btn-group" dropdown>
             <button dropdownToggle type="button"  class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Type sykkel
             </button>
             
@@ -96,6 +97,7 @@
         </div>
         <div class="btn-group" dropdown>
             <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Type utstyr for denne sykkelen
             </button>
             
@@ -103,9 +105,6 @@
                 <a class="dropdown-item" *ngFor="let equipment of nonBikeEquipment" (click)="addEquipOrBike(equipment, 'equipment')">{{equipment.name}}</a>
             </div>
         </div>
-        <button type="button" class="btn btn-primary waves-light" mdbWavesEffect>
-            <i class="fa fa-plus-circle" aria-hidden="true"></i> Legg til utstyr og sykkel
-        </button>
     </div>
     
     
@@ -121,11 +120,11 @@
         <p *ngIf="days">bestilling for: {{dayModel}} dager</p>
         <p>Utstyr:</p>
         <ul *ngFor="let equipment of selectedEquipment">
-            <li>{{equipment.name}}</li>
+            <li>{{equipment.name}}, {{equipment.type}}</li>
         </ul>
         <p>Sykkel:</p>
         <ul *ngFor="let bike of selectedBike">
-            <li>{{bike['name']}}</li>
+            <li>{{bike.name}}, {{bike.type}}</li>
         </ul>
         <br/>
     </div>

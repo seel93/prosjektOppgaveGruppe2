@@ -123,7 +123,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Customer set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email, kunde_password=@Customer.Password, steder_sted_id=@Customer.Location where kunde_id=@id";
+                cmd.CommandText = "update kunde set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email, kunde_password=@Customer.password,steder_sted_id=@Customer.Location where kunde_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
                 cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);

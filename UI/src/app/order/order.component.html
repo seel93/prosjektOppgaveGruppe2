@@ -114,19 +114,19 @@
     <div class="card card-body col-md-5 orderSummary">
         <h4 class="card-title">Nåværende bestilling</h4>
         <p>bestilling for: {{personModel}} person(er)</p>
-        <br/>
         <p *ngIf="hours">bestilling for: {{hourModel}} timer</p>
-        <br/>
         <p *ngIf="days">bestilling for: {{dayModel}} dager</p>
         <p>Utstyr:</p>
         <ul *ngFor="let equipment of selectedEquipment">
-            <li>{{equipment.name}}, {{equipment.type}}</li>
+            <li>{{equipment.name}}, {{equipment.type}}, <span *ngIf="days">pris: {{equipment.dailyPrice}}</span> <span *ngIf="hours">pris: {{equipment.hourPrice}}</span></li>
         </ul>
         <p>Sykkel:</p>
         <ul *ngFor="let bike of selectedBike">
-            <li>{{bike.name}}, {{bike.type}}</li>
+            <li>{{bike.name}}, {{bike.type}}, <span *ngIf="days">pris: {{bike.dailyPrice}}</span> <span *ngIf="hours">pris: {{bike.hourPrice}}</span></li>
         </ul>
         <br/>
+        <p>Total pris:</p>
+
     </div>
     <!--/.Panel-->
     

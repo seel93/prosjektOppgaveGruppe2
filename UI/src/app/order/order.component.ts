@@ -22,39 +22,13 @@ export class OrderComponent implements OnInit {
 
   //api data:
   public equipmentList: any[];
-  public nonBikeEquipment: any[];/*  {
-    id: number,
-    name: string
-    belongsToPlace: number,
-    bike_id: number,
-    dailyPrice: number,
-    equipmentCode: string,
-    frame: string,
-    hourPrice: number,
-    lastSeenOnPlace: number,
-    name: string,
-    type: string,
-    status: string
-    wheelSize: string,
-  }[]; */
+  public nonBikeEquipment: any[];
+  public bikeEquipmnet: any[]; 
 
-  public bikeEquipmnet: any[]; /* {
-    id: number,
-    name: string
-    belongsToPlace: number,
-    bike_id: number, 
-    dailyPrice: number,
-    equipmentCode: string, 
-    frame: string,
-    hourPrice: number, 
-    lastSeenOnPlace: number, 
-    name: string, 
-    type: string, 
-    status: string
-    wheelSize: string,
-  }[]; */
+  //payload variables for creating order:
   public selectedEquipment: any[] = Array();
   public selectedBike: any[] = Array();
+  public totalPrice : number;
 
   apiUrl: string = environment.ApiUrl;
   subscription: Subscription;
@@ -148,7 +122,13 @@ export class OrderComponent implements OnInit {
 
   preparePayload() {
     let payload = {
-
+      Price: this.totalPrice,
+      IsGroupOrder: this.groups,
+      Customer_id: null, // denne er litt stress
+      Employee_id: null, // også en smule tricky
+      OrderDate: new Date(),
+      IsAvailableFrom: new Date(),
+      MustBeDeliveredBefore: null // denne må avgjøres basert på valg av timer eller dagr
     }
     return payload;
   }

@@ -63,7 +63,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into bestilling(bestilling_id, pris, gruppe,kunde_kunde_id,ansatt_ansatt_id,bestillingsdato,kan_hentes,maa_leveres_foer) values(@Order.Order_id, @Order.Price, @Order.IsGroupOrder,@Order.Customer_id,@Order.Employee_id,@Order.OrderDate,@Order.IsAvailabeFrom,@Order.MustBeDeliveredBefoe);";
+                cmd.CommandText = "insert into bestilling(bestilling_id, pris, gruppe,kunde_kunde_id,ansatt_ansatt_id,bestillingsdato,kan_hentes,maa_leveres_foer) values(@Order.Order_id, @Order.Price, @Order.IsGroupOrder,@Order.Customer_id,@Order.Employee_id,@Order.OrderDate,@Order.IsAvailableFrom,@Order.MustBeDeliveredBefore);";
                 cmd.Parameters.AddWithValue("@Order.Order_id", Order.Order_id);
                 cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
                 cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
@@ -84,7 +84,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Bestilling where bestilling_id = @id;";
+                cmd.CommandText = "select * from bestilling where bestilling_id = @id;";
                  cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -114,7 +114,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Order where bestilling_id=@id";
+                cmd.CommandText = "delete from Bestilling where bestilling_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -127,7 +127,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailiableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=@id";
+                cmd.CommandText = "update Bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Order.Order_id", Order.Order_id);
                 cmd.Parameters.AddWithValue("@Order.Price", Order.Price);

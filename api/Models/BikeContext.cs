@@ -37,8 +37,8 @@ namespace api.Models
                         list.Add(new Bike
                         {
                             Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_Navn"].ToString(),
-                            Type = reader["utstyr_Type"].ToString(),
+                            Name = reader["utstyr_navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
                             DailyPrice = Convert.ToInt32(reader["dagspris"]),
                             HourPrice = Convert.ToInt32(reader["timepris"]),
                             EquipmentCode = reader["utstyrkode"].ToString(),
@@ -46,7 +46,7 @@ namespace api.Models
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = reader["status"].ToString()
+                            STATUS = reader["utstyr_status"].ToString()
                         });
                     }
                 }
@@ -66,8 +66,9 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into Utstyr(utstyr_id, Type, dagspris,timepris,utstyrkode,var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, status_idstatus) values(@Bike.Bike_id, @Bike.Type, @Bike.DailyPrice, @Bike.HourPrice, @Bike.EquipmentCode, @Bike.LastSeenOnPlace, @Bike.BelongsToPlace, @Bike.WheelSize,@Bike.Frame, @Bike.STATUS);";
+                cmd.CommandText = "insert into Utstyr(utstyr_id, utstyr_type, dagspris,timepris,utstyrkode,var_sist_paa_sted, tilhoerer_sted, hjulstoerrelse, ramme, utstyr_status,utstyr_navn) values(@Bike.Bike_id, @Bike.Type, @Bike.DailyPrice, @Bike.HourPrice, @Bike.EquipmentCode, @Bike.LastSeenOnPlace, @Bike.BelongsToPlace, @Bike.WheelSize,@Bike.Frame, @Bike.STATUS, @Bike.Name);";
                 cmd.Parameters.AddWithValue("@Bike.Bike_id", Bike.Bike_id);
+                cmd.Parameters.AddWithValue("@Bike.Name", Bike.Name);
                 cmd.Parameters.AddWithValue("@Bike.Type", Bike.Type);
                 cmd.Parameters.AddWithValue("@Bike.DailyPrice", Bike.DailyPrice);
                 cmd.Parameters.AddWithValue("@Bike.HourPrice", Bike.HourPrice);
@@ -77,7 +78,6 @@ namespace api.Models
                 cmd.Parameters.AddWithValue("@Bike.WheelSize", Bike.WheelSize);
                 cmd.Parameters.AddWithValue("@Bike.Frame", Bike.Frame);
                 cmd.Parameters.AddWithValue("@Bike.STATUS", Bike.STATUS);
-                
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -99,15 +99,16 @@ namespace api.Models
                         list.Add(new Bike
                         {
                             Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Type = reader["Type"].ToString(),
+                            Name = reader["utstyr_Navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
                             DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timespris"]),
-                            EquipmentCode = reader["utstyrskode"].ToString(),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
                             LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = reader["STATUS"].ToString()
+                            STATUS = reader["utstyr_status"].ToString()
                         });
                     }
                 }
@@ -135,8 +136,9 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Utstyr set Type=@Bike.Type, dagspris=@Bike.DailyPrice, timepris=@Bike.HourPrice, utstyrskode=@Bike.EquipmentCode,var_sist_paa_sted=@Bike.LastSeenOnPlace, tilhoerer_sted=@Bike.BelongsToPlace, hjulstoerrelse=@Bike.WheelSize, ramme=@Bike.Frame, status_idstatus=@Bike.STATUS where utstyr_id=@id";
+                cmd.CommandText = "update Utstyr set utstyr_type=@Bike.Type, dagspris=@Bike.DailyPrice, timepris=@Bike.HourPrice, utstyrkode=@Bike.EquipmentCode,var_sist_paa_sted=@Bike.LastSeenOnPlace, tilhoerer_sted=@Bike.BelongsToPlace, hjulstoerrelse=@Bike.WheelSize, ramme=@Bike.Frame, utstyr_status=@Bike.STATUS, utstyr_navn=@Bike.Name where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Bike.Name", Bike.Name);
                 cmd.Parameters.AddWithValue("@Bike.Type", Bike.Type);
                 cmd.Parameters.AddWithValue("@Bike.DailyPrice", Bike.DailyPrice);
                 cmd.Parameters.AddWithValue("@Bike.HourPrice", Bike.HourPrice);
@@ -162,7 +164,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Utstyr set status_idstatus=@Bike.STATUS where utstyr_id=@id";
+                cmd.CommandText = "update Utstyr set status=@Bike.STATUS where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Bike.STATUS", STATUS);
                 cmd.ExecuteNonQuery();
@@ -178,13 +180,13 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select status from Utstyr left join status ON utstyr.status_idstatus=idstatus where utstyr_id=@id";
+                cmd.CommandText = "select status from Utstyr left join status ON utstyr.status=idstatus where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {
                     while(reader.Read())
                     {
-                        result = reader["status"].ToString();
+                        result = reader["utstyr_status"].ToString();
                     }
                 }
                 conn.Close();

@@ -46,7 +46,7 @@ namespace api.Models
                             BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
                             WheelSize = reader["hjulstoerrelse"].ToString(),
                             Frame = reader["ramme"].ToString(),
-                            STATUS = reader["status"].ToString()
+                            STATUS = reader["utstyr_status"].ToString()
                         });
                     }
                 }

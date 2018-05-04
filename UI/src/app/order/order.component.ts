@@ -26,6 +26,7 @@ export class OrderComponent implements OnInit {
   public nonBikeEquipment: any[];
   public bikeEquipmnet: any[];
   public employess: any[];
+  public orderId: any[];
 
   //payload variables for creating order:
   public selectedEquipment: any[] = Array();
@@ -213,7 +214,8 @@ export class OrderComponent implements OnInit {
       this.httpClient.post(createOrderUrl, payload, this.httpOptions)
         .subscribe(
           (data: any[]) => {
-            console.log(data);
+            this.orderId = data['order_id'];
+            console.log(this.orderId);
           }
         );
     }

@@ -20,6 +20,7 @@ import { OrderComponent } from './order/order.component';
 //services:
 import {AuthService} from './services/auth.service';
 import {OrderService} from './services/order.service';
+import { UserComponent } from './user/user.component';
  
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
   {path: 'equipment', component : EquipmentComponent },
   {path: 'admin', component : AdminComponent },
   {path: 'register', component: RegisterComponent},
-  {path: 'order', component: OrderComponent}
+  {path: 'order', component: OrderComponent},
+  {path: 'user/:id', component: UserComponent}
 ]
 
 @NgModule({
@@ -39,6 +41,7 @@ const appRoutes: Routes = [
     AdminComponent,
     RegisterComponent,
     OrderComponent,
+    UserComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

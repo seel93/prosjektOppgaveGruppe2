@@ -21,7 +21,7 @@ namespace api.Controllers
          public IActionResult Index()  
         {  
             return Ok(_context.GetOrder());  
-        }  
+        }
 
         [HttpPost]
         public IActionResult Create([FromBody] Order Order)

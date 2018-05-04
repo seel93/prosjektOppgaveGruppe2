@@ -84,5 +84,14 @@ export class HomeComponent implements OnInit {
     });
     return promise;
   }
+
+  redirectUser(route){
+    if(route == 'history'){
+      this.router.navigate(['/user'+ '/' + this.authService.getId()]);
+    }else{
+      this.router.navigate(['/order']);
+    }
+
+  }
 }
 

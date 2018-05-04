@@ -42,4 +42,12 @@ export class NotificationService {
     });
     setTimeout(validCreation.close.bind(validCreation), 8000);
   }
+
+  notifyOrderCompleted(orderId: string){
+    let validCreation = new Notification("Bestilling lagret", {
+      body: "med id: " + orderId,
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validCreation.close.bind(validCreation), 8000);
+  }
 }

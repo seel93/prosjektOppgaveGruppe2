@@ -51,7 +51,6 @@ export class OrderComponent implements OnInit {
     this.fetchEquipment();
     this.getEmployees();
     this.userId = this.authService.getId();
-    console.log(this.userId);
     this.notificationService.testNotification();
   }
 
@@ -64,10 +63,8 @@ export class OrderComponent implements OnInit {
           this.equipmentList = data;
         },
         error => () => {
-          console.log("error:")
         },
         () => {
-          console.log("succes for equipment");
           this.filterEquipment(this.equipmentList);
         }
       );
@@ -87,19 +84,15 @@ export class OrderComponent implements OnInit {
     this.httpClient.get(EmploymentUrl, this.httpOptions)
       .subscribe(
         (data: any[]) => {
-          console.log(data);
           this.employess = data;
         },
         error => () => {
           console.log("error:")
         },
         () => {
-          console.log("succes for equipment");
           this.employee = Math.floor((Math.random() * this.employess.length) + 1);
-          console.log(this.employee);
         }
       );
-
   }
 
   addPerson(numOfPeople) {
@@ -137,20 +130,11 @@ export class OrderComponent implements OnInit {
   }
 
   addEquipOrBike(item, dropdown) {
-    console.log(this.bikeEquipmnet);
-    console.log(item);
     if (dropdown == 'bike') {
       this.selectedBike.push(item);
     } else {
       this.selectedEquipment.push(item);
     }
-
-    console.log(this.selectedBike);
-    console.log(this.selectedEquipment);
-  }
-
-  preparePayload() {
-    
   }
   
   checkCredentials() {
@@ -172,7 +156,6 @@ export class OrderComponent implements OnInit {
           let elementPrice : number = element[price];
           this.totalPrice = this.totalPrice + elementPrice;
       });
-
       this.selectedEquipment.forEach(element => {
         let elementPrice : number = element[price];
         this.totalPrice = this.totalPrice + elementPrice;
@@ -196,7 +179,7 @@ export class OrderComponent implements OnInit {
         Price: this.totalPrice,
         IsGroupOrder: this.groups ? 1 : 0,
         Customer_id: this.userId,
-        Employee_id: this.employee, // også en smule tricky
+        Employee_id: this.employee,
         OrderDate: new Date(),
         IsAvailableFrom: new Date(),
         MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
@@ -205,7 +188,7 @@ export class OrderComponent implements OnInit {
       this.httpClient.post(createOrderUrl, payload, this.httpOptions)
         .subscribe(
           (data: any[]) => {
-            this.orderId = data;
+            this.orderId = data[0].order_id;
             console.log(this.orderId);
             this.linkEquipmentToOrder();
           }
@@ -214,24 +197,32 @@ export class OrderComponent implements OnInit {
   }
 
   linkEquipmentToOrder(){
-    let EquipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
+    let equipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
     this.selectedBike.forEach(element => {
       let payload = {
         Bike_Id: element['bike_id'],
-        Order_Id: this.orderId[0].orderId
-
+        Order_Id: this.orderId
       }
-      console.log(payload);
-
+      this.httpClient.post(equipmentAndOrderUrl, payload, this.httpOptions)
+        .subscribe(
+          (data: any []) =>{
+            console.log(data);
+          }
+        )
     });
 
     this.selectedEquipment.forEach(element => {
       let payload = {
         Bike_Id: element['bike_id'],
-        Order_Id: this.orderId[0].orderId
+        Order_Id: this.orderId
       }
-
-      console.log(payload); 
+      this.httpClient.post(equipmentAndOrderUrl, payload, this.httpOptions)
+        .subscribe(
+          (data: any []) =>{
+            console.log(data);
+          }
+        )
     });
+    this.notificationService.notifyOrderCompleted(this.orderId);
   }
 }

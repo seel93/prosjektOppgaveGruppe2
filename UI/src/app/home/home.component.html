@@ -47,8 +47,8 @@
 <!--Logginn Form-->
 <div class="row" *ngIf="auth">
     <div class="col-md-6">
-        <button class="btn btn-primary waves-light" mdbRippleRadius>Se ordrehistorikken din:</button>
-        <button class="btn btn-primary waves-light" mdbRippleRadius>Gå til en ny bestilling:</button>
+        <button class="btn btn-primary waves-light" (click)="redirectUser('history')" mdbRippleRadius>Se ordrehistorikken din:</button>
+        <button class="btn btn-primary waves-light" (click)="redirectUser('order')" mdbRippleRadius>Gå til en ny bestilling:</button>
     </div>
 
    

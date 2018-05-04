@@ -171,6 +171,30 @@ namespace api.Models
             }
         }
 
+        public List<int> getOrderByUserId(int id)
+        {
+            List<int> list = new List<int>();
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select bestilling.bestilling_id from bestilling inner join kunde on kunde.kunde_id = bestilling.kunde_kunde_id where kunde_id=@id;";
+                 cmd.Parameters.AddWithValue("@id", id);
+                using(var reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        list.Add(
+                        
+                            Convert.ToInt32(reader[0])
+                        );
+                    }
+                }
+                 conn.Close();
+            }
+            return list;
+        }
+
         
     }    
 }

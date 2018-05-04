@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
 import { Subscription } from 'rxjs';
-//import {Subscription} from 'rxjs/es6/Subscription.js';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../../environments/environment';
@@ -26,7 +26,7 @@ export class EquipmentComponent implements OnInit {
     })
   };
 
-  constructor(private authService: AuthService, private httpClient: HttpClient) {
+  constructor(private authService: AuthService, private notificationService : NotificationService,  private httpClient: HttpClient) {
     this.subscription = this.authService.getMessage().subscribe(
       (message) => {
         if (message.status) {
@@ -51,8 +51,8 @@ export class EquipmentComponent implements OnInit {
           console.log("error:" )
         },
         () => {
-          this.notifyEquipmentRecieved();
           this.fetchEquipment();
+          this.notificationService.notifyEquipmentRecieved();
           console.log("succes for places");
         }
     );
@@ -73,15 +73,6 @@ export class EquipmentComponent implements OnInit {
         console.log("succes for equipment")
       }
     );
-  }
-
-
-  notifyEquipmentRecieved() {
-    let validLogging = new Notification("Utstyr fra databasen er mottat", {
-      body: "Her har du oversikt over alt utstyret vi kan tilby",
-      icon: '../assets/icons/bike-21-512.png'
-    });
-    setTimeout(validLogging.close.bind(validLogging), 8000);
   }
 
   modalTrigger(){

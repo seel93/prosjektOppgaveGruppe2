@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -44,13 +45,14 @@ export class OrderComponent implements OnInit {
     })
   };
 
-  constructor(private authService: AuthService, private httpClient: HttpClient) { }
+  constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.fetchEquipment();
     this.getEmployees();
     this.userId = this.authService.getId();
     console.log(this.userId);
+    this.notificationService.testNotification();
   }
 
   fetchEquipment() {
@@ -145,7 +147,6 @@ export class OrderComponent implements OnInit {
 
     console.log(this.selectedBike);
     console.log(this.selectedEquipment);
-    this.calculatePrice();
   }
 
   preparePayload() {
@@ -154,16 +155,6 @@ export class OrderComponent implements OnInit {
   
   checkCredentials() {
     this.userName = this.authService.getUserCredentials();
-  }
-  
-  
-  
-  notifyInvalidOrder() {
-    let error = new Notification("Feil:", {
-      body: "Du kan ikke lagen en bestilling uten å være logget inn",
-      icon: '../assets/icons/bike-21-512.png'
-    });
-    setTimeout(error.close.bind(error), 8000);
   }
 
   getDayOrHours(): string {
@@ -197,7 +188,7 @@ export class OrderComponent implements OnInit {
     this.checkCredentials();
     console.log(this.userName);
     if (this.userName == 'Gjest' || !this.userName) {
-      this.notifyInvalidOrder();
+      this.notificationService.notifyInvalidOrder();
     } else {
       this.getDayOrHours();
       this.calculatePrice();

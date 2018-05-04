@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
 
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
   };
   apiUrl : string = environment.ApiUrl; // api logg inn url
 
-  constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router, private notificationService : NotificationService) { }
 
   ngOnInit() {
     Notification.requestPermission().then((result) => {
@@ -40,16 +41,7 @@ export class HomeComponent implements OnInit {
   }
 
   sendMessage(name: string, employee: boolean, userId: number): void {
-    // send message to subscribers via observable subject
     this.authService.sendMessage("logged in as user " + name, employee, userId);
-  }
-
-  notifyUponSubmission() {
-    let validLogging = new Notification("Du er logget inn", {
-      body: "Nå kan du velge område og tidsrom du vil leie utstyr i",
-      icon: '../assets/icons/bike-21-512.png'
-    });
-    setTimeout(validLogging.close.bind(validLogging), 8000);
   }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
@@ -75,7 +67,7 @@ export class HomeComponent implements OnInit {
           .then(
             res => {
               this.auth = true;
-              this.notifyUponSubmission();
+              this.notificationService.notifyUponSubmission();
               this.sendMessage(res['username'], this.employee, res['creds_id']);
               console.log(res);
               resolve();
@@ -83,7 +75,7 @@ export class HomeComponent implements OnInit {
             error => {
               if(error.status = "200"){
                 this.auth = true;
-                this.notifyUponSubmission();
+                this.notificationService.notifyUponSubmission();
                 this.sendMessage(data.username, this.employee, data.Creds_id);
                 resolve();
             }

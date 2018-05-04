@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit {
     })
   };
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private notificationService : NotificationService) { }
 
   ngOnInit() {
     this.fetchPlaces();
@@ -87,16 +88,8 @@ export class RegisterComponent implements OnInit {
           console.log("error:")
         },
         () => {
-          this.notifyCustomerCreated();
+          this.notificationService.notifyCustomerCreated();
         }
       );
-  }
-
-  notifyCustomerCreated(){
-    let validCreation = new Notification("Brukeren er lagt", {
-      body: "Nå kan du leie utstyr",
-      icon: '../assets/icons/bike-21-512.png'
-    });
-    setTimeout(validCreation.close.bind(validCreation), 8000);
   }
 }

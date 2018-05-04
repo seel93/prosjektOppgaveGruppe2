@@ -42,8 +42,8 @@ export class AdminComponent implements OnInit {
     this.loggIn(f.value);
   }
   
-  sendMessage(name: string, employee: boolean, id: number): void {
-    this.authService.sendMessage("logget inn som ansatt " + name, employee, id);
+  sendMessage(name: string, employee: boolean, userId: number): void {
+    this.authService.sendMessage("logget inn som ansatt " + name, employee, userId);
   }
   
   loggIn(data) {

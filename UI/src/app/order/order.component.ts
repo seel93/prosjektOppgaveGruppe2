@@ -19,6 +19,7 @@ export class OrderComponent implements OnInit {
   public hours: boolean;
   public days: boolean;
   public employee: number;
+  public userId: number;
 
   //api data:
   public equipmentList: any[];
@@ -29,7 +30,7 @@ export class OrderComponent implements OnInit {
   //payload variables for creating order:
   public selectedEquipment: any[] = Array();
   public selectedBike: any[] = Array();
-  public totalPrice: number;
+  public totalPrice: number = 0;
 
   apiUrl: string = environment.ApiUrl;
   userName: string = "Gjest";
@@ -47,7 +48,8 @@ export class OrderComponent implements OnInit {
   ngOnInit() {
     this.fetchEquipment();
     this.getEmployees();
-
+    this.userId = this.authService.getId();
+    console.log(this.userId);
   }
 
   fetchEquipment() {
@@ -153,15 +155,6 @@ export class OrderComponent implements OnInit {
   }
   
   submitOrder() {
-    let payload = {
-      Price: this.totalPrice,
-      IsGroupOrder: this.groups ? 1 : 0,
-      Customer_id: this.authService.getId(),
-      Employee_id: this.employee, // også en smule tricky
-      OrderDate: new Date(),
-      IsAvailableFrom: new Date(),
-      MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
-    }
     let createOrderUrl = this.apiUrl + "/order";
     this.checkCredentials();
     console.log(this.userName);
@@ -170,6 +163,16 @@ export class OrderComponent implements OnInit {
     } else {
       this.getDayOrHours();
       this.calculatePrice();
+      let payload = {
+        Price: this.totalPrice,
+        IsGroupOrder: this.groups ? 1 : 0,
+        Customer_id: this.userId,
+        Employee_id: this.employee, // også en smule tricky
+        OrderDate: new Date(),
+        IsAvailableFrom: new Date(),
+        MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
+      }
+      console.log(payload);
       this.httpClient.post(createOrderUrl, payload, this.httpOptions)
         .subscribe(
           (data: any[]) => {
@@ -178,6 +181,7 @@ export class OrderComponent implements OnInit {
         )
     }
   }
+
 
   notifyInvalidOrder() {
     let error = new Notification("Feil:", {
@@ -196,18 +200,17 @@ export class OrderComponent implements OnInit {
   }
 
   calculatePrice() {
-    let result: number = 0;
     let price = this.getDayOrHours();
 
     this.selectedBike.forEach(element => {
-      result += element[price];
+      let elementPrice : number = element[price];
+      this.totalPrice = this.totalPrice + elementPrice;
     });
 
     this.selectedEquipment.forEach(element => {
-      result += element[price];
+      let elementPrice : number = element[price];
+      this.totalPrice = this.totalPrice + elementPrice;
     });
 
-    console.log(result);
-    return result;
   }
 }

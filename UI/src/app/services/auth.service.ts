@@ -11,12 +11,13 @@ export class AuthService {
   private subject = new Subject<any>();
   public message: string; 
   public employee: boolean; 
-  public id: number;
+  public userId: number;
  
-  sendMessage(message: string, employee: boolean, id: number) {
+  sendMessage(message: string, employee: boolean, userId: number) {
     this.message = message;
     this.employee = employee;  
-    this.id = id;
+    this.userId = userId;
+    console.log(userId);
     this.subject.next({ 
           text: message,
           status: employee  
@@ -35,8 +36,8 @@ export class AuthService {
       return this.employee;
   }
 
-  getId(){
-      return this.id;
+  getId(): number{
+      return this.userId;
   }
 
   getMessage(): Observable<any> {

@@ -39,9 +39,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  sendMessage(name: string, employee: boolean, id: number): void {
+  sendMessage(name: string, employee: boolean, userId: number): void {
     // send message to subscribers via observable subject
-    this.authService.sendMessage("logged in as user " + name, employee, id);
+    this.authService.sendMessage("logged in as user " + name, employee, userId);
   }
 
   notifyUponSubmission() {
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
             res => {
               this.auth = true;
               this.notifyUponSubmission();
-              this.sendMessage(data.username, this.employee, data.Creds_id);
+              this.sendMessage(res['username'], this.employee, res['creds_id']);
               console.log(res);
               resolve();
             }, 

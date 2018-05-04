@@ -215,7 +215,22 @@ export class OrderComponent implements OnInit {
           (data: any[]) => {
             console.log(data);
           }
-        )
+        );
     }
+  }
+
+  linkEquipmentToOrder(){
+    let EquipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
+    this.selectedBike.forEach(element => {
+      let payload = {
+
+      }
+    });
+
+    this.selectedEquipment.forEach(element => {
+      let payload = {
+        
+      }
+    });
   }
 }

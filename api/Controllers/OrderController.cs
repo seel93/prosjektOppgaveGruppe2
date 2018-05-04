@@ -32,7 +32,7 @@ namespace api.Controllers
             }
             else
             {
-                return Ok("Data created");
+                return Ok(_context.GetLatestOrderId());
             }
         }
 

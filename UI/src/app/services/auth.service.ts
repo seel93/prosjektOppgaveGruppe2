@@ -25,7 +25,10 @@ export class AuthService {
   }
 
   clearMessage() {
-      this.subject.next();
+      this.subject.next({
+          text: null,
+          status: null
+      });
   }
 
   getUserCredentials(){

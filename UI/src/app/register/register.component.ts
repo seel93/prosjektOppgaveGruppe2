@@ -54,7 +54,14 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
     console.log(f.value);
-    this.preparePayload(f.value);
+    let input = f.value;
+    if(input.Password == input.secondPassword){
+      this.preparePayload(f.value);
+    }else{
+      //Todo: legg til notification-service
+      console.log("password mismatch");
+    }
+    
   }
 
   preparePayload(formData) {

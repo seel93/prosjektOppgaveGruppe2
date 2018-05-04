@@ -77,6 +77,35 @@ namespace api.Models
             }
         }
 
+        public List<Order> GetLatestOrderId()
+        {
+            List<Order> list = new List<Order>();
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM bestilling ORDER BY bestilling_id  DESC LIMIT 0, 1";
+                using(var reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        list.Add(new Order
+                        {
+                            Order_id = Convert.ToInt32(reader["bestilling_id"]),
+                            Price = reader["pris"].ToString(),
+                            IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
+                            Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
+                            Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
+                            OrderDate = (DateTime)reader["bestillingsdato"],
+                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
+                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
         public List<Order> GetOrder(int id)
         {
             List<Order> list = new List<Order>();

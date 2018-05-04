@@ -26,7 +26,7 @@ export class OrderComponent implements OnInit {
   public nonBikeEquipment: any[];
   public bikeEquipmnet: any[];
   public employess: any[];
-  public orderId: any[];
+  public orderId: any;
 
   //payload variables for creating order:
   public selectedEquipment: any[] = Array();
@@ -214,8 +214,9 @@ export class OrderComponent implements OnInit {
       this.httpClient.post(createOrderUrl, payload, this.httpOptions)
         .subscribe(
           (data: any[]) => {
-            this.orderId = data['order_id'];
+            this.orderId = data;
             console.log(this.orderId);
+            this.linkEquipmentToOrder();
           }
         );
     }
@@ -225,14 +226,21 @@ export class OrderComponent implements OnInit {
     let EquipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
     this.selectedBike.forEach(element => {
       let payload = {
+        Bike_Id: element['bike_id'],
+        Order_Id: this.orderId[0].orderId
 
       }
+      console.log(payload);
+
     });
 
     this.selectedEquipment.forEach(element => {
       let payload = {
-        
+        Bike_Id: element['bike_id'],
+        Order_Id: this.orderId[0].orderId
       }
+
+      console.log(payload); 
     });
   }
 }

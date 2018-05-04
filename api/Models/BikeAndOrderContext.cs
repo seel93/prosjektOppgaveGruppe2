@@ -26,7 +26,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from utstyr_has_bestilling;";
+                var command = "select * from Utstyr_has_bestilling;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
                 
@@ -57,7 +57,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);";
+                cmd.CommandText = "insert into Utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);";
                 cmd.Parameters.AddWithValue("@BikeAndOrder.Bike_id", BikeAndOrder.Bike_id);
                 cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
                 cmd.ExecuteNonQuery();
@@ -72,7 +72,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from utstyr_has_bestilling where bestilling_bestilling_id = @id;";
+                cmd.CommandText = "select * from Utstyr_has_bestilling where bestilling_bestilling_id = @id;";
                 cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {

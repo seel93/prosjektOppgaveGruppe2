@@ -144,6 +144,7 @@ export class OrderComponent implements OnInit {
 
     console.log(this.selectedBike);
     console.log(this.selectedEquipment);
+    this.calculatePrice();
   }
 
   preparePayload() {
@@ -154,6 +155,42 @@ export class OrderComponent implements OnInit {
     this.userName = this.authService.getUserCredentials();
   }
   
+  
+  
+  notifyInvalidOrder() {
+    let error = new Notification("Feil:", {
+      body: "Du kan ikke lagen en bestilling uten å være logget inn",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(error.close.bind(error), 8000);
+  }
+
+  getDayOrHours(): string {
+    if (this.hours) {
+      return "hourPrice";
+    } else {
+      return "dailyPrice";
+    }
+  }
+  
+  calculatePrice() {
+    let price = this.getDayOrHours();
+    try{
+      this.selectedBike.forEach(element => {
+          let elementPrice : number = element[price];
+          this.totalPrice = this.totalPrice + elementPrice;
+      });
+
+      this.selectedEquipment.forEach(element => {
+        let elementPrice : number = element[price];
+        this.totalPrice = this.totalPrice + elementPrice;
+      });
+    }catch(e){
+      console.log(e);
+    }
+    
+  }
+
   submitOrder() {
     let createOrderUrl = this.apiUrl + "/order";
     this.checkCredentials();
@@ -180,37 +217,5 @@ export class OrderComponent implements OnInit {
           }
         )
     }
-  }
-
-
-  notifyInvalidOrder() {
-    let error = new Notification("Feil:", {
-      body: "Du kan ikke lagen en bestilling uten å være logget inn",
-      icon: '../assets/icons/bike-21-512.png'
-    });
-    setTimeout(error.close.bind(error), 8000);
-  }
-
-  getDayOrHours(): string {
-    if (this.hours) {
-      return "hourPrice";
-    } else {
-      return "dailyPrice";
-    }
-  }
-
-  calculatePrice() {
-    let price = this.getDayOrHours();
-
-    this.selectedBike.forEach(element => {
-      let elementPrice : number = element[price];
-      this.totalPrice = this.totalPrice + elementPrice;
-    });
-
-    this.selectedEquipment.forEach(element => {
-      let elementPrice : number = element[price];
-      this.totalPrice = this.totalPrice + elementPrice;
-    });
-
   }
 }

@@ -6,3 +6,5 @@ init.sql
 
 #build folder for angular
 /UI/build
+/UI/node_modules
+/UI/package-lock.json

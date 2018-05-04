@@ -63,22 +63,22 @@
         <div *ngIf="hours">
             <h5>Antall timer:</h5>
             <div class="btn-group">
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(1)" mdbRadio="1" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(1)" mdbRadio="1" mdbWavesEffect>
                     1
                 </label>
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(2)" mdbRadio="2" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(2)" mdbRadio="2" mdbWavesEffect>
                     2
                 </label>
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(3)" mdbRadio="3" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(3)" mdbRadio="3" mdbWavesEffect>
                     3
                 </label>
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(4)" mdbRadio="4" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(4)" mdbRadio="4" mdbWavesEffect>
                     4
                 </label>
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(5)" mdbRadio="5" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(5)" mdbRadio="5" mdbWavesEffect>
                     5
                 </label>
-                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHours(6)" mdbRadio="6" mdbWavesEffect>
+                <label class="btn btn-primary waves-light" [(ngModel)]="hourModel" (click)="addHour(6)" mdbRadio="6" mdbWavesEffect>
                     6
                 </label>
             </div>
@@ -129,7 +129,6 @@
 
     </div>
     <!--/.Panel-->
-
-    <button class="btn btn-primary" (click)="submitOrder()"> Sende bestilling </button>
-    
+    <hr>
+    <button class="btn btn-primary orderSubmit" (click)="submitOrder()"> Sende bestilling </button>
 </div>

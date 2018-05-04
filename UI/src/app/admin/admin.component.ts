@@ -42,8 +42,8 @@ export class AdminComponent implements OnInit {
     this.loggIn(f.value);
   }
   
-  sendMessage(name: string, employee: boolean): void {
-    this.authService.sendMessage("logget inn som ansatt " + name, employee);
+  sendMessage(name: string, employee: boolean, id: number): void {
+    this.authService.sendMessage("logget inn som ansatt " + name, employee, id);
   }
   
   loggIn(data) {
@@ -68,7 +68,7 @@ export class AdminComponent implements OnInit {
           }
         }
       )
-    this.sendMessage(data.username, this.employee);
+    this.sendMessage(data.username, this.employee, data.Creds_id);
   }
 
   fetchEquipment(){

@@ -42,6 +42,7 @@ namespace api.Models
                             {
                                 Username = read["epost"].ToString(),
                                 Password = read["kunde_password"].ToString(),
+                                Creds_id = Convert.ToInt32(read["kunde_id"])
                                 //IsEmployee = read["employee"]
                             });
                         }
@@ -79,6 +80,7 @@ namespace api.Models
                             {
                                 Username = read["ansatt_id"].ToString(),
                                 Password = read["ansatt_password"].ToString(),
+                                Creds_id = Convert.ToInt32(read["ansatt_id"])
                             });
                         }
                     }

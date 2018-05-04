@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOff() : void {
-    console.log("logg of reauested"); 
+    console.log("logg of requested"); 
     this.authService.clearMessage();
   }
 }

@@ -18,20 +18,21 @@ export class OrderComponent implements OnInit {
   public groups: boolean;
   public hours: boolean;
   public days: boolean;
-  
+  public employee: number;
 
   //api data:
   public equipmentList: any[];
   public nonBikeEquipment: any[];
-  public bikeEquipmnet: any[]; 
+  public bikeEquipmnet: any[];
+  public employess: any[];
 
   //payload variables for creating order:
   public selectedEquipment: any[] = Array();
   public selectedBike: any[] = Array();
-  public totalPrice : number;
+  public totalPrice: number;
 
   apiUrl: string = environment.ApiUrl;
-  userName : string = "Gjest";
+  userName: string = "Gjest";
   subscription: Subscription;
 
   httpOptions = { // http-headers for API
@@ -45,6 +46,55 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.fetchEquipment();
+    this.getEmployees();
+
+  }
+
+  fetchEquipment() {
+    let equipmentEndpoint = this.apiUrl + "/bike";
+    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.equipmentList = data;
+        },
+        error => () => {
+          console.log("error:")
+        },
+        () => {
+          console.log("succes for equipment");
+          this.filterEquipment(this.equipmentList);
+        }
+      );
+  }
+
+  filterEquipment(list) {
+    this.nonBikeEquipment = list.filter((element) => {
+      return element.type != "Sykkel";
+    });
+    this.bikeEquipmnet = list.filter((element) => {
+      return element.type == "Sykkel"
+    });
+  }
+
+  getEmployees() {
+    let EmploymentUrl = this.apiUrl + "/employee";
+    this.httpClient.get(EmploymentUrl, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.employess = data;
+        },
+        error => () => {
+          console.log("error:")
+        },
+        () => {
+          console.log("succes for equipment");
+          this.employee = Math.floor((Math.random() * this.employess.length) + 1);
+          console.log(this.employee);
+        }
+      );
+
   }
 
   addPerson(numOfPeople) {
@@ -81,33 +131,6 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  fetchEquipment() {
-    let equipmentEndpoint = this.apiUrl + "/bike";
-    this.httpClient.get(equipmentEndpoint, this.httpOptions)
-      .subscribe(
-        (data: any[]) => {
-          console.log(data);
-          this.equipmentList = data;
-        },
-        error => () => {
-          console.log("error:")
-        },
-        () => {
-          console.log("succes for equipment");
-          this.filterEquipment(this.equipmentList);
-        }
-      );
-  }
-
-  filterEquipment(list) {
-    this.nonBikeEquipment = list.filter((element) => {
-      return element.type != "Sykkel";
-    });
-    this.bikeEquipmnet = list.filter((element) => {
-      return element.type == "Sykkel"
-    });
-  }
-
   addEquipOrBike(item, dropdown) {
     console.log(this.bikeEquipmnet);
     console.log(item);
@@ -122,30 +145,37 @@ export class OrderComponent implements OnInit {
   }
 
   preparePayload() {
-    let payload = {
-      Price: this.totalPrice,
-      IsGroupOrder: this.groups,
-      Customer_id: null, // denne er litt stress
-      Employee_id: null, // også en smule tricky
-      OrderDate: new Date(),
-      IsAvailableFrom: new Date(),
-      MustBeDeliveredBefore: null // denne må avgjøres basert på valg av timer eller dagr
-    }
-    return payload;
+    
   }
-
-  checkCredentials(){
+  
+  checkCredentials() {
     this.userName = this.authService.getUserCredentials();
   }
-
-  submitOrder(){
+  
+  submitOrder() {
+    let payload = {
+      Price: this.totalPrice,
+      IsGroupOrder: this.groups ? 1 : 0,
+      Customer_id: this.authService.getId(),
+      Employee_id: this.employee, // også en smule tricky
+      OrderDate: new Date(),
+      IsAvailableFrom: new Date(),
+      MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
+    }
+    let createOrderUrl = this.apiUrl + "/order";
     this.checkCredentials();
     console.log(this.userName);
-    if(this.userName == 'Gjest'){
+    if (this.userName == 'Gjest' || !this.userName) {
       this.notifyInvalidOrder();
-    }else{
+    } else {
       this.getDayOrHours();
       this.calculatePrice();
+      this.httpClient.post(createOrderUrl, payload, this.httpOptions)
+        .subscribe(
+          (data: any[]) => {
+            console.log(data);
+          }
+        )
     }
   }
 
@@ -157,35 +187,27 @@ export class OrderComponent implements OnInit {
     setTimeout(error.close.bind(error), 8000);
   }
 
-  getDayOrHours(){ 
-    if(this.hours){
+  getDayOrHours(): string {
+    if (this.hours) {
       return "hourPrice";
-    }else{
+    } else {
       return "dailyPrice";
     }
   }
 
-  calculatePrice(){
-    let result : number = 0;
+  calculatePrice() {
+    let result: number = 0;
     let price = this.getDayOrHours();
-    console.log(price); 
-
-    for(let i = 0; i < this.selectedBike.length; i++){
-      console.log(this.selectedBike[i].price);
-      result += this.selectedBike[i].price.toString;
-    }
-
-    for(let j = 0; j < this.selectedEquipment.length; j++){
-      result += this.selectedEquipment[j];
-    }
 
     this.selectedBike.forEach(element => {
-      console.log(element.price.toString());
+      result += element[price];
     });
 
-    //console.log(result);
+    this.selectedEquipment.forEach(element => {
+      result += element[price];
+    });
+
+    console.log(result);
     return result;
   }
-
-
 }

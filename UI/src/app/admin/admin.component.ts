@@ -58,12 +58,13 @@ export class AdminComponent implements OnInit {
       .subscribe(
         (data: any[]) => {
           console.log(data);
+          this.auth = true;
+          this.notifyUponSubmission();
+          this.fetchEquipment();
         },
         (err) => {
           if (err.status == 200) {
             this.auth = true;
-            this.notifyUponSubmission();
-            this.fetchEquipment();
           } else {
           }
         }

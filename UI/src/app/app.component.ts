@@ -1,8 +1,7 @@
 import { Component} from '@angular/core';
 import {remote, ipcRenderer} from 'electron'; //for å lage menyer filer osv.
 import { HomeComponent } from './home/home.component';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import {AuthService} from './services/auth.service';
 @Component({
   selector: 'app-root',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -215,7 +215,22 @@ export class OrderComponent implements OnInit {
           (data: any[]) => {
             console.log(data);
           }
-        )
+        );
     }
+  }
+
+  linkEquipmentToOrder(){
+    let EquipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
+    this.selectedBike.forEach(element => {
+      let payload = {
+
+      }
+    });
+
+    this.selectedEquipment.forEach(element => {
+      let payload = {
+        
+      }
+    });
   }
 }

@@ -41,7 +41,8 @@ namespace api.Models
                             LastName = reader["enavn"].ToString(),
                             Phone = reader["mob_nr"].ToString(),
                             Email = reader["epost"].ToString(),
-                            Location = Convert.ToInt32(reader["steder_sted_id"])
+                            Location = Convert.ToInt32(reader["steder_sted_id"]),
+                            Password = reader["kunde_password"].ToString()
                         });
                     }
                 }

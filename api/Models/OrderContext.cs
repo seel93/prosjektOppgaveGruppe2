@@ -1,3 +1,4 @@
+using api.models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic; 
@@ -171,7 +172,7 @@ namespace api.Models
             }
         }
 
-        public List<int> getOrderByUserId(int id)
+        public List<int> getOrderByUserId(OrderByUser order)
         {
             List<int> list = new List<int>();
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
@@ -179,7 +180,7 @@ namespace api.Models
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select bestilling.bestilling_id from bestilling inner join kunde on kunde.kunde_id = bestilling.kunde_kunde_id where kunde_id=@id;";
-                 cmd.Parameters.AddWithValue("@id", id);
+                 cmd.Parameters.AddWithValue("@id", order.Id);
                 using(var reader = cmd.ExecuteReader())
                 {
                     while(reader.Read())
@@ -194,7 +195,5 @@ namespace api.Models
             }
             return list;
         }
-
-        
     }    
 }

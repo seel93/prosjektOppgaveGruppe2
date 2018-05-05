@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
-import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -34,7 +36,6 @@ export class OrderComponent implements OnInit {
   public selectedBike: any[] = Array();
   public totalPrice: number = 0;
 
-  apiUrl: string = environment.ApiUrl;
   userName: string = "Gjest";
   subscription: Subscription;
 
@@ -55,7 +56,7 @@ export class OrderComponent implements OnInit {
   }
 
   fetchEquipment() {
-    let equipmentEndpoint = this.apiUrl + "/bike";
+    let equipmentEndpoint = environment.ApiUrl + "/bike";
     this.httpClient.get(equipmentEndpoint, this.httpOptions)
       .subscribe(
         (data: any[]) => {
@@ -80,7 +81,7 @@ export class OrderComponent implements OnInit {
   }
 
   getEmployees() {
-    let EmploymentUrl = this.apiUrl + "/employee";
+    let EmploymentUrl = environment.ApiUrl + "/employee";
     this.httpClient.get(EmploymentUrl, this.httpOptions)
       .subscribe(
         (data: any[]) => {
@@ -167,7 +168,7 @@ export class OrderComponent implements OnInit {
   }
 
   submitOrder() {
-    let createOrderUrl = this.apiUrl + "/order";
+    let createOrderUrl = environment.ApiUrl + "/order";
     this.checkCredentials();
     console.log(this.userName);
     if (this.userName == 'Gjest' || !this.userName) {
@@ -197,7 +198,7 @@ export class OrderComponent implements OnInit {
   }
 
   linkEquipmentToOrder(){
-    let equipmentAndOrderUrl = this.apiUrl + "/bikeandorder";
+    let equipmentAndOrderUrl = environment.ApiUrl + "/bikeandorder";
     this.selectedBike.forEach(element => {
       let payload = {
         Bike_Id: element['bike_id'],

@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
   public placesList: any[];
   public place: string;
   public date = new Date();
-  apiUrl: string = environment.ApiUrl;
 
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -31,7 +30,7 @@ export class RegisterComponent implements OnInit {
   }
 
   fetchPlaces() {
-    let placesUrl = this.apiUrl + "/place";
+    let placesUrl = environment.ApiUrl + "/place";
     this.httpClient.get(placesUrl, this.httpOptions)
       .subscribe(
         (data: any[]) => {
@@ -78,7 +77,7 @@ export class RegisterComponent implements OnInit {
     this.submitCustomer(payload)
   }
   submitCustomer(payload) {
-    let newCustomerUrl = this.apiUrl + "/customer";
+    let newCustomerUrl = environment.ApiUrl + "/customer";
     this.httpClient.post(newCustomerUrl, payload, this.httpOptions)
       .subscribe(
         (data: any[]) => {

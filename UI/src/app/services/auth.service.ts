@@ -17,7 +17,6 @@ export class AuthService {
     this.message = message;
     this.employee = employee;  
     this.userId = userId;
-    console.log(userId);
     this.subject.next({ 
           text: message,
           status: employee  

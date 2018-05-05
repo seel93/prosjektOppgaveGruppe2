@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
-import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
 
 
@@ -31,7 +32,6 @@ export class HomeComponent implements OnInit {
       //'Authorization': 'my-auth-token'
     })
   };
-  apiUrl : string = environment.ApiUrl; // api logg inn url
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router, private notificationService : NotificationService) { }
 
@@ -45,12 +45,12 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
-    console.log(f.value);
-    this.loggIn(f.value);
-  }
-
-  onDateSubmit(d: NgForm){
-    console.log(d.value);
+    let inputData = f.value;
+    if(!inputData.username || !inputData.password){
+      this.notificationService.notifyInvalidCredentials();
+    }else{
+      this.loggIn(inputData);
+    }
   }
 
   loggIn(data) {
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
       IsEmployee: this.employee
     }
     console.log(payload);
-    let authUrl = this.apiUrl + "/auth";
+    let authUrl = environment.ApiUrl + "/auth";
     let promise = new Promise((resolve, reject) =>{
         this.httpClient.post(authUrl, payload, this.httpOptions) // http-post
           .toPromise()
@@ -91,7 +91,6 @@ export class HomeComponent implements OnInit {
     }else{
       this.router.navigate(['/order']);
     }
-
   }
 }
 

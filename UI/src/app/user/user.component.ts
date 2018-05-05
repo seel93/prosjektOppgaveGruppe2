@@ -13,6 +13,8 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  public orderIdForUser: any[];
+  public orderRecords: any[];
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -25,6 +27,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     if(this.authService.getId()){
       this.fetchOrderIds();
+      
     }
   }
 
@@ -32,11 +35,37 @@ export class UserComponent implements OnInit {
     let iDUrl = environment.ApiUrl + "/orderbyuser";
     let payload = {id : this.authService.getId()};
     this.httpClient.post(iDUrl, payload, this.httpOptions)
-      .subscribe(
-        (data) => {
-          console.log(data);
+     .subscribe(
+        (data: any []) => {
+          this.orderIdForUser = data;
+          console.log(this.orderIdForUser);
+        },
+        (error) =>{
+          this.notificationService.alertApiError(error);
+        },
+        () => {
+          this.fetchOrders();
         }
-      )
+    );
+  }
+
+  fetchOrders(){
+    this.orderIdForUser.forEach(element => {
+      let orderUrl = environment.ApiUrl + '/order' + '/' + element;
+      this.httpClient.get(orderUrl, this.httpOptions)
+        .subscribe(
+          (data: any) => {
+            console.log(data);
+            this.orderRecords.push(data[0]);
+          },
+          (error) =>{
+            this.notificationService.alertApiError(error);
+          }, 
+          () => {
+            console.log(this.orderRecords);
+          }
+        )
+    });
   }
 
 }

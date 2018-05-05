@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
+using api.models;
 
 namespace api.Controllers
 {
@@ -24,10 +25,9 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetOrdersForUser([FromBody] int id)
+        public IActionResult GetOrdersForUser([FromBody] OrderByUser order)
         {
-            return Ok(_context.getOrderByUserId(id));
+            return Ok(_context.getOrderByUserId(order));
         }
-
     }
 }

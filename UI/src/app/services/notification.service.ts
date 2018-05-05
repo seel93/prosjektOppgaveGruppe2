@@ -50,4 +50,19 @@ export class NotificationService {
     });
     setTimeout(validCreation.close.bind(validCreation), 8000);
   }
+
+  notifyInvalidCredentials(){
+    let validCreation = new Notification("Ugyldig logg inn", {
+      body: "Vi finner ikke denne brukeren i databasen",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validCreation.close.bind(validCreation), 8000);
+  }
+
+  alertApiError(error: any[]){
+    let errorMessage = new Notification("Feil:", {
+      body: "" + error.toString(), 
+      icon:'../assets/icons/bike-21-512.png'
+    })
+  }
 }

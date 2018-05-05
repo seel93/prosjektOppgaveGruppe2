@@ -1,3 +1,91 @@
-<ul *ngFor="let order of orderRecords">
-    <li>{{order}}</li>
-</ul>
+
+<!--Section: Blog v.1-->
+<section class="py-4 text-center text-lg-left orderSection">
+    <!--Grid row-->
+    <div class="row pb-5">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-xl-4 pb-2">
+            <!--Featured image-->
+            <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
+                <img src="../assets/bike.jpg" alt="Thrid image in the blog listing." class="img-fluid">
+                <a>
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-7 col-xl-7">
+            <!--Excerpt-->
+            <a href="" class="indigo-text">
+                <h6 class="font-weight-bold pb-1">
+                    <i class="fa fa-bicycle"></i> Sykkler og utstyr</h6>
+            </a>
+            <h3 class="mb-4 font-weight-bold dark-grey-text">
+                <strong>Her finner du alle de tidligere bestillingene fra oss</strong>
+            </h3>
+            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
+                magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro qui dolorem ipsum quia sit
+                amet, consectetur.</p>
+            <p>by
+                <a>
+                    <strong>Sykkelutleie</strong>
+                </a>, {{date}}</p>
+        </div>
+        <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+</section>
+<!--Section: Blog v.1-->
+
+<table class="table orderSection">
+    <thead class="blue-grey lighten-4 orderSection">
+        <tr>
+            <th>Ordre id:</th>
+            <th>Pris:</th>
+            <th>Ordre dato:</th>
+        </tr>
+    </thead>
+    <tbody class="orderSection" >
+      <tr *ngFor="let order of orderRecords; let i = index">
+        <td>
+          {{order.order_id}}
+          <button 
+                type="button" 
+                class="btn btn-primary relative waves-light" 
+                (click)="statusModal.show(); modalTrigger(i)" 
+                mdbWavesEffect
+                >
+                    Mer informasjon:
+                </button>
+
+        </td>
+        <td>{{order.price}}</td>
+        <td>{{order.orderDate}}</td>
+      </tr>
+    </tbody>
+</table>
+
+<div mdbModal #statusModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mystatusModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Sjekk status på</h4>
+            </div>
+            <div class="modal-body">
+                {{eqipment}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
+            </div>
+        </div>
+    </div>
+</div>
+

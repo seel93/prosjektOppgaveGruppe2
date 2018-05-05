@@ -65,4 +65,13 @@ export class NotificationService {
       icon:'../assets/icons/bike-21-512.png'
     })
   }
+
+  notifyOrderRecordsRecieved(recordLength: number){
+    let orderRecords = new Notification("Bestillinger er hentet", {
+      body: "Vi fant " + recordLength + " bestilinger for denne brukeren",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(orderRecords.close.bind(orderRecords), 8000);
+  }
+
 }

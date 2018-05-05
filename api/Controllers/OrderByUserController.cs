@@ -12,16 +12,18 @@ namespace api.Controllers
     public class OrderByUserController : Controller
     {
         private readonly OrderContext _context;
+        private readonly BikeAndOrderContext second_context;
 
-        public OrderByUserController(OrderContext context)
+        public OrderByUserController(OrderContext context, BikeAndOrderContext context2)
         {
             _context = context;
+            second_context = context2;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        [HttpGet("{id}")]
+        public IActionResult GetOrder(int id)
         {
-            return Ok();
+            return Ok(second_context.GetEquipmentByOrder(id));
         }
 
         [HttpPost]

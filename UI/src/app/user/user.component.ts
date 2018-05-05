@@ -14,7 +14,9 @@ import { environment } from '../../environments/environment';
 })
 export class UserComponent implements OnInit {
   public orderIdForUser: any[];
-  public orderRecords: any[];
+  public orderRecords: any[] = Array();
+  public selectedOrderRecord: any[] = Array();
+  public date = new Date();
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     if(this.authService.getId()){
       this.fetchOrderIds();
-      
+      this.notificationService.notifyOrderRecordsRecieved(this.orderRecords.length);
     }
   }
 
@@ -54,8 +56,7 @@ export class UserComponent implements OnInit {
       let orderUrl = environment.ApiUrl + '/order' + '/' + element;
       this.httpClient.get(orderUrl, this.httpOptions)
         .subscribe(
-          (data: any) => {
-            console.log(data);
+          (data: any[]) => {
             this.orderRecords.push(data[0]);
           },
           (error) =>{
@@ -68,4 +69,16 @@ export class UserComponent implements OnInit {
     });
   }
 
+  modalTrigger(index){
+    console.log(index);
+    let orderEquipmentUrl = environment.ApiUrl + "/orderbyuser" + "/" + this.orderRecords[index]['order_id'];
+    this.httpClient.get(orderEquipmentUrl, this.httpOptions)
+      .subscribe(
+        (data: any[])=>{
+          this.selectedOrderRecord = data;
+        }
+    );
+    console.log(this.selectedOrderRecord);
+    
+  }
 }

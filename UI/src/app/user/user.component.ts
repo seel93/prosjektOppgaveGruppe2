@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {må 
+export class UserComponent implements OnInit { 
   public orderIdForUser: any[];
   public orderRecords: any[] = Array();
   public equipmentRecordForOrder : any[] = Array();
@@ -76,8 +76,6 @@ export class UserComponent implements OnInit {må
       .subscribe(
         (data: any[])=>{
           selectedOrderRecord = data;
-        },
-        () => {
           this.fetchEquipmentInfoForSelectedOrderId(selectedOrderRecord);
         }
     );
@@ -86,13 +84,19 @@ export class UserComponent implements OnInit {må
 
   fetchEquipmentInfoForSelectedOrderId(orderRecord){
     orderRecord.forEach(element => {
-      let equipmentInfoUrl = environment.ApiUrl + "/bike" + element['bike_id'];
+      let equipmentInfoUrl = environment.ApiUrl + "/bike" + "/" + element['bike_id'];
       this.httpClient.get(equipmentInfoUrl, this.httpOptions)
         .subscribe(
-          (data: any[]) => {
+          (data) => {
             console.log(data);
+            this.equipmentRecordForOrder.push(data[0]);
           }
         );
     });
+  }
+
+  clearEquipmentInfo(){
+    console.log("clearing list");
+    this.equipmentRecordForOrder = []; 
   }
 }

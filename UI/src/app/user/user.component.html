@@ -74,16 +74,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide(); clearEquipmentInfo()">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">Sjekk status på</h4>
+                <h4 class="modal-title w-100" id="myModalLabel">Utstyr for denne bestillingen</h4>
             </div>
             <div class="modal-body">
-                {{eqipment}}
+                <ul *ngFor="let bike of equipmentRecordForOrder">
+                    <li>
+                        <span>Navn: {{bike.name}}</span>
+                        &ensp; &ensp;
+                        <span>Type: {{bike.type}}</span>
+                        &ensp; &ensp;
+                        <span>Status: {{bike.status}}</span>
+                        &ensp; &ensp;
+                    </li>
+                </ul>
+                <p>Trukk enten på Lukk eller x når du skal ut av vinduet</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
+                <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide(); clearEquipmentInfo()" mdbWavesEffect>Lukk</button>
             </div>
         </div>
     </div>

@@ -43,6 +43,7 @@ insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansat
 insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansatt_id, bestillingsdato, kan_hentes, maa_leveres_foer) values(5, 3397.96, 1, 5, 4, '2016-08-20 15:53:23', '2016-08-23 13:00:00', '2016-08-25 13:00:00');
 insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansatt_id, bestillingsdato, kan_hentes, maa_leveres_foer) values(6, 4194, 0, 4, 1, '2017-11-27 21:42:52', '2017-11-29 07:00:00', '2017-12-05 07:00:00');
 insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansatt_id, bestillingsdato, kan_hentes, maa_leveres_foer) values(7, 5096.94, 1, 3, 1, '2018-01-17 18:17:03', '2018-01-28 07:00:00', '2018-01-31 07:00:00');
+insert into bestilling(bestilling_id, pris, gruppe, kunde_kunde_id, ansatt_ansatt_id, bestillingsdato, kan_hentes, maa_leveres_foer) values(8, 14000, 0, 1, 1, '2018-03-17 18:17:03', '2018-05-06 07:00:00', '2018-05-26 07:00:00');
 
 --UTSTYR_BESTILLING_SAMMENINSERT
 insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) values(1, 1);
@@ -59,6 +60,7 @@ insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) va
 insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) values(1, 7);
 insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) values(2, 7);
 insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) values(4, 7);
+insert into Utstyr_has_bestilling(Utstyr_utstyr_id, bestilling_bestilling_id) values(1, 8);
 
 --LEVERINGINSERT
 insert into Levering (bestilling_bestilling_id, leveringsdato, leveringssted) values(1, '2013-12-13 19:34:54', 11);

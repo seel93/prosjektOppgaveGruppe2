@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     Notification.requestPermission().then((result) => {
     });
+    if(this.authService.getUserCredentials()){
+      this.auth = true;
+    }
   }
 
   sendMessage(name: string, employee: boolean, userId: number): void {

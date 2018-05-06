@@ -142,7 +142,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Utstyr_has_bestilling where bestilling_bestilling_id=@id ;";
+                cmd.CommandText = "select * from Utstyr_has_bestilling where bestilling_bestilling_id=@id;";
                  cmd.Parameters.AddWithValue("@id", id);
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -150,7 +150,7 @@ namespace api.Models
                     {
                           list.Add(new BikeAndOrder
                         {
-                            Bike_id = Convert.ToInt32(reader["utstyr_utstyr_id"]),
+                            Bike_id = Convert.ToInt32(reader["Utstyr_utstyr_id"]),
                             Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"])
                         });
                     }

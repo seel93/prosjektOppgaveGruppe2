@@ -12,11 +12,12 @@ import { environment } from '../../environments/environment';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit {må 
   public orderIdForUser: any[];
   public orderRecords: any[] = Array();
-  public selectedOrderRecord: any[] = Array();
+  public equipmentRecordForOrder : any[] = Array();
   public date = new Date();
+
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -63,22 +64,35 @@ export class UserComponent implements OnInit {
             this.notificationService.alertApiError(error);
           }, 
           () => {
-            console.log(this.orderRecords);
           }
         )
     });
   }
 
   modalTrigger(index){
-    console.log(index);
+    let selectedOrderRecord: any[] = Array();
     let orderEquipmentUrl = environment.ApiUrl + "/orderbyuser" + "/" + this.orderRecords[index]['order_id'];
     this.httpClient.get(orderEquipmentUrl, this.httpOptions)
       .subscribe(
         (data: any[])=>{
-          this.selectedOrderRecord = data;
+          selectedOrderRecord = data;
+        },
+        () => {
+          this.fetchEquipmentInfoForSelectedOrderId(selectedOrderRecord);
         }
     );
-    console.log(this.selectedOrderRecord);
     
+  }
+
+  fetchEquipmentInfoForSelectedOrderId(orderRecord){
+    orderRecord.forEach(element => {
+      let equipmentInfoUrl = environment.ApiUrl + "/bike" + element['bike_id'];
+      this.httpClient.get(equipmentInfoUrl, this.httpOptions)
+        .subscribe(
+          (data: any[]) => {
+            console.log(data);
+          }
+        );
+    });
   }
 }

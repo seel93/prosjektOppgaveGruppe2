@@ -1,4 +1,6 @@
 
+![Alt text](app.png?raw=true "Sykkel utleie")
+
 # ProsjektOppgave IINI1010 og IFUD1110 Objektorientert programmering med systemarbeid (2018 VÅR):
 
 
@@ -61,3 +63,13 @@ Api:
 ```shell
     dotnet run
 ```
+
+#Creating a runnable file for the electron App:
+
+```shell
+    ng build 
+```
+```shell
+    npm run package
+```
+There should appear a folder containing all the files for the app including a .exe or similar file for other plattforms

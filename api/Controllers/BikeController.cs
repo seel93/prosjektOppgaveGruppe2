@@ -16,6 +16,12 @@ namespace api.Controllers
            _context = context;
        }
 
+       [HttpGet("/more")]
+       public IActionResult test()
+       {
+           return Ok("funker fjell");
+       }
+
 
         [HttpGet]
          public IActionResult Index()  

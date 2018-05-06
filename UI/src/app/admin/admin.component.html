@@ -4,7 +4,7 @@
     <div class="md-form">
         <i class="fa fa-user prefix grey-text"></i>
         <input type="text" id="form3" class="form-control" name="username" ngModel mdbActive>
-        <label for="form3">Brukernavn</label>
+        <label for="form3">Ansatt id</label>
     </div>
 
     <div class="md-form">
@@ -22,56 +22,55 @@
 <!--Logginn Form-->
 
 <div *ngIf="auth">
-
+    <h4>Oversikt over utstyr:</h4>
     <table class="table equipmentTable">
 
         <!--Table head-->
         <thead class="blue-grey lighten-4">
-            <tr>
-                <th>Utstyr navn:</th>
-                <th>Type:</th>
-                <th>Tilgjengelighet:</th>
-                <th>Status:</th>
-                <th>Tilgjengelig ved:</th>
-                <th>pris  time:</th>
-                <th>pris dag:</th>
-                <th>Ramme</th>
-                <th>Hjulstørrelse</th>
-            </tr>
-        </thead>
-        <!--Table head-->
-
-        <!--Table body-->
-        <tbody>
-            <tr *ngFor="let equipment of equipmentList">
-                <td>{{equipment.name}}</td>
-                <td>{{equipment.type}}</td>
-                <td>
-                    <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show()" mdbWavesEffect>
-                        Sjekk Tilgjengelighet
-                    </button>
-                </td>
-                <td>
-                    <span *ngIf="!auth">{{equipment.staus}}</span>
-                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
-                        Endre status
-                    </button>
-                </td>
-                <td>
-                    <span *ngIf="!auth">{{equipment.staus}}</span>
-                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
-                        Endre sted
-                    </button>
-                </td>
-                <td>{{equipment.hourPrice}}</td>
-                <td>{{equipment.dailyPrice}}</td>
-                <td>{{equipment.frame}}</td>
-                <td>{{equipment.wheelSize}}</td>
-            </tr>
-        </tbody>
-        <!--Table body-->
+                <tr>
+                    <th>Utstyr navn:</th>
+                    <th>Type:</th>
+                    <th>Tilgjengelighet:</th>
+                    <th>Status:</th>
+                    <th>Tilgjengelig ved:</th>
+                    <th>pris  time:</th>
+                    <th>pris dag:</th>
+                    <th>Ramme</th>
+                    <th>Hjulstørrelse</th>
+                </tr>
+            </thead>
+            <!--Table head-->
+    
+            <!--Table body-->
+            <tbody>
+                <tr *ngFor="let equipment of equipmentList">
+                    <td>{{equipment.name}}</td>
+                    <td>{{equipment.type}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show()" mdbWavesEffect>
+                            Sjekk Tilgjengelighet
+                        </button>
+                    </td>
+                    <td>
+                        <span *ngIf="!auth">{{equipment.staus}}</span>
+                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
+                            Endre status
+                        </button>
+                    </td>
+                    <td>
+                        <span *ngIf="!auth">{{equipment.staus}}</span>
+                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
+                            Endre sted
+                        </button>
+                    </td>
+                    <td>{{equipment.hourPrice}}</td>
+                    <td>{{equipment.dailyPrice}}</td>
+                    <td>{{equipment.frame}}</td>
+                    <td>{{equipment.wheelSize}}</td>
+                </tr>
+            </tbody>
+            <!--Table body-->
     </table>
-    <!--Table-->
 
     <div mdbModal #statusModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mystatusModalLabel"
         aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
@@ -134,4 +133,33 @@
             </div>
         </div>
     </div>
+    <br/>
+    <h4>Oversikt over bestillinger:</h4>
+      <table class="table equipmentTable">
+
+        <!--Table head-->
+        <thead class="blue-grey lighten-4">
+            <tr>
+                <th>Id:</th>
+                <th>Pris:</th>
+                <th>Kunde id:</th>
+                <th>Ansatt id:</th>
+                <th>Order dato:</th>
+            </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+            <tr *ngFor="let order of orderList">
+                <td>{{order.order_id}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.customer_id}}</td>
+                <td>{{order.employee_id}}</td>
+                <td>{{order.orderDate}}</td>
+            </tr>
+        </tbody>
+        <!--Table body-->
+    </table>
+    <!--Table-->
 </div>

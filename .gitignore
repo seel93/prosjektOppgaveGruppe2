@@ -5,7 +5,7 @@ init.sql
 .vscode
 
 #build folder for angular
-/UI/build
+#/UI/build
 /UI/node_modules
 /UI/package-lock.json
 /UI/SykkelUtleie-linux-x64

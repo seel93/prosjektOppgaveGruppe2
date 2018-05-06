@@ -64,14 +64,25 @@ export class HomeComponent implements OnInit {
     }
     console.log(payload);
     let authUrl = environment.ApiUrl + "/auth";
-    let promise = new Promise((resolve, reject) =>{
+    this.httpClient.post(authUrl, payload, this.httpOptions)
+    .subscribe(
+      (data) =>{
+        if(data['creds_id'] && data['password'] && data['username']){
+          this.auth = true;
+          this.notificationService.notifyUponSubmission();
+          this.sendMessage(data['username'], this.employee, data['creds_id']);
+        }
+        (error)=>{
+          this.notificationService.alertApiError(error);
+
+        }
+        }
+    );
+   /*  let promise = new Promise((resolve, reject) =>{
         this.httpClient.post(authUrl, payload, this.httpOptions) // http-post
           .toPromise()
           .then(
             res => {
-              this.auth = true;
-              this.notificationService.notifyUponSubmission();
-              this.sendMessage(res['username'], this.employee, res['creds_id']);
               console.log(res);
               resolve();
             }, 
@@ -83,9 +94,10 @@ export class HomeComponent implements OnInit {
                 resolve();
             }
           }
-        );
-    });
-    return promise;
+        ); 
+      });
+      return promise;
+      */
   }
 
   redirectUser(route){

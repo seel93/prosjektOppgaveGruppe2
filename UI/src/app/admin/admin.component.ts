@@ -12,9 +12,9 @@ import {environment} from '../../environments/environment';
 })
 export class AdminComponent implements OnInit {
   public equipmentList : any [];
+  public orderList : any [] = Array();
   employee: boolean = true;
   auth: boolean = false;
-  apiUrl : string = environment.ApiUrl;
 
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
   }
   
   loggIn(data) {
-    let loggInnUrl = this.apiUrl + "/auth"; // api logg inn url
+    let loggInnUrl = environment.ApiUrl + "/auth"; // api logg inn url
     let payload = { // objektet som blir sendt med http-request
       Username: data.username,
       Password: data.password,
@@ -61,6 +61,7 @@ export class AdminComponent implements OnInit {
           this.auth = true;
           this.notifyUponSubmission();
           this.fetchEquipment();
+          this.fetchOrders();
         },
         (err) => {
           if (err.status == 200) {
@@ -73,20 +74,7 @@ export class AdminComponent implements OnInit {
   }
 
   fetchEquipment(){
-    let equipmentEndpoint = this.apiUrl + "/bike";
-    /* let Promise = this.httpClient.get(equipmentEndpoint, this.httpOptions)
-      .toPromise()
-      .then(
-        (res : any) => {
-          console.log(res);
-          this.equipmentList.push(res);
-          console.log(this.equipmentList);
-        },
-        error => {
-          console.log(error);
-        }
-      ); */
-
+    let equipmentEndpoint = environment.ApiUrl + "/bike";
       this.httpClient.get(equipmentEndpoint, this.httpOptions)
         .subscribe(
           (data : any) => {
@@ -98,9 +86,17 @@ export class AdminComponent implements OnInit {
           () => {
             console.log("succes");
           }
-        )
-
+    );
   }
   
+  fetchOrders(){
+    let orderUrl = environment.ApiUrl + "/order";
+    this.httpClient.get(orderUrl, this.httpOptions)
+      .subscribe(
+        (data: any []) => {
+          this.orderList = data;
+        }
+      )
+  }
 
 }

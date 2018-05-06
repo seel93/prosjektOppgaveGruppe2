@@ -52,7 +52,6 @@ export class OrderComponent implements OnInit {
     this.fetchEquipment();
     this.getEmployees();
     this.userId = this.authService.getId();
-    this.notificationService.testNotification();
   }
 
   fetchEquipment() {

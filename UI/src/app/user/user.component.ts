@@ -96,7 +96,6 @@ export class UserComponent implements OnInit {
   }
 
   clearEquipmentInfo(){
-    console.log("clearing list");
     this.equipmentRecordForOrder = []; 
   }
 }

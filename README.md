@@ -47,6 +47,7 @@ Setup for Database:
 ```shell
     mysql -u <your-username> -p < setup_init.sql
 ```
+The password should be: "password123" which is the password we have set in appsettings.json
 
 #Running the App: 
 UI:

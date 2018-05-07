@@ -38,6 +38,10 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.auth = this.authService.checkEmployment();
     this.fetchPlaces();    
+    if(this.auth){
+      this.fetchEquipment();
+      this.fetchOrders();
+    }
   }
   
   notifyUponSubmission() {

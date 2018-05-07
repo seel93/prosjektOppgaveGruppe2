@@ -133,9 +133,9 @@ export class AdminComponent implements OnInit {
   }
 
   locationConfig(equipment){
-    console.log(this.placesList[equipment['lastSeenOnPlace']]); 
+    console.log(this.placesList[this.placesList.findIndex(place => place.place_id === equipment.lastSeenOnPlace)]); 
     this.selectedEquipment = Object.assign({}, equipment);
-    this.selectedEquipmentLocation = Object.assign({},this.placesList[equipment['lastSeenOnPlace']]);
+    this.selectedEquipmentLocation = Object.assign({}, this.placesList[this.placesList.findIndex(place => place.place_id === equipment.lastSeenOnPlace)]); 
     this.selectedEquipmentName = equipment.name;
     console.log(this.selectedEquipmentLocation);
   }

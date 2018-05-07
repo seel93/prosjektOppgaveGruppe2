@@ -1,20 +1,21 @@
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace api.Models
 {
     public class BikeContext
     {
-        
-        public string ConnectionString {get; set;}
+
+        public string ConnectionString { get; set; }
 
         public BikeContext(string connectionString)
         {
-            this.ConnectionString =  connectionString;
+            this.ConnectionString = connectionString;
         }
 
-        private MySqlConnection GetConnection(){
+        private MySqlConnection GetConnection()
+        {
             return new MySqlConnection(ConnectionString);
         }
 
@@ -22,17 +23,17 @@ namespace api.Models
         {
             List<Bike> list = new List<Bike>();
 
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd;
                 var command = "select * from Utstyr;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
-                
-                using(var reader = cmd.ExecuteReader())
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         list.Add(new Bike
                         {
@@ -60,17 +61,128 @@ namespace api.Models
         {
             List<Bike> list = new List<Bike>();
 
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd;
                 var command = "select * from Utstyr order by status;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
-                
-                using(var reader = cmd.ExecuteReader())
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
+                    {
+                        list.Add(new Bike
+                        {
+                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
+                            Name = reader["utstyr_navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
+                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
+                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
+                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
+                            WheelSize = reader["hjulstoerrelse"].ToString(),
+                            Frame = reader["ramme"].ToString(),
+                            STATUS = reader["utstyr_status"].ToString()
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return list;
+        }
+
+        public List<Bike> GetBikeOrderByHourPrice()
+        {
+            List<Bike> list = new List<Bike>();
+
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd;
+                var command = "select * from Utstyr order by timepris;";
+                cmd = new MySqlCommand(command, conn);
+                //cmd.ExecuteNonQuery();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Bike
+                        {
+                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
+                            Name = reader["utstyr_navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
+                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
+                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
+                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
+                            WheelSize = reader["hjulstoerrelse"].ToString(),
+                            Frame = reader["ramme"].ToString(),
+                            STATUS = reader["utstyr_status"].ToString()
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return list;
+        }
+
+                public List<Bike> GetBikeOrderByDayPrice()
+        {
+            List<Bike> list = new List<Bike>();
+
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd;
+                var command = "select * from Utstyr order by dagspris;";
+                cmd = new MySqlCommand(command, conn);
+                //cmd.ExecuteNonQuery();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Bike
+                        {
+                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
+                            Name = reader["utstyr_navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
+                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
+                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
+                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
+                            WheelSize = reader["hjulstoerrelse"].ToString(),
+                            Frame = reader["ramme"].ToString(),
+                            STATUS = reader["utstyr_status"].ToString()
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return list;
+        }
+
+        public List<Bike> GetBikeOrderByInvalidState()
+        {
+            List<Bike> list = new List<Bike>();
+
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd;
+                var command = "select * from Utstyr where utstyr_status != 'klar';";
+                cmd = new MySqlCommand(command, conn);
+                //cmd.ExecuteNonQuery();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
                         list.Add(new Bike
                         {
@@ -130,9 +242,9 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select * from Utstyr where utstyr_id = @id;";
                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         list.Add(new Bike
                         {
@@ -150,7 +262,7 @@ namespace api.Models
                         });
                     }
                 }
-                 conn.Close();
+                conn.Close();
             }
             return list;
         }
@@ -167,10 +279,10 @@ namespace api.Models
                 conn.Close();
             }
         }
-        
+
         public void UpdateBike(int id, Bike Bike)
         {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
@@ -192,8 +304,8 @@ namespace api.Models
         }
 
 
-//------------------------------------------------------------------------------------------------------//
-//------------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------//
 
 
         public void UpdateBikeStatus(int id, string STATUS)
@@ -212,7 +324,7 @@ namespace api.Models
 
         public string GetBikeStatus(int id)
         {
-            string result="";
+            string result = "";
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
@@ -220,9 +332,9 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select status from Utstyr left join status ON utstyr.status=idstatus where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         result = reader["utstyr_status"].ToString();
                     }
@@ -243,9 +355,9 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select tilhoerer_sted from Utstyr where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         result = Convert.ToInt32(reader["tilhoerer_sted"]);
                     }
@@ -265,9 +377,9 @@ namespace api.Models
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select var_sist_paa_sted from Utstyr where utstyr_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         result = Convert.ToInt32(reader["var_sist_paa_sted"]);
                     }
@@ -276,5 +388,5 @@ namespace api.Models
             }
             return result;
         }
-    }    
+    }
 }

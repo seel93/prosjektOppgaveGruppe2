@@ -4,9 +4,10 @@
         Sorter etter:
     </button>
     <div class="dropdown-menu dropdown-primary">
-        <a class="dropdown-item" href="#">Sted</a>
-        <a class="dropdown-item" href="#">Tilgjengelig</a>
-        <a class="dropdown-item" href="#">Ikke tilgjengelig</a>
+        <a class="dropdown-item" (click)="orderByCriteria('pris')">pris per time</a>
+        <a class="dropdown-item" (click)="orderByCriteria('prisDag')">pris per dag </a>
+        <a class="dropdown-item" (click)="orderByCriteria('validStatus')">Tilgjengelig</a>
+        <a class="dropdown-item" (click)="orderByCriteria('invalidStatus')">Ikke tilgjengelig</a>
     </div>
 </div>
 <br />

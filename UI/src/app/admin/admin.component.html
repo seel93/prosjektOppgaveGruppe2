@@ -52,7 +52,7 @@
                         </button>
                     </td>
                     <td>
-                        <span *ngIf="!auth">{{equipment.staus}}</span>
+                        <span *ngIf="!auth">{{equipment.status}}</span>
                         <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show(); statusConfig(equipment)" mdbWavesEffect>
                             Endre status
                         </button>

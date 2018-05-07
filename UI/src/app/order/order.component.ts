@@ -72,10 +72,10 @@ export class OrderComponent implements OnInit {
 
   filterEquipment(list) {
     this.nonBikeEquipment = list.filter((element) => {
-      return element.type != "Sykkel";
+      return element.type != "Sykkel" && element.status == "klar";
     });
     this.bikeEquipmnet = list.filter((element) => {
-      return element.type == "Sykkel"
+      return element.type == "Sykkel" && element.status == "klar";
     });
   }
 

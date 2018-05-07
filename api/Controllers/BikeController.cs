@@ -11,29 +11,23 @@ namespace api.Controllers
     public class BikeController : Controller
     {
         private readonly BikeContext _context;
-       public BikeController(BikeContext context)
-       {
-           _context = context;
-       }
-
-       [HttpGet("/more")]
-       public IActionResult test()
-       {
-           return Ok("funker fjell");
-       }
-
+        public BikeController(BikeContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-         public IActionResult Index()  
-        {  
-            return Ok(_context.GetBike());  
-        }  
+        public IActionResult Index()
+        {
+            return Ok(_context.GetBike());
+        }
 
         [HttpPost]
         public IActionResult Create([FromBody] Bike Bike)
         {
             _context.postBike(Bike);
-            if(Bike == null){
+            if (Bike == null)
+            {
                 return BadRequest();
             }
             else
@@ -46,7 +40,8 @@ namespace api.Controllers
         public IActionResult GetById(int id)
         {
             _context.GetBike(id);
-            if(_context.GetBike(id) == null){
+            if (_context.GetBike(id) == null)
+            {
                 return BadRequest();
             }
             else
@@ -69,56 +64,56 @@ namespace api.Controllers
             return Ok("object updated");
         }
 
-    //-------------------------------------------------------------------------//
-    // //Dont need these for now
+        //-------------------------------------------------------------------------//
+        // //Dont need these for now
 
-    //     [HttpPut("{id}")]
-    //     public IActionResult UpdateStatus(int bike_id, string STATUS)
-    //     {
-    //         _context.UpdateBikeStatus(bike_id, STATUS);
-    //         return Ok("object updated");
-    //     }
+        //     [HttpPut("{id}")]
+        //     public IActionResult UpdateStatus(int bike_id, string STATUS)
+        //     {
+        //         _context.UpdateBikeStatus(bike_id, STATUS);
+        //         return Ok("object updated");
+        //     }
 
-    //     [HttpGet("{id}")]
-    //     public IActionResult GetBikeStatus(int id)
-    //     {
-    //         _context.GetBikeStatus(id);
-    //         if(_context.GetBikeStatus(id) == null)
-    //         {
-    //             return BadRequest();
-    //         }
-    //         else
-    //         {
-    //             return Ok(_context.GetBikeStatus(id));
-    //         }
-    //     }
+        //     [HttpGet("{id}")]
+        //     public IActionResult GetBikeStatus(int id)
+        //     {
+        //         _context.GetBikeStatus(id);
+        //         if(_context.GetBikeStatus(id) == null)
+        //         {
+        //             return BadRequest();
+        //         }
+        //         else
+        //         {
+        //             return Ok(_context.GetBikeStatus(id));
+        //         }
+        //     }
 
-    //     [HttpGet("{id}")]
-    //     public IActionResult  GetBikeOriginalLocation(int id)
-    //     {
-    //         _context.GetBikeOriginalLocation(id);
-    //         if(_context.GetBikeOriginalLocation(id) == null)
-    //         {
-    //             return BadRequest();
-    //         }
-    //         else
-    //         {
-    //             return Ok(_context.GetBikeOriginalLocation(id));
-    //         }
-    //     }
+        //     [HttpGet("{id}")]
+        //     public IActionResult  GetBikeOriginalLocation(int id)
+        //     {
+        //         _context.GetBikeOriginalLocation(id);
+        //         if(_context.GetBikeOriginalLocation(id) == null)
+        //         {
+        //             return BadRequest();
+        //         }
+        //         else
+        //         {
+        //             return Ok(_context.GetBikeOriginalLocation(id));
+        //         }
+        //     }
 
-    //     [HttpGet("{id}")]
-    //     public IActionResult GetBikeLastSeenLocation(int id)
-    //     {
-    //         _context.GetBikeLastSeenLocation(id);
-    //         if(_context.GetBikeLastSeenLocation(id) == null)
-    //         {
-    //             return BadRequest();
-    //         }
-    //         else
-    //         {
-    //             return Ok(_context.GetBikeLastSeenLocation(id));
-    //         }
-    //     } 
+        //     [HttpGet("{id}")]
+        //     public IActionResult GetBikeLastSeenLocation(int id)
+        //     {
+        //         _context.GetBikeLastSeenLocation(id);
+        //         if(_context.GetBikeLastSeenLocation(id) == null)
+        //         {
+        //             return BadRequest();
+        //         }
+        //         else
+        //         {
+        //             return Ok(_context.GetBikeLastSeenLocation(id));
+        //         }
+        //     } 
     }
 }

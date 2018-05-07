@@ -5,7 +5,7 @@ import { NotificationService } from '../services/notification.service';
 import { Subscription } from 'rxjs';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-equipment',
@@ -17,7 +17,7 @@ export class EquipmentComponent implements OnInit {
   public placesList: any[];
   public selectedPlace: Object = {};
   public selectedEquipmentName: string = "";
-  userName : string = "Gjest";
+  userName: string = "Gjest";
   subscription: Subscription;
 
   httpOptions = { // http-headers for API
@@ -27,7 +27,7 @@ export class EquipmentComponent implements OnInit {
     })
   };
 
-  constructor(private authService: AuthService, private notificationService : NotificationService,  private httpClient: HttpClient) {
+  constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) {
     this.subscription = this.authService.getMessage().subscribe(
       (message) => {
         if (message.status) {
@@ -49,14 +49,14 @@ export class EquipmentComponent implements OnInit {
           this.placesList = data;
         },
         error => () => {
-          console.log("error:" )
+          console.log("error:")
         },
         () => {
           this.fetchEquipment();
           this.notificationService.notifyEquipmentRecieved();
           console.log("succes for places");
         }
-    );
+      );
   }
 
   fetchEquipment() {
@@ -66,18 +66,40 @@ export class EquipmentComponent implements OnInit {
         (data: any[]) => {
           console.log(data);
           this.equipmentList = data;
-      },
-      error => () => {
-        console.log("error:" )
-      },
-      () => {
-        console.log("succes for equipment")
-      }
-    );
+        },
+        error => () => {
+          console.log("error:")
+        },
+        () => {
+          console.log("succes for equipment")
+        }
+      );
   }
 
-  modalTrigger(index, name){ 
+  modalTrigger(index, name) {
     this.selectedPlace = Object.assign({}, this.placesList[this.placesList.findIndex(place => place.place_id === index)]);
     this.selectedEquipmentName = name;
+  }
+
+  orderByCriteria(criteria: string) {
+    let url = environment.ApiUrl + "/status";
+    let payload = {};
+    if (criteria == 'pris') {
+      payload = { criteria: "price" }
+    } else if (criteria == 'validStatus') {
+      payload = { criteria: "validStatus" }
+
+    }else if(criteria == 'prisDag'){
+      payload = {criteria: 'priceDay'}
+    }else {
+      payload = { criteria: "invalidStatus" }
+    }
+
+    this.httpClient.post(url, payload, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          this.equipmentList = data;
+        }
+      )
   }
 }

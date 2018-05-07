@@ -26,7 +26,7 @@ export class NotificationService {
   notifyUponSubmission() {
     let validLogging = new Notification("Du er logget inn", {
       body: "Nå kan du velge område og tidsrom du vil leie utstyr i",
-      //icon: '../assets/icons/bike-21-512.png'
+      icon: '../assets/icons/bike-21-512.png'
     });
     setTimeout(validLogging.close.bind(validLogging), 8000);
   }

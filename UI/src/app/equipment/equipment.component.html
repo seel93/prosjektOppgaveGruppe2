@@ -20,7 +20,6 @@
             <th>Type</th>
             <th>Tilgjengelighet:</th>
             <th>Status:</th>
-            <th>Tilgjengelig ved:</th>
             <th>pris  time:</th>
             <th>pris dag:</th>
             <th>Ramme</th>
@@ -30,21 +29,20 @@
     <!--Table head-->
     <!--Table body-->
     <tbody>
-        <tr *ngFor="let equipment of equipmentList">
+        <tr *ngFor="let equipment of equipmentList; let i = index">
             <td>{{equipment.name}}</td>
             <td>{{equipment.type}}</td>
             <td>
                 <button 
                 type="button" 
                 class="btn btn-primary relative waves-light" 
-                (click)="statusModal.show(); modalTrigger()" 
+                (click)="statusModal.show(); modalTrigger(equipment.lastSeenOnPlace, equipment.name)" 
                 mdbWavesEffect
                 >
                     Sjekk Tilgjengelighet
                 </button>
             </td>
             <td>{{equipment.status}}</td>
-            <td>{{placesList.name}}</td>
             <td>{{equipment.hourPrice}}</td>
             <td>{{equipment.dailyPrice}}</td>
             <td>{{equipment.frame}}</td>
@@ -62,10 +60,14 @@
                 <button type="button" class="close pull-right" aria-label="Close" (click)="statusModal.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">Sjekk status på</h4>
+                <h4 class="modal-title w-100" id="myModalLabel">Status på utstyret</h4>
             </div>
             <div class="modal-body">
-                {{eqipment}}
+                <p>Status for: {{selectedEquipmentName}}</p>
+                <p>
+                    Siste sett på: {{selectedPlace.name}}
+                </p>
+                <p> Post nummer: {{selectedPlace.postalCode}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>

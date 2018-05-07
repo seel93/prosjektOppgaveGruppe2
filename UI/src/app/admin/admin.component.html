@@ -43,23 +43,23 @@
     
             <!--Table body-->
             <tbody>
-                <tr *ngFor="let equipment of equipmentList">
+                <tr *ngFor="let equipment of equipmentList; let i = index">
                     <td>{{equipment.name}}</td>
                     <td>{{equipment.type}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show()" mdbWavesEffect>
+                        <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show(); locationConfig(equipment)" mdbWavesEffect>
                             Sjekk Tilgjengelighet
                         </button>
                     </td>
                     <td>
                         <span *ngIf="!auth">{{equipment.staus}}</span>
-                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show()" mdbWavesEffect>
+                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show(); statusConfig(equipment)" mdbWavesEffect>
                             Endre status
                         </button>
                     </td>
                     <td>
                         <span *ngIf="!auth">{{equipment.staus}}</span>
-                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show()" mdbWavesEffect>
+                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show(); locationConfig(equipment)" mdbWavesEffect>
                             Endre sted
                         </button>
                     </td>
@@ -83,7 +83,8 @@
                     <h4 class="modal-title w-100" id="myModalLabel">Endre status på</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <p>{{selectedEquipmentName}}</p>
+                    <p> status: {{selectedEquipmentStatus}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
@@ -104,7 +105,9 @@
                     <h4 class="modal-title w-100" id="myModalLabel">Tilgjengelighet</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <p>{{selectedEquipmentName}}</p>
+                    <p>Sist sett på {{selectedEquipmentLocation.name}}</p>
+                    <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="avaliableModal.hide()" mdbWavesEffect>Lukk</button>
@@ -124,11 +127,23 @@
                     <h4 class="modal-title w-100" id="myModalLabel">Endre sted</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                        <p>{{selectedEquipmentName}}</p>
+                        <p>Sist sett på {{selectedEquipmentLocation.name}}</p>
+                        <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>
+                        <div class="btn-group sorterBtn" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                                Endre sted til:
+                            </button>
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" *ngFor="let place of placesList" (click)="assignNewPlace(place.place_id)">
+                                    {{place.name}}
+                                </a>
+                            </div>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="locationModal.hide()" mdbWavesEffect>Lukk</button>
-                    <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="updateLocation()" mdbWavesEffect>Lagre endringer</button>
                 </div>
             </div>
         </div>

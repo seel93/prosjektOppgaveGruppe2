@@ -461,7 +461,7 @@ var EquipmentComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4 *ngIf=\"!auth\" class=\"HomeTittle\">Brukerinnlogging</h4>\n<h4 *ngIf=\"auth\" class=\"HomeTittle\">Velkommen</h4>\n\n<br />\n<div class=\"card text-center NewUserPanel\" *ngIf=\"!auth\">\n    <div class=\"card-header success-color white-text\">\n        Featured\n    </div>\n    <div class=\"card-body\">\n        <h4 class=\"card-title\">Har du ikke bruker hos oss ennå?</h4>\n        <p class=\"card-text\">\n            Det er raskt og enkelt\n        </p>\n        <a class=\"btn btn-success btn-sm\" href=\"#register\">Gå til registrering</a>\n    </div>\n    <div class=\"card-footer text-muted success-color white-text\">\n    </div>\n</div>\n\n<br />\n<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f)\" novalidate *ngIf=\"!auth\" class=\"logginForm\">\n    <p class=\"h5 text-center mb-4\">Logg inn </p>\n\n  <div class=\"md-form\">\n      <i class=\"fa fa-user prefix grey-text\"></i>\n      <input type=\"text\" class=\"form-control\" name=\"username\" ngModel mdbActive>\n      <label for=\"logginForm\">Brukernavn</label>\n  </div>\n  \n  <div class=\"md-form\">\n        <i class=\"fa fa-certificate prefix grey-text\"></i>\n        <input type=\"password\" class=\"form-control\" name=\"password\" ngModel mdbActive>\n        <label for=\"logginForm\">passord</label>\n    </div>\n\n    <div class=\"text-center\">\n        <button class=\"btn btn-primary\" mdbRippleRadius>\n            <i class=\"fa fa-send mr-1\"></i> Logg inn</button>\n    </div>\n\n</form>\n\n\n<hr>\n<br/>\n<br/>\n<!--Logginn Form-->\n<div class=\"row\" *ngIf=\"auth\">\n    <div class=\"col-md-6\">\n        <button class=\"btn btn-primary waves-light\" (click)=\"redirectUser('history')\" mdbRippleRadius>Se ordrehistorikken din:</button>\n        <button class=\"btn btn-primary waves-light\" (click)=\"redirectUser('order')\" mdbRippleRadius>Gå til en ny bestilling:</button>\n    </div>\n\n   \n</div>"
+module.exports = "<h4 *ngIf=\"!auth\" class=\"HomeTittle\">Brukerinnlogging</h4>\n<h4 *ngIf=\"auth\" class=\"HomeTittle\">Velkommen</h4>\n\n<br />\n<div class=\"card text-center NewUserPanel\" *ngIf=\"!auth\">\n    <div class=\"card-header success-color white-text\">\n        Featured\n    </div>\n    <div class=\"card-body\">\n        <h4 class=\"card-title\">Har du ikke bruker hos oss ennå?</h4>\n        <p class=\"card-text\">\n            Det er raskt og enkelt\n        </p>\n        <a class=\"btn btn-success btn-sm\" href=\"#register\">Gå til registrering</a>\n    </div>\n    <div class=\"card-footer text-muted success-color white-text\">\n    </div>\n</div>\n\n<br />\n<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f)\" novalidate *ngIf=\"!auth\" class=\"logginForm\">\n    <p class=\"h5 text-center mb-4\">Logg inn </p>\n\n  <div class=\"md-form\">\n      <i class=\"fa fa-user prefix grey-text\"></i>\n      <input type=\"text\" class=\"form-control\" name=\"username\" ngModel mdbActive>\n      <label for=\"logginForm\">Brukernavn</label>\n  </div>\n  \n  <div class=\"md-form\">\n        <i class=\"fa fa-certificate prefix grey-text\"></i>\n        <input type=\"password\" class=\"form-control\" name=\"password\" ngModel mdbActive>\n        <label for=\"logginForm\">passord</label>\n    </div>\n\n    <div class=\"text-center\">\n        <button class=\"btn btn-primary\" mdbRippleRadius>\n            <i class=\"fa fa-send mr-1\"></i> Logg inn</button>\n    </div>\n\n</form>\n\n\n<hr>\n<br/>\n<br/>\n<!--Logginn Form-->\n<div class=\"row\" *ngIf=\"auth\">\n    <!-- Grid column -->\n    <div class=\"col-md-6 col-lg-5 userCard\">\n        \n        <!--Card-->\n        <div class=\"card green darken-3\">\n            \n            <!--Card image-->\n            <div class=\"view\">\n                <img src=\"./assets/downhill.jpg\" class=\"img-fluid\" alt=\"photo\">\n                <a href=\"#\">\n                    <div class=\"mask rgba-white-slight\"></div>\n                </a>\n            </div>\n            \n            <!--Card content-->\n            <div class=\"card-body text-center\">\n                <!--Title-->\n                <h4 class=\"card-title white-text\">{{message}}</h4>\n                <!--Text-->\n                <p class=\"card-text white-text\">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto vitae.</p>\n                <button class=\"btn btn-primary waves-light\" (click)=\"redirectUser('history')\" mdbRippleRadius>Se ordrehistorikken din:</button>\n                <button class=\"btn btn-primary waves-light\" (click)=\"redirectUser('order')\" mdbRippleRadius>Gå til en ny bestilling:</button>\n                </div>\n\n            </div>\n            <!--/.Card-->\n    \n        </div>\n        <!-- Grid column -->\n    \n\n   \n</div>"
 
 /***/ }),
 
@@ -472,7 +472,7 @@ module.exports = "<h4 *ngIf=\"!auth\" class=\"HomeTittle\">Brukerinnlogging</h4>
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".NewUserPanel {\n  width: 60%;\n  margin: 0 auto; }\n\n.HomeTittle {\n  text-align: center; }\n\n.logginForm {\n  width: 60%;\n  margin: 0 auto; }\n"
+module.exports = ".NewUserPanel {\n  width: 60%;\n  margin: 0 auto; }\n\n.HomeTittle {\n  text-align: center; }\n\n.logginForm {\n  width: 60%;\n  margin: 0 auto; }\n\n.userCard {\n  margin: 0 auto; }\n"
 
 /***/ }),
 
@@ -538,6 +538,7 @@ var HomeComponent = /** @class */ (function () {
     };
     HomeComponent.prototype.onSubmit = function (f) {
         var inputData = f.value;
+        this.message = inputData.username;
         if (!inputData.username || !inputData.password) {
             this.notificationService.notifyInvalidCredentials();
         }
@@ -554,25 +555,17 @@ var HomeComponent = /** @class */ (function () {
         };
         console.log(payload);
         var authUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].ApiUrl + "/auth";
-        var promise = new Promise(function (resolve, reject) {
-            _this.httpClient.post(authUrl, payload, _this.httpOptions) // http-post
-                .toPromise()
-                .then(function (res) {
+        this.httpClient.post(authUrl, payload, this.httpOptions)
+            .subscribe(function (data) {
+            if (data['creds_id'] && data['password'] && data['username']) {
                 _this.auth = true;
                 _this.notificationService.notifyUponSubmission();
-                _this.sendMessage(res['username'], _this.employee, res['creds_id']);
-                console.log(res);
-                resolve();
-            }, function (error) {
-                if (error.status = "200") {
-                    _this.auth = true;
-                    _this.notificationService.notifyUponSubmission();
-                    _this.sendMessage(data.username, _this.employee, data.Creds_id);
-                    resolve();
-                }
+                _this.sendMessage(data['username'], _this.employee, data['creds_id']);
+            }
+            (function (error) {
+                _this.notificationService.alertApiError(error);
             });
         });
-        return promise;
     };
     HomeComponent.prototype.redirectUser = function (route) {
         if (route == 'history') {

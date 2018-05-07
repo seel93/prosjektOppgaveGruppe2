@@ -30,7 +30,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     if(this.authService.getId()){
       this.fetchOrderIds();
-      this.notificationService.notifyOrderRecordsRecieved(this.orderRecords.length);
     }
   }
 
@@ -67,6 +66,8 @@ export class UserComponent implements OnInit {
           }
         )
     });
+    this.notificationService.notifyOrderRecordsRecieved(this.orderRecords.length);
+    
   }
 
   modalTrigger(index){

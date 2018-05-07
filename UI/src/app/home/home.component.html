@@ -46,10 +46,36 @@
 <br/>
 <!--Logginn Form-->
 <div class="row" *ngIf="auth">
-    <div class="col-md-6">
-        <button class="btn btn-primary waves-light" (click)="redirectUser('history')" mdbRippleRadius>Se ordrehistorikken din:</button>
-        <button class="btn btn-primary waves-light" (click)="redirectUser('order')" mdbRippleRadius>Gå til en ny bestilling:</button>
-    </div>
+    <!-- Grid column -->
+    <div class="col-md-6 col-lg-5 userCard">
+        
+        <!--Card-->
+        <div class="card green darken-3">
+            
+            <!--Card image-->
+            <div class="view">
+                <img src="./assets/downhill.jpg" class="img-fluid" alt="photo">
+                <a href="#">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+            
+            <!--Card content-->
+            <div class="card-body text-center">
+                <!--Title-->
+                <h4 class="card-title white-text">{{message}}</h4>
+                <!--Text-->
+                <p class="card-text white-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto vitae.</p>
+                <button class="btn btn-primary waves-light" (click)="redirectUser('history')" mdbRippleRadius>Se ordrehistorikken din:</button>
+                <button class="btn btn-primary waves-light" (click)="redirectUser('order')" mdbRippleRadius>Gå til en ny bestilling:</button>
+                </div>
+
+            </div>
+            <!--/.Card-->
+    
+        </div>
+        <!-- Grid column -->
+    
 
    
 </div>

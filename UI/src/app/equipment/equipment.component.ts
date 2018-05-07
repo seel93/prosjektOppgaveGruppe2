@@ -15,7 +15,8 @@ import {environment} from '../../environments/environment';
 export class EquipmentComponent implements OnInit {
   public equipmentList: any[];
   public placesList: any[];
-  apiUrl : string = environment.ApiUrl;
+  public selectedPlace: Object = {};
+  public selectedEquipmentName: string = "";
   userName : string = "Gjest";
   subscription: Subscription;
 
@@ -40,7 +41,7 @@ export class EquipmentComponent implements OnInit {
   }
 
   fetchPlaces() {
-    let placesUrl = this.apiUrl + "/place";
+    let placesUrl = environment.ApiUrl + "/place";
     this.httpClient.get(placesUrl, this.httpOptions)
       .subscribe(
         (data: any[]) => {
@@ -59,7 +60,7 @@ export class EquipmentComponent implements OnInit {
   }
 
   fetchEquipment() {
-    let equipmentEndpoint = this.apiUrl + "/bike";
+    let equipmentEndpoint = environment.ApiUrl + "/bike";
     this.httpClient.get(equipmentEndpoint, this.httpOptions)
       .subscribe(
         (data: any[]) => {
@@ -75,7 +76,8 @@ export class EquipmentComponent implements OnInit {
     );
   }
 
-  modalTrigger(){
-    console.log("this works");
+  modalTrigger(index, name){
+    this.selectedPlace = Object.assign({}, this.placesList[index]);
+    this.selectedEquipmentName = name;
   }
 }

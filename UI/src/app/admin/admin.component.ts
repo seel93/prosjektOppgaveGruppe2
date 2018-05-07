@@ -11,8 +11,17 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  //api data
   public equipmentList : any [];
   public orderList : any [] = Array();
+  placesList: any[] = Array();
+
+  // scope data
+  public selectedEquipment: Object = {};
+  public selectedEquipmentName: string = " ";
+  public selectedEquipmentStatus: string = " ";
+  public selectedEquipmentLocation: Object = {};
+  public assignedPlaceId: number = 0;
   employee: boolean = true;
   auth: boolean = false;
 
@@ -27,7 +36,7 @@ export class AdminComponent implements OnInit {
   
   ngOnInit() {
     this.auth = this.authService.checkEmployment();
-    console.log(this.auth);
+    this.fetchPlaces();    
   }
   
   notifyUponSubmission() {
@@ -97,6 +106,55 @@ export class AdminComponent implements OnInit {
           this.orderList = data;
         }
       )
+  }
+
+  fetchPlaces() {
+    let placesUrl = environment.ApiUrl + "/place";
+    this.httpClient.get(placesUrl, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+          this.placesList = data;
+        },
+        error => () => {
+          console.log("error:" )
+        },
+        () => {
+          console.log("succes for places");
+        }
+    );
+  }
+
+  statusConfig(equipment){
+    this.selectedEquipment = Object.assign({}, equipment);
+    this.selectedEquipmentStatus = equipment.status;
+    this.selectedEquipmentName = equipment.name;
+  }
+
+  locationConfig(equipment){
+    console.log(equipment); 
+    this.selectedEquipment = Object.assign({}, equipment);
+    this.selectedEquipmentLocation = Object.assign({},this.placesList[equipment['lastSeenOnPlace']]);
+    this.selectedEquipmentName = equipment.name;
+    console.log(this.selectedEquipmentLocation);
+  }
+
+  assignNewPlace(id){
+    this.assignedPlaceId = id;
+  }
+
+  updateLocation(){
+    let updateBikeUrl = environment.ApiUrl + "/bike" + "/" + this.selectedEquipment['bike_id'];
+    this.selectedEquipment['lastSeenOnPlace'] = this.assignedPlaceId;
+    let payload = Object.assign({}, this.selectedEquipment);
+    console.log(payload);
+    this.httpClient.put(updateBikeUrl, payload, this.httpOptions)
+      .subscribe(
+        (data: any[]) => {
+          console.log(data);
+        }
+      )
+
   }
 
 }

@@ -23,7 +23,7 @@ import {environment} from '../../environments/environment';
 })
 
 export class HomeComponent implements OnInit {
-  message: string = "hei";
+  message: string;
   employee: boolean = false;
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
   httpOptions = { // http-headers for API
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
 
   onSubmit(f: NgForm) { // html-form som tar i mot brukernavn og passord
     let inputData = f.value;
+    this.message = inputData.username;
     if(!inputData.username || !inputData.password){
       this.notificationService.notifyInvalidCredentials();
     }else{
@@ -78,26 +79,6 @@ export class HomeComponent implements OnInit {
         }
         }
     );
-   /*  let promise = new Promise((resolve, reject) =>{
-        this.httpClient.post(authUrl, payload, this.httpOptions) // http-post
-          .toPromise()
-          .then(
-            res => {
-              console.log(res);
-              resolve();
-            }, 
-            error => {
-              if(error.status = "200"){
-                this.auth = true;
-                this.notificationService.notifyUponSubmission();
-                this.sendMessage(data.username, this.employee, data.Creds_id);
-                resolve();
-            }
-          }
-        ); 
-      });
-      return promise;
-      */
   }
 
   redirectUser(route){

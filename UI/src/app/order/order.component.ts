@@ -224,5 +224,32 @@ export class OrderComponent implements OnInit {
         )
     });
     this.notificationService.notifyOrderCompleted(this.orderId);
+    this.updateStatusOfRentedEquipment();
+  }
+
+  updateStatusOfRentedEquipment(){
+    this.selectedEquipment.forEach(element => {
+      let updateUrl = environment.ApiUrl + "/bike" + "/" + element['bike_id'];
+      element['status'] = "utleid";
+      let payload = {
+        Bike_id: element['bike_id'],
+        Name: element['name'],
+        Type: element['type'],
+        DailyPrice: element['dailyPrice'],
+        HourPrice: element['hourPrice'],
+        EquipmentCode: element['equipmentCode'],
+        LastSeenOnPlace: element['lastSeenOnPlace'],
+        BelongsToPlace: element['belongsToPlace'],
+        WheelSize: element['wheelSize'],
+        Frame: element['frame'],
+        STATUS: element['status']
+      }
+      this.httpClient.put(updateUrl, payload, this.httpOptions)
+        .subscribe(
+          (data: any []) =>{
+            console.log(data);
+          }
+        )
+    });
   }
 }

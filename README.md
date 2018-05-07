@@ -45,7 +45,7 @@ If you dont have mysql on your machine you can find i [here](https://dev.mysql.c
 
 Setup for Database: 
 ```shell
-    mysql -u <your-username> -p < init.sql
+    mysql -u <your-username> -p < setup_init.sql
 ```
 
 #Running the App: 

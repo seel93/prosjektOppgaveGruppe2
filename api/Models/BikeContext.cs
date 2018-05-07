@@ -65,7 +65,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd;
-                var command = "select * from Utstyr order by status;";
+                var command = "select * from Utstyr where utstyr_status='klar';";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
 

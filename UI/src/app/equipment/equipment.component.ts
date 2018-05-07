@@ -77,7 +77,7 @@ export class EquipmentComponent implements OnInit {
   }
 
   modalTrigger(index, name){ 
-    this.selectedPlace = Object.assign({}, this.placesList[index]);
+    this.selectedPlace = Object.assign({}, this.placesList[this.placesList.findIndex(place => place.place_id === index)]);
     this.selectedEquipmentName = name;
   }
 }

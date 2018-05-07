@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f)\" novalidate *ngIf=\"!auth\" class=\"logginForm\">\n    <p class=\"h5 text-center mb-4\">Logg inn </p>\n\n    <div class=\"md-form\">\n        <i class=\"fa fa-user prefix grey-text\"></i>\n        <input type=\"text\" id=\"form3\" class=\"form-control\" name=\"username\" ngModel mdbActive>\n        <label for=\"form3\">Ansatt id</label>\n    </div>\n\n    <div class=\"md-form\">\n        <i class=\"fa fa-dollar prefix grey-text\"></i>\n        <input type=\"password\" id=\"form2\" class=\"form-control\" name=\"password\" ngModel mdbActive>\n        <label for=\"form2\">Passord</label>\n    </div>\n\n    <div class=\"text-center\">\n        <button class=\"btn btn-primary\" mdbRippleRadius>\n            <i class=\"fa fa-send mr-1\"></i> Logg inn</button>\n    </div>\n\n</form>\n<!--Logginn Form-->\n\n<div *ngIf=\"auth\">\n    <h4>Oversikt over utstyr:</h4>\n    <table class=\"table equipmentTable\">\n\n        <!--Table head-->\n        <thead class=\"blue-grey lighten-4\">\n                <tr>\n                    <th>Utstyr navn:</th>\n                    <th>Type:</th>\n                    <th>Tilgjengelighet:</th>\n                    <th>Status:</th>\n                    <th>Tilgjengelig ved:</th>\n                    <th>pris  time:</th>\n                    <th>pris dag:</th>\n                    <th>Ramme</th>\n                    <th>Hjulstørrelse</th>\n                </tr>\n            </thead>\n            <!--Table head-->\n    \n            <!--Table body-->\n            <tbody>\n                <tr *ngFor=\"let equipment of equipmentList\">\n                    <td>{{equipment.name}}</td>\n                    <td>{{equipment.type}}</td>\n                    <td>\n                        <button type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"avaliableModal.show()\" mdbWavesEffect>\n                            Sjekk Tilgjengelighet\n                        </button>\n                    </td>\n                    <td>\n                        <span *ngIf=\"!auth\">{{equipment.staus}}</span>\n                        <button *ngIf=\"auth\" type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"statusModal.show()\" mdbWavesEffect>\n                            Endre status\n                        </button>\n                    </td>\n                    <td>\n                        <span *ngIf=\"!auth\">{{equipment.staus}}</span>\n                        <button *ngIf=\"auth\" type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"locationModal.show()\" mdbWavesEffect>\n                            Endre sted\n                        </button>\n                    </td>\n                    <td>{{equipment.hourPrice}}</td>\n                    <td>{{equipment.dailyPrice}}</td>\n                    <td>{{equipment.frame}}</td>\n                    <td>{{equipment.wheelSize}}</td>\n                </tr>\n            </tbody>\n            <!--Table body-->\n    </table>\n\n    <div mdbModal #statusModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mystatusModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"statusModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Endre status på</h4>\n                </div>\n                <div class=\"modal-body\">\n                    ...\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"statusModal.hide()\" mdbWavesEffect>Lukk</button>\n                    <button type=\"button\" class=\"btn btn-primary relative waves-light\" mdbWavesEffect>Lagre endringer</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div mdbModal #avaliableModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"avaliableModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"avaliableModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Tilgjengelighet</h4>\n                </div>\n                <div class=\"modal-body\">\n                    ...\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"avaliableModal.hide()\" mdbWavesEffect>Lukk</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div mdbModal #locationModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"locationModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"locationModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Endre sted</h4>\n                </div>\n                <div class=\"modal-body\">\n                    ...\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"locationModal.hide()\" mdbWavesEffect>Lukk</button>\n                    <button type=\"button\" class=\"btn btn-primary relative waves-light\" mdbWavesEffect>Lagre endringer</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <br/>\n    <h4>Oversikt over bestillinger:</h4>\n      <table class=\"table equipmentTable\">\n\n        <!--Table head-->\n        <thead class=\"blue-grey lighten-4\">\n            <tr>\n                <th>Id:</th>\n                <th>Pris:</th>\n                <th>Kunde id:</th>\n                <th>Ansatt id:</th>\n                <th>Order dato:</th>\n            </tr>\n        </thead>\n        <!--Table head-->\n\n        <!--Table body-->\n        <tbody>\n            <tr *ngFor=\"let order of orderList\">\n                <td>{{order.order_id}}</td>\n                <td>{{order.price}}</td>\n                <td>{{order.customer_id}}</td>\n                <td>{{order.employee_id}}</td>\n                <td>{{order.orderDate}}</td>\n            </tr>\n        </tbody>\n        <!--Table body-->\n    </table>\n    <!--Table-->\n</div>"
+module.exports = "<form #f=\"ngForm\" (ngSubmit)=\"onSubmit(f)\" novalidate *ngIf=\"!auth\" class=\"logginForm\">\n    <p class=\"h5 text-center mb-4\">Logg inn </p>\n\n    <div class=\"md-form\">\n        <i class=\"fa fa-user prefix grey-text\"></i>\n        <input type=\"text\" id=\"form3\" class=\"form-control\" name=\"username\" ngModel mdbActive>\n        <label for=\"form3\">Ansatt id</label>\n    </div>\n\n    <div class=\"md-form\">\n        <i class=\"fa fa-dollar prefix grey-text\"></i>\n        <input type=\"password\" id=\"form2\" class=\"form-control\" name=\"password\" ngModel mdbActive>\n        <label for=\"form2\">Passord</label>\n    </div>\n\n    <div class=\"text-center\">\n        <button class=\"btn btn-primary\" mdbRippleRadius>\n            <i class=\"fa fa-send mr-1\"></i> Logg inn</button>\n    </div>\n\n</form>\n<!--Logginn Form-->\n\n<div *ngIf=\"auth\">\n    <h4>Oversikt over utstyr:</h4>\n    <table class=\"table equipmentTable\">\n\n        <!--Table head-->\n        <thead class=\"blue-grey lighten-4\">\n                <tr>\n                    <th>Utstyr navn:</th>\n                    <th>Type:</th>\n                    <th>Tilgjengelighet:</th>\n                    <th>Status:</th>\n                    <th>Tilgjengelig ved:</th>\n                    <th>pris  time:</th>\n                    <th>pris dag:</th>\n                    <th>Ramme</th>\n                    <th>Hjulstørrelse</th>\n                </tr>\n            </thead>\n            <!--Table head-->\n    \n            <!--Table body-->\n            <tbody>\n                <tr *ngFor=\"let equipment of equipmentList; let i = index\" ngModel>\n                    <td>{{equipment.name}}</td>\n                    <td>{{equipment.type}}</td>\n                    <td>\n                        <button type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"avaliableModal.show(); locationConfig(equipment)\" mdbWavesEffect>\n                            Sjekk Tilgjengelighet\n                        </button>\n                    </td>\n                    <td>\n                        <span *ngIf=\"!auth\">{{equipment.staus}}</span>\n                        <button *ngIf=\"auth\" type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"statusModal.show(); statusConfig(equipment)\" mdbWavesEffect>\n                            Endre status\n                        </button>\n                    </td>\n                    <td>\n                        <span *ngIf=\"!auth\">{{equipment.staus}}</span>\n                        <button *ngIf=\"auth\" type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"locationModal.show(); locationConfig(equipment)\" mdbWavesEffect>\n                            Endre sted\n                        </button>\n                    </td>\n                    <td>{{equipment.hourPrice}}</td>\n                    <td>{{equipment.dailyPrice}}</td>\n                    <td>{{equipment.frame}}</td>\n                    <td>{{equipment.wheelSize}}</td>\n                </tr>\n            </tbody>\n            <!--Table body-->\n    </table>\n\n    <div mdbModal #statusModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mystatusModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"statusModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Endre status på</h4>\n                </div>\n                <div class=\"modal-body\">\n                    <p>{{selectedEquipmentName}}</p>\n                    <p> status: {{selectedEquipmentStatus}}</p>\n                    <div class=\"btn-group sorterBtn\" dropdown>\n                            <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                                Endre status til: {{assignedSatus}}\n                            </button>\n                            <div class=\"dropdown-menu dropdown-primary\">\n                                <a class=\"dropdown-item\" (click)=\"assignNewStatus('flytt')\">\n                                    Flytt\n                                </a>\n                                <a class=\"dropdown-item\" (click)=\"assignNewStatus('reparasjon')\">\n                                    Reparasjon\n                                </a>\n                                <a class=\"dropdown-item\" (click)=\"assignNewStatus('stjålet')\">\n                                    Stjålet\n                                </a>\n                                <a class=\"dropdown-item\" (click)=\"assignNewStatus('klar')\">\n                                    Klar\n                                </a>\n                            </div>\n                        </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"statusModal.hide()\" mdbWavesEffect>Lukk</button>\n                    <button type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"updateLocationOrStatus('status')\" mdbWavesEffect>Lagre endringer</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div mdbModal #avaliableModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"avaliableModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"avaliableModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Tilgjengelighet</h4>\n                </div>\n                <div class=\"modal-body\">\n                    <p>{{selectedEquipmentName}}</p>\n                    <p>Sist sett på {{selectedEquipmentLocation.name}}</p>\n                    <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"avaliableModal.hide()\" mdbWavesEffect>Lukk</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div mdbModal #locationModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"locationModalLabel\"\n        aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"locationModal.hide()\">\n                        <span aria-hidden=\"true\">×</span>\n                    </button>\n                    <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Endre sted</h4>\n                </div>\n                <div class=\"modal-body\">\n                        <p>{{selectedEquipmentName}}</p>\n                        <p>Sist sett på {{selectedEquipmentLocation.name}}</p>\n                        <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>\n                        <div class=\"btn-group sorterBtn\" dropdown>\n                            <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                                Endre sted til:\n                            </button>\n                            <div class=\"dropdown-menu dropdown-primary\">\n                                <a class=\"dropdown-item\" *ngFor=\"let place of placesList\" (click)=\"assignNewPlace(place.place_id)\">\n                                    {{place.name}}\n                                </a>\n                            </div>\n                        </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"locationModal.hide()\" mdbWavesEffect>Lukk</button>\n                    <button type=\"button\" class=\"btn btn-primary relative waves-light\" (click)=\"updateLocationOrStatus('location')\" mdbWavesEffect>Lagre endringer</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <br/>\n    <h4>Oversikt over bestillinger:</h4>\n      <table class=\"table equipmentTable\">\n\n        <!--Table head-->\n        <thead class=\"blue-grey lighten-4\">\n            <tr>\n                <th>Id:</th>\n                <th>Pris:</th>\n                <th>Kunde id:</th>\n                <th>Ansatt id:</th>\n                <th>Order dato:</th>\n            </tr>\n        </thead>\n        <!--Table head-->\n\n        <!--Table body-->\n        <tbody>\n            <tr *ngFor=\"let order of orderList\">\n                <td>{{order.order_id}}</td>\n                <td>{{order.price}}</td>\n                <td>{{order.customer_id}}</td>\n                <td>{{order.employee_id}}</td>\n                <td>{{order.orderDate}}</td>\n            </tr>\n        </tbody>\n        <!--Table body-->\n    </table>\n    <!--Table-->\n</div>"
 
 /***/ }),
 
@@ -78,6 +78,14 @@ var AdminComponent = /** @class */ (function () {
         this.httpClient = httpClient;
         this.authService = authService;
         this.orderList = Array();
+        this.placesList = Array();
+        // scope data
+        this.selectedEquipment = {};
+        this.selectedEquipmentName = " ";
+        this.selectedEquipmentStatus = " ";
+        this.selectedEquipmentLocation = {};
+        this.assignedPlaceId = 0;
+        this.assignedSatus = "";
         this.employee = true;
         this.auth = false;
         this.httpOptions = {
@@ -89,7 +97,7 @@ var AdminComponent = /** @class */ (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
         this.auth = this.authService.checkEmployment();
-        console.log(this.auth);
+        this.fetchPlaces();
     };
     AdminComponent.prototype.notifyUponSubmission = function () {
         var validLogging = new Notification("Du er logget inn", {
@@ -148,6 +156,58 @@ var AdminComponent = /** @class */ (function () {
             .subscribe(function (data) {
             _this.orderList = data;
         });
+    };
+    AdminComponent.prototype.fetchPlaces = function () {
+        var _this = this;
+        var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/place";
+        this.httpClient.get(placesUrl, this.httpOptions)
+            .subscribe(function (data) {
+            console.log(data);
+            _this.placesList = data;
+        }, function (error) { return function () {
+            console.log("error:");
+        }; }, function () {
+            console.log("succes for places");
+        });
+    };
+    AdminComponent.prototype.statusConfig = function (equipment) {
+        this.selectedEquipment = Object.assign({}, equipment);
+        this.selectedEquipmentStatus = equipment.status;
+        this.selectedEquipmentName = equipment.name;
+    };
+    AdminComponent.prototype.locationConfig = function (equipment) {
+        console.log(this.placesList[equipment['lastSeenOnPlace']]);
+        this.selectedEquipment = Object.assign({}, equipment);
+        this.selectedEquipmentLocation = Object.assign({}, this.placesList[equipment['lastSeenOnPlace']]);
+        this.selectedEquipmentName = equipment.name;
+        console.log(this.selectedEquipmentLocation);
+    };
+    AdminComponent.prototype.assignNewPlace = function (id) {
+        this.assignedPlaceId = id;
+    };
+    AdminComponent.prototype.assignNewStatus = function (status) {
+        this.assignedSatus = status;
+    };
+    AdminComponent.prototype.updateLocationOrStatus = function (fieldForUpdate) {
+        if (fieldForUpdate == 'location') {
+            this.selectedEquipment['lastSeenOnPlace'] = this.assignedPlaceId;
+        }
+        else {
+            this.selectedEquipment['status'] = this.assignedSatus;
+        }
+        var updateBikeUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/bike" + "/" + this.selectedEquipment['bike_id'];
+        var payload = Object.assign({}, this.selectedEquipment);
+        console.log(payload);
+        this.httpClient.put(updateBikeUrl, payload, this.httpOptions)
+            .subscribe(function (data) {
+            console.log(data);
+        });
+        this.updateEquipmentInView();
+    };
+    AdminComponent.prototype.updateEquipmentInView = function () {
+        this.fetchEquipment();
+        this.fetchOrders();
+        this.fetchPlaces();
     };
     AdminComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -341,7 +401,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Dersom du er ansatt, gå til /ansatte for å se utstyr</h4>\n<div class=\"btn-group sorterBtn\" dropdown>\n    <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n        Sorter etter:\n    </button>\n    <div class=\"dropdown-menu dropdown-primary\">\n        <a class=\"dropdown-item\" href=\"#\">Sted</a>\n        <a class=\"dropdown-item\" href=\"#\">Tilgjengelig</a>\n        <a class=\"dropdown-item\" href=\"#\">Ikke tilgjengelig</a>\n    </div>\n</div>\n<br />\n<hr>\n<!--Table-->\n<table class=\"table equipmentTable\">\n    <!--Table head-->\n    <thead class=\"blue-grey lighten-4\">\n        <tr>\n            <th>Utstyr navn:</th>\n            <th>Type</th>\n            <th>Tilgjengelighet:</th>\n            <th>Status:</th>\n            <th>Tilgjengelig ved:</th>\n            <th>pris  time:</th>\n            <th>pris dag:</th>\n            <th>Ramme</th>\n            <th>Hjulstørrelse</th>\n        </tr>\n    </thead>\n    <!--Table head-->\n    <!--Table body-->\n    <tbody>\n        <tr *ngFor=\"let equipment of equipmentList\">\n            <td>{{equipment.name}}</td>\n            <td>{{equipment.type}}</td>\n            <td>\n                <button \n                type=\"button\" \n                class=\"btn btn-primary relative waves-light\" \n                (click)=\"statusModal.show(); modalTrigger()\" \n                mdbWavesEffect\n                >\n                    Sjekk Tilgjengelighet\n                </button>\n            </td>\n            <td>{{equipment.status}}</td>\n            <td>{{placesList.name}}</td>\n            <td>{{equipment.hourPrice}}</td>\n            <td>{{equipment.dailyPrice}}</td>\n            <td>{{equipment.frame}}</td>\n            <td>{{equipment.wheelSize}}</td>\n        </tr>\n    </tbody>\n    <!--Table body-->\n</table>\n<!--Table-->\n\n<div mdbModal #statusModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mystatusModalLabel\" aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"statusModal.hide()\">\n                    <span aria-hidden=\"true\">×</span>\n                </button>\n                <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Sjekk status på</h4>\n            </div>\n            <div class=\"modal-body\">\n                {{eqipment}}\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"statusModal.hide()\" mdbWavesEffect>Lukk</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n\n            \n                                    "
+module.exports = "<h4>Dersom du er ansatt, gå til /ansatte for å se utstyr</h4>\n<div class=\"btn-group sorterBtn\" dropdown>\n    <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n        Sorter etter:\n    </button>\n    <div class=\"dropdown-menu dropdown-primary\">\n        <a class=\"dropdown-item\" href=\"#\">Sted</a>\n        <a class=\"dropdown-item\" href=\"#\">Tilgjengelig</a>\n        <a class=\"dropdown-item\" href=\"#\">Ikke tilgjengelig</a>\n    </div>\n</div>\n<br />\n<hr>\n<!--Table-->\n<table class=\"table equipmentTable\">\n    <!--Table head-->\n    <thead class=\"blue-grey lighten-4\">\n        <tr>\n            <th>Utstyr navn:</th>\n            <th>Type</th>\n            <th>Tilgjengelighet:</th>\n            <th>Status:</th>\n            <th>pris  time:</th>\n            <th>pris dag:</th>\n            <th>Ramme</th>\n            <th>Hjulstørrelse</th>\n        </tr>\n    </thead>\n    <!--Table head-->\n    <!--Table body-->\n    <tbody>\n        <tr *ngFor=\"let equipment of equipmentList; let i = index\">\n            <td>{{equipment.name}}</td>\n            <td>{{equipment.type}}</td>\n            <td>\n                <button \n                type=\"button\" \n                class=\"btn btn-primary relative waves-light\" \n                (click)=\"statusModal.show(); modalTrigger(equipment.lastSeenOnPlace, equipment.name)\" \n                mdbWavesEffect\n                >\n                    Sjekk Tilgjengelighet\n                </button>\n            </td>\n            <td>{{equipment.status}}</td>\n            <td>{{equipment.hourPrice}}</td>\n            <td>{{equipment.dailyPrice}}</td>\n            <td>{{equipment.frame}}</td>\n            <td>{{equipment.wheelSize}}</td>\n        </tr>\n    </tbody>\n    <!--Table body-->\n</table>\n<!--Table-->\n\n<div mdbModal #statusModal=\"mdb-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mystatusModalLabel\" aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: true}\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"statusModal.hide()\">\n                    <span aria-hidden=\"true\">×</span>\n                </button>\n                <h4 class=\"modal-title w-100\" id=\"myModalLabel\">Status på utstyret</h4>\n            </div>\n            <div class=\"modal-body\">\n                <p>Status for: {{selectedEquipmentName}}</p>\n                <p>\n                    Siste sett på: {{selectedPlace.name}}\n                </p>\n                <p> Post nummer: {{selectedPlace.postalCode}}</p>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-secondary waves-light\" aria-label=\"Close\" (click)=\"statusModal.hide()\" mdbWavesEffect>Lukk</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n\n            \n                                    "
 
 /***/ }),
 
@@ -391,7 +451,8 @@ var EquipmentComponent = /** @class */ (function () {
         this.authService = authService;
         this.notificationService = notificationService;
         this.httpClient = httpClient;
-        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl;
+        this.selectedPlace = {};
+        this.selectedEquipmentName = "";
         this.userName = "Gjest";
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
@@ -410,7 +471,7 @@ var EquipmentComponent = /** @class */ (function () {
     };
     EquipmentComponent.prototype.fetchPlaces = function () {
         var _this = this;
-        var placesUrl = this.apiUrl + "/place";
+        var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/place";
         this.httpClient.get(placesUrl, this.httpOptions)
             .subscribe(function (data) {
             console.log(data);
@@ -425,7 +486,7 @@ var EquipmentComponent = /** @class */ (function () {
     };
     EquipmentComponent.prototype.fetchEquipment = function () {
         var _this = this;
-        var equipmentEndpoint = this.apiUrl + "/bike";
+        var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike";
         this.httpClient.get(equipmentEndpoint, this.httpOptions)
             .subscribe(function (data) {
             console.log(data);
@@ -436,8 +497,9 @@ var EquipmentComponent = /** @class */ (function () {
             console.log("succes for equipment");
         });
     };
-    EquipmentComponent.prototype.modalTrigger = function () {
-        console.log("this works");
+    EquipmentComponent.prototype.modalTrigger = function (index, name) {
+        this.selectedPlace = Object.assign({}, this.placesList[this.placesList.findIndex(function (place) { return place.place_id === index; })]);
+        this.selectedEquipmentName = name;
     };
     EquipmentComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -517,7 +579,6 @@ var HomeComponent = /** @class */ (function () {
         this.authService = authService;
         this.router = router;
         this.notificationService = notificationService;
-        this.message = "hei";
         this.employee = false;
         this.auth = false; // sjekker om bruker er logget inn (false by default)
         this.httpOptions = {
@@ -1151,6 +1212,7 @@ var NotificationService = /** @class */ (function () {
     NotificationService.prototype.notifyUponSubmission = function () {
         var validLogging = new Notification("Du er logget inn", {
             body: "Nå kan du velge område og tidsrom du vil leie utstyr i",
+            icon: '../assets/icons/bike-21-512.png'
         });
         setTimeout(validLogging.close.bind(validLogging), 8000);
     };
@@ -1306,7 +1368,6 @@ var UserComponent = /** @class */ (function () {
     UserComponent.prototype.ngOnInit = function () {
         if (this.authService.getId()) {
             this.fetchOrderIds();
-            this.notificationService.notifyOrderRecordsRecieved(this.orderRecords.length);
         }
     };
     UserComponent.prototype.fetchOrderIds = function () {
@@ -1335,6 +1396,7 @@ var UserComponent = /** @class */ (function () {
             }, function () {
             });
         });
+        this.notificationService.notifyOrderRecordsRecieved(this.orderRecords.length);
     };
     UserComponent.prototype.modalTrigger = function (index) {
         var _this = this;

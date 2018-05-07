@@ -55,6 +55,44 @@ namespace api.Models
             return list;
         }
 
+
+        public List<Bike> GetBikeOrderByStatus()
+        {
+            List<Bike> list = new List<Bike>();
+
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd;
+                var command = "select * from Utstyr order by status;";
+                cmd = new MySqlCommand(command, conn);
+                //cmd.ExecuteNonQuery();
+                
+                using(var reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        list.Add(new Bike
+                        {
+                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
+                            Name = reader["utstyr_navn"].ToString(),
+                            Type = reader["utstyr_type"].ToString(),
+                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
+                            HourPrice = Convert.ToInt32(reader["timepris"]),
+                            EquipmentCode = reader["utstyrkode"].ToString(),
+                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
+                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
+                            WheelSize = reader["hjulstoerrelse"].ToString(),
+                            Frame = reader["ramme"].ToString(),
+                            STATUS = reader["utstyr_status"].ToString()
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return list;
+        }
+
         public void postBike(Bike Bike)
         {
             if (Bike == null)

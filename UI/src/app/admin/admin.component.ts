@@ -163,5 +163,12 @@ export class AdminComponent implements OnInit {
           console.log(data);
         }
       );
+    this.updateEquipmentInView();
+  }
+
+  updateEquipmentInView(){
+      this.fetchEquipment();
+      this.fetchOrders();
+      this.fetchPlaces();
   }
 }

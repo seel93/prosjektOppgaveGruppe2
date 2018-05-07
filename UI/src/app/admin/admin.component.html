@@ -43,7 +43,7 @@
     
             <!--Table body-->
             <tbody>
-                <tr *ngFor="let equipment of equipmentList; let i = index">
+                <tr *ngFor="let equipment of equipmentList; let i = index" ngModel>
                     <td>{{equipment.name}}</td>
                     <td>{{equipment.type}}</td>
                     <td>

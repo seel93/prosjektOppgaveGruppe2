@@ -85,10 +85,29 @@
                 <div class="modal-body">
                     <p>{{selectedEquipmentName}}</p>
                     <p> status: {{selectedEquipmentStatus}}</p>
+                    <div class="btn-group sorterBtn" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                                Endre status til: {{assignedSatus}}
+                            </button>
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" (click)="assignNewStatus('flytt')">
+                                    Flytt
+                                </a>
+                                <a class="dropdown-item" (click)="assignNewStatus('reparasjon')">
+                                    Reparasjon
+                                </a>
+                                <a class="dropdown-item" (click)="assignNewStatus('stjålet')">
+                                    Stjålet
+                                </a>
+                                <a class="dropdown-item" (click)="assignNewStatus('klar')">
+                                    Klar
+                                </a>
+                            </div>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
-                    <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Lagre endringer</button>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="updateLocationOrStatus('status')" mdbWavesEffect>Lagre endringer</button>
                 </div>
             </div>
         </div>
@@ -143,7 +162,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="locationModal.hide()" mdbWavesEffect>Lukk</button>
-                    <button type="button" class="btn btn-primary relative waves-light" (click)="updateLocation()" mdbWavesEffect>Lagre endringer</button>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="updateLocationOrStatus('location')" mdbWavesEffect>Lagre endringer</button>
                 </div>
             </div>
         </div>

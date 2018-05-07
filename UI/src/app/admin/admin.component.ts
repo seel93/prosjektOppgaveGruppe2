@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit {
   public selectedEquipmentStatus: string = " ";
   public selectedEquipmentLocation: Object = {};
   public assignedPlaceId: number = 0;
+  public assignedSatus: string = "";
   employee: boolean = true;
   auth: boolean = false;
 
@@ -132,20 +133,28 @@ export class AdminComponent implements OnInit {
   }
 
   locationConfig(equipment){
-    console.log(equipment); 
+    console.log(this.placesList[equipment['lastSeenOnPlace']]); 
     this.selectedEquipment = Object.assign({}, equipment);
     this.selectedEquipmentLocation = Object.assign({},this.placesList[equipment['lastSeenOnPlace']]);
     this.selectedEquipmentName = equipment.name;
     console.log(this.selectedEquipmentLocation);
   }
 
-  assignNewPlace(id){
+  assignNewPlace(id: number){
     this.assignedPlaceId = id;
   }
 
-  updateLocation(){
+  assignNewStatus(status: string){
+    this.assignedSatus = status;
+  }
+
+  updateLocationOrStatus(fieldForUpdate){
+    if(fieldForUpdate == 'location'){
+      this.selectedEquipment['lastSeenOnPlace'] = this.assignedPlaceId;
+    }else{
+      this.selectedEquipment['status'] = this.assignedSatus;
+    }
     let updateBikeUrl = environment.ApiUrl + "/bike" + "/" + this.selectedEquipment['bike_id'];
-    this.selectedEquipment['lastSeenOnPlace'] = this.assignedPlaceId;
     let payload = Object.assign({}, this.selectedEquipment);
     console.log(payload);
     this.httpClient.put(updateBikeUrl, payload, this.httpOptions)
@@ -153,8 +162,6 @@ export class AdminComponent implements OnInit {
         (data: any[]) => {
           console.log(data);
         }
-      )
-
+      );
   }
-
 }

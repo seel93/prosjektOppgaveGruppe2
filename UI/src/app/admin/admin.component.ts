@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
   public assignedSatus: string = "";
   employee: boolean = true;
   auth: boolean = false;
+  authId: number = 0;
 
   httpOptions = { // http-headers for API
     headers: new HttpHeaders({
@@ -72,6 +73,7 @@ export class AdminComponent implements OnInit {
       .subscribe(
         (data: any[]) => {
           console.log(data);
+          this.authId = data['creds_id'];
           this.auth = true;
           this.notifyUponSubmission();
           this.fetchEquipment();
@@ -174,5 +176,15 @@ export class AdminComponent implements OnInit {
       this.fetchEquipment();
       this.fetchOrders();
       this.fetchPlaces();
+  }
+
+  filterForEmployee(){
+    let orderForEmployeeUrl = environment.ApiUrl + "/order" + "/" + this.authId;
+    this.httpClient.get(orderForEmployeeUrl, this.httpOptions)
+      .subscribe(
+        (data: any []) => {
+          this.orderList = data;
+        }
+      )
   }
 }

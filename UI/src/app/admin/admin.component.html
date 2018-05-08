@@ -27,49 +27,52 @@
 
         <!--Table head-->
         <thead class="blue-grey lighten-4">
-                <tr>
-                    <th>Utstyr navn:</th>
-                    <th>Type:</th>
-                    <th>Tilgjengelighet:</th>
-                    <th>Status:</th>
-                    <th>Tilgjengelig ved:</th>
-                    <th>pris  time:</th>
-                    <th>pris dag:</th>
-                    <th>Ramme</th>
-                    <th>Hjulstørrelse</th>
-                </tr>
-            </thead>
-            <!--Table head-->
-    
-            <!--Table body-->
-            <tbody>
-                <tr *ngFor="let equipment of equipmentList; let i = index" ngModel>
-                    <td>{{equipment.name}}</td>
-                    <td>{{equipment.type}}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show(); locationConfig(equipment)" mdbWavesEffect>
-                            Sjekk Tilgjengelighet
-                        </button>
-                    </td>
-                    <td>
-                        <span *ngIf="!auth">{{equipment.status}}</span>
-                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show(); statusConfig(equipment)" mdbWavesEffect>
-                            Endre status
-                        </button>
-                    </td>
-                    <td>
-                        <span *ngIf="!auth">{{equipment.status}}</span>
-                        <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show(); locationConfig(equipment)" mdbWavesEffect>
-                            Endre sted
-                        </button>
-                    </td>
-                    <td>{{equipment.hourPrice}}</td>
-                    <td>{{equipment.dailyPrice}}</td>
-                    <td>{{equipment.frame}}</td>
-                    <td>{{equipment.wheelSize}}</td>
-                </tr>
-            </tbody>
-            <!--Table body-->
+            <tr>
+                <th>Utstyr navn:</th>
+                <th>Type:</th>
+                <th>Tilgjengelighet:</th>
+                <th>Status:</th>
+                <th>Tilgjengelig ved:</th>
+                <th>pris time:</th>
+                <th>pris dag:</th>
+                <th>Ramme</th>
+                <th>Hjulstørrelse</th>
+            </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+            <tr *ngFor="let equipment of equipmentList; let i = index" ngModel>
+                <td>{{equipment.name}}</td>
+                <td>{{equipment.type}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary relative waves-light" (click)="avaliableModal.show(); locationConfig(equipment)"
+                        mdbWavesEffect>
+                        Sjekk Tilgjengelighet
+                    </button>
+                </td>
+                <td>
+                    <span *ngIf="!auth">{{equipment.status}}</span>
+                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="statusModal.show(); statusConfig(equipment)"
+                        mdbWavesEffect>
+                        Endre status
+                    </button>
+                </td>
+                <td>
+                    <span *ngIf="!auth">{{equipment.status}}</span>
+                    <button *ngIf="auth" type="button" class="btn btn-primary relative waves-light" (click)="locationModal.show(); locationConfig(equipment)"
+                        mdbWavesEffect>
+                        Endre sted
+                    </button>
+                </td>
+                <td>{{equipment.hourPrice}}</td>
+                <td>{{equipment.dailyPrice}}</td>
+                <td>{{equipment.frame}}</td>
+                <td>{{equipment.wheelSize}}</td>
+            </tr>
+        </tbody>
+        <!--Table body-->
     </table>
 
     <div mdbModal #statusModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mystatusModalLabel"
@@ -86,24 +89,24 @@
                     <p>{{selectedEquipmentName}}</p>
                     <p> status: {{selectedEquipmentStatus}}</p>
                     <div class="btn-group sorterBtn" dropdown>
-                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
-                                Endre status til: {{assignedSatus}}
-                            </button>
-                            <div class="dropdown-menu dropdown-primary">
-                                <a class="dropdown-item" (click)="assignNewStatus('flytt')">
-                                    Flytt
-                                </a>
-                                <a class="dropdown-item" (click)="assignNewStatus('reparasjon')">
-                                    Reparasjon
-                                </a>
-                                <a class="dropdown-item" (click)="assignNewStatus('stjålet')">
-                                    Stjålet
-                                </a>
-                                <a class="dropdown-item" (click)="assignNewStatus('klar')">
-                                    Klar
-                                </a>
-                            </div>
+                        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                            Endre status til: {{assignedSatus}}
+                        </button>
+                        <div class="dropdown-menu dropdown-primary">
+                            <a class="dropdown-item" (click)="assignNewStatus('flytt')">
+                                Flytt
+                            </a>
+                            <a class="dropdown-item" (click)="assignNewStatus('reparasjon')">
+                                Reparasjon
+                            </a>
+                            <a class="dropdown-item" (click)="assignNewStatus('stjålet')">
+                                Stjålet
+                            </a>
+                            <a class="dropdown-item" (click)="assignNewStatus('klar')">
+                                Klar
+                            </a>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="statusModal.hide()" mdbWavesEffect>Lukk</button>
@@ -146,19 +149,19 @@
                     <h4 class="modal-title w-100" id="myModalLabel">Endre sted</h4>
                 </div>
                 <div class="modal-body">
-                        <p>{{selectedEquipmentName}}</p>
-                        <p>Sist sett på {{selectedEquipmentLocation.name}}</p>
-                        <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>
-                        <div class="btn-group sorterBtn" dropdown>
-                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
-                                Endre sted til:
-                            </button>
-                            <div class="dropdown-menu dropdown-primary">
-                                <a class="dropdown-item" *ngFor="let place of placesList" (click)="assignNewPlace(place.place_id)">
-                                    {{place.name}}
-                                </a>
-                            </div>
+                    <p>{{selectedEquipmentName}}</p>
+                    <p>Sist sett på {{selectedEquipmentLocation.name}}</p>
+                    <p>Post nummer: {{selectedEquipmentLocation.postalCode}}</p>
+                    <div class="btn-group sorterBtn" dropdown>
+                        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                            Endre sted til:
+                        </button>
+                        <div class="dropdown-menu dropdown-primary">
+                            <a class="dropdown-item" *ngFor="let place of placesList" (click)="assignNewPlace(place.place_id)">
+                                {{place.name}}
+                            </a>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="locationModal.hide()" mdbWavesEffect>Lukk</button>
@@ -168,8 +171,15 @@
         </div>
     </div>
     <br/>
+    <br/>
+    <br/>
     <h4>Oversikt over bestillinger:</h4>
-      <table class="table equipmentTable">
+    <button dropdownToggle type="button" class="btn btn-primary waves-light" (click)="filterForEmployee()" mdbWavesEffect>
+        Filtrer etter bestillinger tildelt deg:
+    </button>
+    <br/>
+    <br/>
+    <table class="table equipmentTable">
 
         <!--Table head-->
         <thead class="blue-grey lighten-4">

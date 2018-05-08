@@ -11,10 +11,12 @@ namespace api.Controllers
     public class StatusController : Controller
     {
          private readonly BikeContext _context;
+         private readonly OrderContext second_context;
 
-         public StatusController(BikeContext context)
+         public StatusController(BikeContext context, OrderContext Secondcontext)
          {
              _context = context;
+             second_context = Secondcontext;
          }
 
          public IActionResult GetSortedOrFilteredData([FromBody] StatusCriteria data)
@@ -35,10 +37,15 @@ namespace api.Controllers
              {
                  return Ok(_context.GetBikeOrderByDayPrice());
              }
+             else if(data.Criteria == "employee")
+             {
+                 return Ok(second_context.GetOrdersForEmployee(data.Id));
+             }
              else
              {
                 return BadRequest("invalid criteria");
              }
+
          }
 
 

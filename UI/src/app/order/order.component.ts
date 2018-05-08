@@ -107,6 +107,7 @@ export class OrderComponent implements OnInit {
 
   addHour(numOfHours) {
     this.hourModel = numOfHours.toString();
+    this.determineDate();
     return numOfHours;
   }
 
@@ -182,7 +183,7 @@ export class OrderComponent implements OnInit {
         Employee_id: this.employee,
         OrderDate: new Date(),
         IsAvailableFrom: new Date(),
-        MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
+        MustBeDeliveredBefore: this.determineDate() // denne må avgjøres basert på valg av timer eller dagr
       }
       console.log(payload);
       this.httpClient.post(createOrderUrl, payload, this.httpOptions)
@@ -193,6 +194,16 @@ export class OrderComponent implements OnInit {
             this.linkEquipmentToOrder();
           }
         );
+    }
+  }
+
+  determineDate(){
+    if(this.hours){
+      console.log(parseInt(this.hourModel));
+      return new Date().setHours(parseInt(this.hourModel));
+    }else{
+      console.log(parseInt(this.daysModel));
+      return new Date( + parseInt(this.daysModel));
     }
   }
 

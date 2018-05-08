@@ -98,6 +98,10 @@ var AdminComponent = /** @class */ (function () {
     AdminComponent.prototype.ngOnInit = function () {
         this.auth = this.authService.checkEmployment();
         this.fetchPlaces();
+        if (this.auth) {
+            this.fetchEquipment();
+            this.fetchOrders();
+        }
     };
     AdminComponent.prototype.notifyUponSubmission = function () {
         var validLogging = new Notification("Du er logget inn", {
@@ -684,7 +688,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Navbar-->\n<mdb-navbar SideClass=\"navbar navbar-expand-lg navbar-dark indigo\">\n  <!-- Navbar brand -->\n  <logo><a class=\"navbar-brand\" href=\"#\">Sykkelutleie</a></logo>\n  <!-- Collapsible content -->\n  <links>\n      <!-- Links -->\n      <ul class=\"navbar-nav mr-auto\">\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#\" >Home</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#equipment\">Ustyr</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#admin\">Ansatte</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#order\">Bestille utstyr</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" (click)=\"logOff()\">Logg ut</a>\n        </li>\n      </ul>\n      <!-- Links -->\n  </links>\n  <!-- Collapsible content -->\n</mdb-navbar>\n<!--/.Navbar-->\n          "
+module.exports = "<!--Navbar-->\n<mdb-navbar SideClass=\"navbar navbar-expand-lg navbar-dark indigo\">\n  <!-- Navbar brand -->\n  <logo><a class=\"navbar-brand\" href=\"#\">Sykkelutleie</a></logo>\n  <!-- Collapsible content -->\n  <links>\n      <!-- Links -->\n      <ul class=\"navbar-nav mr-auto\">\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#\" >Home</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#equipment\">Ustyr</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#admin\">Ansatte</a>\n        </li>\n        <li class=\"nav-item waves-light\" mdbRippleRadius>\n            <a class=\"nav-link\" href=\"#order\">Bestille utstyr</a>\n        </li>\n      </ul>\n      <!-- Links -->\n  </links>\n  <!-- Collapsible content -->\n</mdb-navbar>\n<!--/.Navbar-->\n          "
 
 /***/ }),
 
@@ -978,6 +982,31 @@ var OrderComponent = /** @class */ (function () {
             });
         });
         this.notificationService.notifyOrderCompleted(this.orderId);
+        this.updateStatusOfRentedEquipment();
+    };
+    OrderComponent.prototype.updateStatusOfRentedEquipment = function () {
+        var _this = this;
+        this.selectedEquipment.forEach(function (element) {
+            var updateUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike" + "/" + element['bike_id'];
+            element['status'] = "utleid";
+            var payload = {
+                Bike_id: element['bike_id'],
+                Name: element['name'],
+                Type: element['type'],
+                DailyPrice: element['dailyPrice'],
+                HourPrice: element['hourPrice'],
+                EquipmentCode: element['equipmentCode'],
+                LastSeenOnPlace: element['lastSeenOnPlace'],
+                BelongsToPlace: element['belongsToPlace'],
+                WheelSize: element['wheelSize'],
+                Frame: element['frame'],
+                STATUS: element['status']
+            };
+            _this.httpClient.put(updateUrl, payload, _this.httpOptions)
+                .subscribe(function (data) {
+                console.log(data);
+            });
+        });
     };
     OrderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

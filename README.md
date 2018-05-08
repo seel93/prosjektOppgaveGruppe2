@@ -65,7 +65,7 @@ Api:
     dotnet run
 ```
 
-#Creating a runnable file for the electron App:
+# Creating a runnable file for the electron App:
 
 ```shell
     ng build 

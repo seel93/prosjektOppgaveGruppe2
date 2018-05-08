@@ -174,8 +174,11 @@
     <br/>
     <br/>
     <h4>Oversikt over bestillinger:</h4>
-    <button dropdownToggle type="button" class="btn btn-primary waves-light" (click)="filterForEmployee()" mdbWavesEffect>
+    <button type="button" class="btn btn-primary waves-light" *ngIf="!listSorted" (click)="filterForEmployee()" mdbWavesEffect>
         Filtrer etter bestillinger tildelt deg:
+    </button>
+    <button type="button" class="btn btn-primary waves-light" *ngIf="listSorted" (click)="fetchOrders()" mdbWavesEffect>
+       Gå tilbake til original liste:
     </button>
     <br/>
     <br/>

@@ -39,12 +39,6 @@ export class OrderComponent implements OnInit {
   userName: string = "Gjest";
   subscription: Subscription;
 
-  httpOptions = { // http-headers for API
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  };
 
   constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) { }
 
@@ -56,7 +50,7 @@ export class OrderComponent implements OnInit {
 
   fetchEquipment() {
     let equipmentEndpoint = environment.ApiUrl + "/bike";
-    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+    this.httpClient.get(equipmentEndpoint, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -81,7 +75,7 @@ export class OrderComponent implements OnInit {
 
   getEmployees() {
     let EmploymentUrl = environment.ApiUrl + "/employee";
-    this.httpClient.get(EmploymentUrl, this.httpOptions)
+    this.httpClient.get(EmploymentUrl, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           this.employess = data;
@@ -186,7 +180,7 @@ export class OrderComponent implements OnInit {
         MustBeDeliveredBefore: this.determineDate() // denne må avgjøres basert på valg av timer eller dagr
       }
       console.log(payload);
-      this.httpClient.post(createOrderUrl, payload, this.httpOptions)
+      this.httpClient.post(createOrderUrl, payload, environment.httpOptions)
         .subscribe(
           (data: any[]) => {
             this.orderId = data[0].order_id;
@@ -214,7 +208,7 @@ export class OrderComponent implements OnInit {
         Bike_Id: element['bike_id'],
         Order_Id: this.orderId
       }
-      this.httpClient.post(equipmentAndOrderUrl, payload, this.httpOptions)
+      this.httpClient.post(equipmentAndOrderUrl, payload, environment.httpOptions)
         .subscribe(
           (data: any []) =>{
             console.log(data);
@@ -227,7 +221,7 @@ export class OrderComponent implements OnInit {
         Bike_Id: element['bike_id'],
         Order_Id: this.orderId
       }
-      this.httpClient.post(equipmentAndOrderUrl, payload, this.httpOptions)
+      this.httpClient.post(equipmentAndOrderUrl, payload, environment.httpOptions)
         .subscribe(
           (data: any []) =>{
             console.log(data);
@@ -255,7 +249,7 @@ export class OrderComponent implements OnInit {
         Frame: element['frame'],
         STATUS: element['status']
       }
-      this.httpClient.put(updateUrl, payload, this.httpOptions)
+      this.httpClient.put(updateUrl, payload, environment.httpOptions)
         .subscribe(
           (data: any []) =>{
             console.log(data);

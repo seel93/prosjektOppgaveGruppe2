@@ -16,12 +16,6 @@ export class RegisterComponent implements OnInit {
   public place: string;
   public date = new Date();
 
-  httpOptions = { // http-headers for API
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  };
 
   constructor(private httpClient: HttpClient, private notificationService : NotificationService) { }
 
@@ -31,7 +25,7 @@ export class RegisterComponent implements OnInit {
 
   fetchPlaces() {
     let placesUrl = environment.ApiUrl + "/place";
-    this.httpClient.get(placesUrl, this.httpOptions)
+    this.httpClient.get(placesUrl, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -78,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
   submitCustomer(payload) {
     let newCustomerUrl = environment.ApiUrl + "/customer";
-    this.httpClient.post(newCustomerUrl, payload, this.httpOptions)
+    this.httpClient.post(newCustomerUrl, payload, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);

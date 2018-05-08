@@ -18,12 +18,6 @@ export class UserComponent implements OnInit {
   public equipmentRecordForOrder : any[] = Array();
   public date = new Date();
 
-  httpOptions = { // http-headers for API
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  };
 
   constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) { }
 
@@ -36,7 +30,7 @@ export class UserComponent implements OnInit {
   fetchOrderIds(){
     let iDUrl = environment.ApiUrl + "/orderbyuser";
     let payload = {id : this.authService.getId()};
-    this.httpClient.post(iDUrl, payload, this.httpOptions)
+    this.httpClient.post(iDUrl, payload, environment.httpOptions)
      .subscribe(
         (data: any []) => {
           this.orderIdForUser = data;
@@ -54,7 +48,7 @@ export class UserComponent implements OnInit {
   fetchOrders(){
     this.orderIdForUser.forEach(element => {
       let orderUrl = environment.ApiUrl + '/order' + '/' + element;
-      this.httpClient.get(orderUrl, this.httpOptions)
+      this.httpClient.get(orderUrl, environment.httpOptions)
         .subscribe(
           (data: any[]) => {
             this.orderRecords.push(data[0]);
@@ -73,7 +67,7 @@ export class UserComponent implements OnInit {
   modalTrigger(index){
     let selectedOrderRecord: any[] = Array();
     let orderEquipmentUrl = environment.ApiUrl + "/orderbyuser" + "/" + this.orderRecords[index]['order_id'];
-    this.httpClient.get(orderEquipmentUrl, this.httpOptions)
+    this.httpClient.get(orderEquipmentUrl, environment.httpOptions)
       .subscribe(
         (data: any[])=>{
           selectedOrderRecord = data;
@@ -86,7 +80,7 @@ export class UserComponent implements OnInit {
   fetchEquipmentInfoForSelectedOrderId(orderRecord){
     orderRecord.forEach(element => {
       let equipmentInfoUrl = environment.ApiUrl + "/bike" + "/" + element['bike_id'];
-      this.httpClient.get(equipmentInfoUrl, this.httpOptions)
+      this.httpClient.get(equipmentInfoUrl, environment.httpOptions)
         .subscribe(
           (data) => {
             console.log(data);

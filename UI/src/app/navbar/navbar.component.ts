@@ -16,8 +16,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  logOff() : void {
-    console.log("logg of requested"); 
-    this.authService.clearMessage();
+  loggOff() : void {
+    if(window['process']){
+      console.log("running electron");
+    }else{
+      window.location.reload();
+    }
   }
 }

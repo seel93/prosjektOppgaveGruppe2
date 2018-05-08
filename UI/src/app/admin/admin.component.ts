@@ -26,17 +26,21 @@ export class AdminComponent implements OnInit {
   employee: boolean = true;
   auth: boolean = false;
   authId: number = 0;
+  listSorted = false;
 
-  httpOptions = { // http-headers for API
+ /*  httpOptions = { // http-headers for API
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
+      'Authorization': "{'firstName':'John', 'lastName':'Doe'}"
     })
-  };
+  }; */
+
+  
   
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
   
   ngOnInit() {
+    console.log(this.authService.getHash());
     this.auth = this.authService.checkEmployment();
     this.fetchPlaces();    
     if(this.auth){
@@ -69,7 +73,7 @@ export class AdminComponent implements OnInit {
       IsEmployee: this.employee
     }
     console.log(payload);
-    this.httpClient.post(loggInnUrl, payload, this.httpOptions) // http-post
+    this.httpClient.post(loggInnUrl, payload, environment.httpOptions) // http-post
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -91,7 +95,7 @@ export class AdminComponent implements OnInit {
 
   fetchEquipment(){
     let equipmentEndpoint = environment.ApiUrl + "/bike";
-      this.httpClient.get(equipmentEndpoint, this.httpOptions)
+      this.httpClient.get(equipmentEndpoint, environment.httpOptions)
         .subscribe(
           (data : any) => {
             this.equipmentList = data;
@@ -107,17 +111,18 @@ export class AdminComponent implements OnInit {
   
   fetchOrders(){
     let orderUrl = environment.ApiUrl + "/order";
-    this.httpClient.get(orderUrl, this.httpOptions)
+    this.httpClient.get(orderUrl, environment.httpOptions)
       .subscribe(
         (data: any []) => {
           this.orderList = data;
+          this.listSorted = false;
         }
       )
   }
 
   fetchPlaces() {
     let placesUrl = environment.ApiUrl + "/place";
-    this.httpClient.get(placesUrl, this.httpOptions)
+    this.httpClient.get(placesUrl, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -163,7 +168,7 @@ export class AdminComponent implements OnInit {
     let updateBikeUrl = environment.ApiUrl + "/bike" + "/" + this.selectedEquipment['bike_id'];
     let payload = Object.assign({}, this.selectedEquipment);
     console.log(payload);
-    this.httpClient.put(updateBikeUrl, payload, this.httpOptions)
+    this.httpClient.put(updateBikeUrl, payload, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -179,11 +184,13 @@ export class AdminComponent implements OnInit {
   }
 
   filterForEmployee(){
-    let orderForEmployeeUrl = environment.ApiUrl + "/order" + "/" + this.authId;
-    this.httpClient.get(orderForEmployeeUrl, this.httpOptions)
+    let orderForEmployeeUrl = environment.ApiUrl + "/status"
+    let payload = {criteria: "employee", id: this.authId}
+    this.httpClient.post(orderForEmployeeUrl, payload,  environment.httpOptions)
       .subscribe(
         (data: any []) => {
           this.orderList = data;
+          this.listSorted = true;
         }
       )
   }

@@ -26,47 +26,45 @@ namespace api
             _logger = logger;
         }
 
-        public byte[] hasher(string PasswordToHash)
-        {
-            byte[] hash;
-            var dataForHash = Encoding.UTF8.GetBytes(PasswordToHash);
-            using (SHA512 shaM = new SHA512Managed())
-            {
-                hash = shaM.ComputeHash(dataForHash);
-            }
-
-            return hash;
-        }
-
         [HttpPost]
-        public IActionResult Auth([FromBody] Creds cred)
+        public IActionResult Auth([FromBody] Creds cred, [FromHeader] string options)
         {
-            var testHash = hasher(cred.Password);
-            if(!cred.IsEmployee)
+            string value = Request.Headers["Authorization"];
+            if (value != "{'firstName':'John', 'lastName':'Doe'}")
             {
-                if (_context.Authenticate(cred) != null)
-                {
-                    _logger.LogInformation("Customer authenticated");
-                    return Ok(_context.Authenticate(cred));
-
-                }
-                else
-                {
-                    _logger.LogWarning("invalid logg inn attempt");
-                    return BadRequest("invalid credentials");
-                }
+                _logger.LogError("invalid auht token");
+                return BadRequest("Invali auth token");
             }
-            else{
-                if (_context.AuthenticateEmployee(cred) != null)
+            else
+            {
+
+                if (!cred.IsEmployee)
                 {
-                    _logger.LogInformation("Employee authenticated");
-                    return Ok(_context.AuthenticateEmployee(cred));
-    
+                    if (_context.Authenticate(cred) != null)
+                    {
+                        _logger.LogInformation("Customer authenticated");
+                        return Ok(_context.Authenticate(cred));
+
+                    }
+                    else
+                    {
+                        _logger.LogWarning("invalid logg inn attempt");
+                        return BadRequest("invalid credentials");
+                    }
                 }
                 else
                 {
-                    _logger.LogWarning("invalid logg inn attempt");
-                    return BadRequest("invalid credentials");
+                    if (_context.AuthenticateEmployee(cred) != null)
+                    {
+                        _logger.LogInformation("Employee authenticated");
+                        return Ok(_context.AuthenticateEmployee(cred));
+
+                    }
+                    else
+                    {
+                        _logger.LogWarning("invalid logg inn attempt");
+                        return BadRequest("invalid credentials");
+                    }
                 }
             }
 

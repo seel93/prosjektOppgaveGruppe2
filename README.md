@@ -49,7 +49,7 @@ Setup for Database:
 ```
 The password should be: "password123" which is the password we have set in appsettings.json
 
-#Running the App: 
+# Running the App: 
 UI:
 
 ```shell
@@ -65,7 +65,7 @@ Api:
     dotnet run
 ```
 
-#Creating a runnable file for the electron App:
+# Creating a runnable file for the electron App:
 
 ```shell
     ng build 
@@ -74,3 +74,6 @@ Api:
     npm run package
 ```
 There should appear a folder containing all the files for the app including a .exe or similar file for other plattforms
+
+# Known issues:
+The date handling for creating orders is not working as intended

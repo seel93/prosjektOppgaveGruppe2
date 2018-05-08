@@ -20,13 +20,6 @@ export class EquipmentComponent implements OnInit {
   userName: string = "Gjest";
   subscription: Subscription;
 
-  httpOptions = { // http-headers for API
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  };
-
   constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) {
     this.subscription = this.authService.getMessage().subscribe(
       (message) => {
@@ -42,7 +35,7 @@ export class EquipmentComponent implements OnInit {
 
   fetchPlaces() {
     let placesUrl = environment.ApiUrl + "/place";
-    this.httpClient.get(placesUrl, this.httpOptions)
+    this.httpClient.get(placesUrl, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -61,7 +54,7 @@ export class EquipmentComponent implements OnInit {
 
   fetchEquipment() {
     let equipmentEndpoint = environment.ApiUrl + "/bike";
-    this.httpClient.get(equipmentEndpoint, this.httpOptions)
+    this.httpClient.get(equipmentEndpoint, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           console.log(data);
@@ -95,7 +88,7 @@ export class EquipmentComponent implements OnInit {
       payload = { criteria: "invalidStatus" }
     }
 
-    this.httpClient.post(url, payload, this.httpOptions)
+    this.httpClient.post(url, payload, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
           this.equipmentList = data;

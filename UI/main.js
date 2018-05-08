@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
   const path = require('path')
   const url = require('url')
-  
+  //const {getCurrentWindow, globalShortcut} = require('electron').remote;
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   let win
@@ -56,3 +56,15 @@ const {app, BrowserWindow, ipcMain} = require('electron')
   
   // In this file you can include the rest of your app's specific main process
   // code. You can also put them in separate files and require them here.
+
+/*   var reload = ()=>{
+    getCurrentWindow().reload()
+  }
+  
+  globalShortcut.register('F5', reload);
+  globalShortcut.register('CommandOrControl+R', reload);
+  // here is the fix bug #3778, if you know alternative ways, please write them
+  window.addEventListener('beforeunload', ()=>{
+    globalShortcut.unregister('F5', reload);
+    globalShortcut.unregister('CommandOrControl+R', reload);
+  }) */

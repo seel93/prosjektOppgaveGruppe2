@@ -26,12 +26,7 @@ export class HomeComponent implements OnInit {
   message: string;
   employee: boolean = false;
   auth: boolean = false; // sjekker om bruker er logget inn (false by default)
-  httpOptions = { // http-headers for API
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      //'Authorization': 'my-auth-token'
-    })
-  };
+
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router, private notificationService : NotificationService) { }
 
@@ -65,7 +60,7 @@ export class HomeComponent implements OnInit {
     }
     console.log(payload);
     let authUrl = environment.ApiUrl + "/auth";
-    this.httpClient.post(authUrl, payload, this.httpOptions)
+    this.httpClient.post(authUrl, payload, environment.httpOptions)
     .subscribe(
       (data) =>{
         if(data['creds_id'] && data['password'] && data['username']){

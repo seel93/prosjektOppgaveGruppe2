@@ -20,8 +20,21 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult Index()  
         {  
-            return Ok(_context.GetBikeAndOrder());  
+            return Ok(_context.GetBikeAndOrders());  
         }  
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            _context.GetBikeAndOrderById(id);
+            if(_context.GetBikeAndOrderById(id) == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(_context.GetBikeAndOrderById(id));
+            }
+        }
 
         [HttpPost]
         public IActionResult Create([FromBody] BikeAndOrder BikeAndOrder)
@@ -51,18 +64,6 @@ namespace api.Controllers
         //     return Ok("Data created");
         // }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            _context.GetBikeAndOrder(id);
-            if(_context.GetBikeAndOrder(id) == null){
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetBikeAndOrder(id));
-            }
-        }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)

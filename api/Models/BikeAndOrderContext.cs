@@ -18,17 +18,14 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<BikeAndOrder> GetBikeAndOrder()
+        public List<BikeAndOrder> BikeAndOrderReader(string command)
         {
             List<BikeAndOrder> list = new List<BikeAndOrder>();
-
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from Utstyr_has_bestilling;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
                 
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -46,6 +43,22 @@ namespace api.Models
             return list;
         }
 
+        public List<BikeAndOrder> GetBikeAndOrders()
+        {
+            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling");
+            return list;
+        }
+
+        public List<BikeAndOrder> GetBikeAndOrderById(int id)
+        {
+            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling where bestilling_bestilling_id = " + id.ToString() + ";");
+            return list;
+        }
+        public List<BikeAndOrder> GetEquipmentByOrder(int id)
+        {
+            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling where bestilling_bestilling_id=" + id.ToString() + ";");
+            return list;
+        }
         public void postBikeAndOrder(BikeAndOrder BikeAndOrder)
         {
             if (BikeAndOrder == null)
@@ -65,30 +78,6 @@ namespace api.Models
             }
         }
 
-        public List<BikeAndOrder> GetBikeAndOrder(int id)
-        {
-            List<BikeAndOrder> list = new List<BikeAndOrder>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Utstyr_has_bestilling where bestilling_bestilling_id = @id;";
-                cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new BikeAndOrder
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_utstyr_id"]),
-                            Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
 
         //Delete all data with given Order_id
         public void deleteBikeAndOrder(int orderId)
@@ -135,30 +124,6 @@ namespace api.Models
         //     }
         // }
 
-        public List<BikeAndOrder> GetEquipmentByOrder(int id)
-        {
-            List<BikeAndOrder> list = new List<BikeAndOrder>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Utstyr_has_bestilling where bestilling_bestilling_id=@id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                          list.Add(new BikeAndOrder
-                        {
-                            Bike_id = Convert.ToInt32(reader["Utstyr_utstyr_id"]),
-                            Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
         
     }    
 }

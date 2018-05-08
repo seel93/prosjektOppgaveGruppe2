@@ -18,7 +18,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Delivery> GetDelivery()
+        public List<Delivery> DeliveryReader(string command)
         {
             List<Delivery> list = new List<Delivery>();
 
@@ -26,9 +26,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from Levering;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
                 
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -46,7 +44,17 @@ namespace api.Models
             }
             return list;
         }
+        public List<Delivery> GetDelivery()
+        {
+            List<Delivery> list = DeliveryReader("select * from Levering;");
+            return list;
+        }
 
+        public List<Delivery> GetDeliveryById(int id)
+        {
+            List<Delivery> list = DeliveryReader("select * from levering where bestilling_bestilling_id =" + id.ToString() + ";");
+            return list;
+        }
         public void postDelivery(Delivery Delivery)
         {
             if (Delivery == null)
@@ -67,31 +75,6 @@ namespace api.Models
             }
         }
 
-        public List<Delivery> GetDelivery(int id)
-        {
-            List<Delivery> list = new List<Delivery>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from levering where bestilling_bestilling_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Delivery
-                        {
-                            Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"]),
-                            DeliveryDate = (DateTime)reader["leveringsdato"],
-                            DeliveryLocation = Convert.ToInt32(reader["leveringssted"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
 
         public void deleteDelivery(int id)
         {

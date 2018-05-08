@@ -23,6 +23,19 @@ namespace api.Controllers
             return Ok(_context.GetDelivery());  
         }  
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            _context.GetDeliveryById(id);
+            if(_context.GetDeliveryById(id) == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(_context.GetDeliveryById(id));
+            }
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] Delivery Delivery)
         {
@@ -52,18 +65,6 @@ namespace api.Controllers
         // }
         
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            _context.GetDelivery(id);
-            if(_context.GetDelivery(id) == null){
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetDelivery(id));
-            }
-        }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
@@ -75,7 +76,6 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Delivery Delivery)
         {
-
             _context.UpdateDelivery(id, Delivery);
             return Ok("object updated");
         }

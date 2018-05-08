@@ -23,6 +23,18 @@ namespace api.Controllers
             return Ok(_context.GetPlace());  
         }  
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            _context.GetPlaceById(id);
+            if(_context.GetPlaceById(id) == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(_context.GetPlaceById(id));
+            }
+        }
         [HttpPost]
         public IActionResult Create([FromBody] Place Place)
         {
@@ -36,18 +48,6 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            _context.GetPlace(id);
-            if(_context.GetPlace(id) == null){
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetPlace(id));
-            }
-        }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)

@@ -19,7 +19,7 @@ namespace api
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Employee> GetEmployee()
+        public List<Employee> EmployeeReader(string command)
         {
             List<Employee> list = new List<Employee>();
 
@@ -27,7 +27,6 @@ namespace api
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from ansatt;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
                 
@@ -51,6 +50,17 @@ namespace api
             return list;
         }
 
+        public List<Employee> GetEmployee()
+        {
+            List<Employee> list = EmployeeReader("select * from ansatt;");
+            return list;
+        }
+
+        public List<Employee> GetEmployeeById(int id)
+        {
+            List<Employee> list = EmployeeReader("select * from ansatt where ansatt_id =" + id.ToString() + ";");
+            return list;
+        }
         public void postEmployee(Employee Employee)
         {
             if (Employee == null)
@@ -76,34 +86,6 @@ namespace api
             }
         }
 
-        public List<Employee> GetEmployee(int id)
-        {
-            List<Employee> list = new List<Employee>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from ansatt where ansatt_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Employee
-                        {
-                            Employee_id = Convert.ToInt32(reader["ansatt_id"]),
-                            Position = reader["Jobb"].ToString(),
-                            IsFulltime = Convert.ToInt32(reader["fulltid"]),
-                            Salary = Convert.ToInt32(reader["loenn"]),
-                            Location = Convert.ToInt32(reader["steder_sted_id"]),
-                            Password = reader["ansatt_password"].ToString()
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
 
         public void deleteEmployee(int id)
         {
@@ -135,7 +117,5 @@ namespace api
                 conn.Close();
             }
         }
-
-        
     }    
 }

@@ -19,18 +19,14 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Bike> GetBike()
+        public List<Bike> BikeReader(string command)
         {
             List<Bike> list = new List<Bike>();
-
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd;
-                var command = "select * from Utstyr;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -53,158 +49,45 @@ namespace api.Models
                 }
                 conn.Close();
             }
+            return list;
+        }
+
+        public List<Bike> GetBike()
+        {
+            List<Bike> list = BikeReader("select * from Utstyr;");
             return list;
         }
 
 
         public List<Bike> GetBikeOrderByStatus()
         {
-            List<Bike> list = new List<Bike>();
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd;
-                var command = "select * from Utstyr where utstyr_status='klar';";
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new Bike
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_navn"].ToString(),
-                            Type = reader["utstyr_type"].ToString(),
-                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timepris"]),
-                            EquipmentCode = reader["utstyrkode"].ToString(),
-                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
-                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
-                            WheelSize = reader["hjulstoerrelse"].ToString(),
-                            Frame = reader["ramme"].ToString(),
-                            STATUS = reader["utstyr_status"].ToString()
-                        });
-                    }
-                }
-                conn.Close();
-            }
+            List<Bike> list = BikeReader("select * from Utstyr where utstyr_status='klar';");
             return list;
         }
 
         public List<Bike> GetBikeOrderByHourPrice()
         {
-            List<Bike> list = new List<Bike>();
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd;
-                var command = "select * from Utstyr order by timepris;";
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new Bike
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_navn"].ToString(),
-                            Type = reader["utstyr_type"].ToString(),
-                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timepris"]),
-                            EquipmentCode = reader["utstyrkode"].ToString(),
-                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
-                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
-                            WheelSize = reader["hjulstoerrelse"].ToString(),
-                            Frame = reader["ramme"].ToString(),
-                            STATUS = reader["utstyr_status"].ToString()
-                        });
-                    }
-                }
-                conn.Close();
-            }
+            List<Bike> list = BikeReader("select * from Utstyr order by timepris;");
             return list;
         }
 
-                public List<Bike> GetBikeOrderByDayPrice()
+        public List<Bike> GetBikeOrderByDayPrice()
         {
-            List<Bike> list = new List<Bike>();
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd;
-                var command = "select * from Utstyr order by dagspris;";
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new Bike
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_navn"].ToString(),
-                            Type = reader["utstyr_type"].ToString(),
-                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timepris"]),
-                            EquipmentCode = reader["utstyrkode"].ToString(),
-                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
-                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
-                            WheelSize = reader["hjulstoerrelse"].ToString(),
-                            Frame = reader["ramme"].ToString(),
-                            STATUS = reader["utstyr_status"].ToString()
-                        });
-                    }
-                }
-                conn.Close();
-            }
+            List<Bike> list = BikeReader("select * from Utstyr order by dagspris;");
             return list;
         }
 
         public List<Bike> GetBikeOrderByInvalidState()
         {
-            List<Bike> list = new List<Bike>();
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd;
-                var command = "select * from Utstyr where utstyr_status != 'klar';";
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new Bike
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_navn"].ToString(),
-                            Type = reader["utstyr_type"].ToString(),
-                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timepris"]),
-                            EquipmentCode = reader["utstyrkode"].ToString(),
-                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
-                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
-                            WheelSize = reader["hjulstoerrelse"].ToString(),
-                            Frame = reader["ramme"].ToString(),
-                            STATUS = reader["utstyr_status"].ToString()
-                        });
-                    }
-                }
-                conn.Close();
-            }
+            List<Bike> list = BikeReader("select * from Utstyr where utstyr_status != 'klar';");
             return list;
         }
 
+        public List<Bike> GetBike(int id)
+        {
+            List<Bike> list = BikeReader("select * from Utstyr where utstyr_id = " + id.ToString() + ";");
+            return list;
+        }
         public void postBike(Bike Bike)
         {
             if (Bike == null)
@@ -233,39 +116,6 @@ namespace api.Models
             }
         }
 
-        public List<Bike> GetBike(int id)
-        {
-            List<Bike> list = new List<Bike>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Utstyr where utstyr_id = @id;";
-                cmd.Parameters.AddWithValue("@id", id);
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new Bike
-                        {
-                            Bike_id = Convert.ToInt32(reader["utstyr_id"]),
-                            Name = reader["utstyr_Navn"].ToString(),
-                            Type = reader["utstyr_type"].ToString(),
-                            DailyPrice = Convert.ToInt32(reader["dagspris"]),
-                            HourPrice = Convert.ToInt32(reader["timepris"]),
-                            EquipmentCode = reader["utstyrkode"].ToString(),
-                            LastSeenOnPlace = Convert.ToInt32(reader["var_sist_paa_sted"]),
-                            BelongsToPlace = Convert.ToInt32(reader["tilhoerer_sted"]),
-                            WheelSize = reader["hjulstoerrelse"].ToString(),
-                            Frame = reader["ramme"].ToString(),
-                            STATUS = reader["utstyr_status"].ToString()
-                        });
-                    }
-                }
-                conn.Close();
-            }
-            return list;
-        }
 
         public void deleteBike(int id)
         {
@@ -302,11 +152,6 @@ namespace api.Models
                 conn.Close();
             }
         }
-
-
-        //------------------------------------------------------------------------------------------------------//
-        //------------------------------------------------------------------------------------------------------//
-
 
         public void UpdateBikeStatus(int id, string STATUS)
         {

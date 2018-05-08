@@ -39,13 +39,13 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetCustomer(id);
-            if(_context.GetCustomer(id) == null){
+            _context.GetCustomerById(id);
+            if(_context.GetCustomerById(id) == null){
                 return BadRequest();
             }
             else
             {
-                return Ok(_context.GetCustomer(id));
+                return Ok(_context.GetCustomerById(id));
             }
         }
 

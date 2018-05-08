@@ -1,39 +1,38 @@
 using api.models;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace api.Models
 {
     public class OrderContext
     {
-        
-        public string ConnectionString {get; set;}
+
+        public string ConnectionString { get; set; }
 
         public OrderContext(string connectionString)
         {
-            this.ConnectionString =  connectionString;
+            this.ConnectionString = connectionString;
         }
 
-        private MySqlConnection GetConnection(){
+        private MySqlConnection GetConnection()
+        {
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Order> GetOrder()
+        public List<Order> OrderReader(string command)
         {
-            List<Order> list = new List<Order>();
+           List<Order> list = new List<Order>();
 
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from bestilling;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-                
-                using(var reader = cmd.ExecuteReader())
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         list.Add(new Order
                         {
@@ -53,34 +52,50 @@ namespace api.Models
             return list;
         }
 
+        public List<Order> GetOrders()
+        {
+            List<Order> list = OrderReader("select * from bestilling;");
+            return list;
+        }
 
         public List<Order> GetActiveOrder()
         {
-            List<Order> list = new List<Order>();
+            List<Order> list = OrderReader("select * from bestilling where maa_leveres_foer >= NOW() AND kan_hentes <= NOW();");
+            return list;
+        }
 
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+        public List<Order> GetLatestOrderId()
+        {
+            List<Order> list = OrderReader("SELECT * FROM bestilling ORDER BY bestilling_id  DESC LIMIT 0, 1");
+            return list;
+        }
+        public List<Order> GetOrderById(int id)
+        {
+            List<Order> list = OrderReader("select * from bestilling where bestilling_id =" + id.ToString() + ";");
+            return list;
+        }
+        public List<Order> GetOrdersForEmployee(int id)
+        {
+            List<Order> list = OrderReader("select * from bestilling where ansatt_ansatt_id =" + id.ToString() + ";");
+            return list;
+        }
+        public List<int> getOrderByUserId(OrderByUser order)
+        {
+            List<int> list = new List<int>();
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from bestilling where maa_leveres_foer >= NOW() AND kan_hentes <= NOW();";
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-                
-                using(var reader = cmd.ExecuteReader())
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select bestilling.bestilling_id from bestilling inner join kunde on kunde.kunde_id = bestilling.kunde_kunde_id where kunde_id=@id;";
+                cmd.Parameters.AddWithValue("@id", order.Id);
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
-                        list.Add(new Order
-                        {
-                            Order_id = Convert.ToInt32(reader["bestilling_id"]),
-                            Price = reader["pris"].ToString(),
-                            IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
-                            Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
-                            Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = (DateTime)reader["bestillingsdato"],
-                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
-                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
-                        });
+                        list.Add(
+
+                            Convert.ToInt32(reader[0])
+                        );
                     }
                 }
                 conn.Close();
@@ -113,113 +128,10 @@ namespace api.Models
             }
         }
 
-        public List<Order> GetLatestOrderId()
-        {
-            List<Order> list = new List<Order>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM bestilling ORDER BY bestilling_id  DESC LIMIT 0, 1";
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Order
-                        {
-                            Order_id = Convert.ToInt32(reader["bestilling_id"]),
-                            Price = reader["pris"].ToString(),
-                            IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
-                            Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
-                            Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = (DateTime)reader["bestillingsdato"],
-                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
-                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
-                        });
-                    }
-                }
-            }
-            return list;
-        }
-
-        public List<Order> GetOrder(int id)
-        {
-            List<Order> list = new List<Order>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from bestilling where bestilling_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Order
-                        {
-                            Order_id = Convert.ToInt32(reader["bestilling_id"]),
-                            Price = reader["pris"].ToString(),
-                            IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
-                            Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
-                            Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = (DateTime)reader["bestillingsdato"],
-                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
-                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
-
-          public List<Order> GetOrdersForEmployee(int id)
-        {
-            List<Order> list = new List<Order>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from bestilling where ansatt_ansatt_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Order
-                        {
-                            Order_id = Convert.ToInt32(reader["bestilling_id"]),
-                            Price = reader["pris"].ToString(),
-                            IsGroupOrder = Convert.ToInt32(reader["gruppe"]),
-                            Customer_id = Convert.ToInt32(reader["Kunde_kunde_id"]),
-                            Employee_id = Convert.ToInt32(reader["ansatt_ansatt_id"]),
-                            OrderDate = (DateTime)reader["bestillingsdato"],
-                            IsAvailableFrom = (DateTime)reader["kan_hentes"],
-                            MustBeDeliveredBefore = (DateTime)reader["maa_leveres_foer"]
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
-
-        public void deleteOrder(int id)
-        {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Bestilling where bestilling_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
 
         public void UpdateOrder(int id, Order Order)
         {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
@@ -238,30 +150,19 @@ namespace api.Models
             }
         }
 
-        public List<int> getOrderByUserId(OrderByUser order)
+
+        public void deleteOrder(int id)
         {
-            List<int> list = new List<int>();
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select bestilling.bestilling_id from bestilling inner join kunde on kunde.kunde_id = bestilling.kunde_kunde_id where kunde_id=@id;";
-                 cmd.Parameters.AddWithValue("@id", order.Id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(
-                        
-                            Convert.ToInt32(reader[0])
-                        );
-                    }
-                }
-                 conn.Close();
+                cmd.CommandText = "delete from Bestilling where bestilling_id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
             }
-            return list;
         }
 
-
-    }    
+    }
 }

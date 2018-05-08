@@ -23,6 +23,18 @@ namespace api.Controllers
             return Ok(_context.GetEmployee());  
         }  
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            _context.GetEmployeeById(id);
+            if(_context.GetEmployeeById(id) == null){
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(_context.GetEmployeeById(id));
+            }
+        }
         [HttpPost]
         public IActionResult Create([FromBody] Employee Employee)
         {
@@ -36,18 +48,6 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            _context.GetEmployee(id);
-            if(_context.GetEmployee(id) == null){
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetEmployee(id));
-            }
-        }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)

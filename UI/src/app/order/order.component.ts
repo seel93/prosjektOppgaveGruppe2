@@ -177,7 +177,7 @@ export class OrderComponent implements OnInit {
         Employee_id: this.employee,
         OrderDate: new Date(),
         IsAvailableFrom: new Date(),
-        MustBeDeliveredBefore: this.determineDate() // denne må avgjøres basert på valg av timer eller dagr
+        MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
       }
       console.log(payload);
       this.httpClient.post(createOrderUrl, payload, environment.httpOptions)

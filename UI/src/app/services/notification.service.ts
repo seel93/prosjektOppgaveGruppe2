@@ -55,6 +55,14 @@ export class NotificationService {
     setTimeout(validCreation.close.bind(validCreation), 8000);
   }
 
+  notifyInvalidUserCreation(){
+    let validCreation = new Notification("Ugyldig registrering", {
+      body: "passordene stemmer ikke over ens",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validCreation.close.bind(validCreation), 8000);
+  }
+
   alertApiError(error: any[]){
     let errorMessage = new Notification("Feil:", {
       body: "" + error.toString(), 

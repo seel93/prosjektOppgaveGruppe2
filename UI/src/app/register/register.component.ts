@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
       this.preparePayload(f.value);
     }else{
       //Todo: legg til notification-service
-      console.log("password mismatch");
+      this.notificationService.notifyInvalidUserCreation();
     }
     
   }

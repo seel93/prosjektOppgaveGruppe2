@@ -18,7 +18,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Place> GetPlace()
+        public List<Place> PlaceReader(string command)
         {
             List<Place> list = new List<Place>();
 
@@ -26,9 +26,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd;
-                var command = "select * from steder;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
                 
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -47,6 +45,17 @@ namespace api.Models
             return list;
         }
 
+        public List<Place> GetPlace()
+        {
+            List<Place> list = PlaceReader("select * from steder;");
+            return list;
+        }
+
+        public List<Place> GetPlaceById(int id)
+        {
+            List<Place> list = PlaceReader("select * from steder where sted_id =" + id.ToString() + ";");
+            return list;
+        }
         public void postPlace(Place Place)
         {
             if (Place == null)
@@ -67,31 +76,6 @@ namespace api.Models
             }
         }
 
-        public List<Place> GetPlace(int id)
-        {
-            List<Place> list = new List<Place>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from steder where sted_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Place
-                        {
-                            Place_id = Convert.ToInt32(reader["sted_id"]),
-                            Name = reader["stedsnavn"].ToString(),
-                            PostalCode = Convert.ToInt32(reader["poststed_postnr"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
 
         public void deletePlace(int id)
         {

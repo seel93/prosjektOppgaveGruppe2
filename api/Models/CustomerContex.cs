@@ -18,15 +18,13 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Customer> GetCustomer()
+        public List<Customer> CustomerReader(string command)
         {
             List<Customer> list = new List<Customer>();
-
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand();
-                var command = "select * from kunde;";
                 cmd = new MySqlCommand(command, conn);
                 //cmd.ExecuteNonQuery();
                 
@@ -51,6 +49,17 @@ namespace api.Models
             return list;
         }
 
+        public List<Customer> GetCustomer()
+        {
+            List<Customer> list = CustomerReader("select * from kunde;");
+            return list;
+        }
+
+        public List<Customer> GetCustomerById(int id)
+        {
+            List<Customer> list = CustomerReader("select * from kunde where kunde_id =" + id.ToString() + ";");
+            return list;
+        }
         public void postCustomer(Customer Customer)
         {
             if (Customer == null)
@@ -75,35 +84,6 @@ namespace api.Models
             }
         }
 
-        public List<Customer> GetCustomer(int id)
-        {
-            List<Customer> list = new List<Customer>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from kunde where kunde_id = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new Customer
-                        {
-                            Customer_id = Convert.ToInt32(reader["kunde_id"]),
-                            FirstName = reader["fnavn"].ToString(),
-                            LastName = reader["enavn"].ToString(),
-                            Phone = reader["mob_nr"].ToString(),
-                            Email = reader["epost"].ToString(),
-                            Password = reader["kunde_password"].ToString(),
-                            Location = Convert.ToInt32(reader["steder_sted_id"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
-            return list;
-        }
 
         public void deleteCustomer(int id)
         {

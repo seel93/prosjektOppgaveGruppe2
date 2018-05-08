@@ -26,12 +26,12 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Order Order)
         {
-            _context.postOrder(Order);
             if(Order == null){
-                return BadRequest();
+                return BadRequest("Inlavid Order");
             }
             else
             {
+                _context.postOrder(Order);
                 return Ok(_context.GetLatestOrderId());
             }
         }

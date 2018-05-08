@@ -26,24 +26,24 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetPlaceById(id);
             if(_context.GetPlaceById(id) == null){
-                return BadRequest();
+                return BadRequest("No place found for that id");
             }
             else
             {
+                _context.GetPlaceById(id);
                 return Ok(_context.GetPlaceById(id));
             }
         }
         [HttpPost]
         public IActionResult Create([FromBody] Place Place)
         {
-            _context.postPlace(Place);
             if(Place == null){
                 return BadRequest();
             }
             else
             {
+                _context.postPlace(Place);
                 return Ok("Data created");
             }
         }

@@ -26,12 +26,12 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Customer Customer)
         {
-            _context.postCustomer(Customer);
             if(Customer == null){
                 return BadRequest();
             }
             else
             {
+                _context.postCustomer(Customer);
                 return Ok("Data created");
             }
         }

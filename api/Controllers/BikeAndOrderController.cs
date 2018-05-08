@@ -26,9 +26,8 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetBikeAndOrderById(id);
-            if(_context.GetBikeAndOrderById(id) == null){
-                return BadRequest();
+            if(_context.GetBikeAndOrderById(id).Count() == 0){
+                return BadRequest("No data with that id found");
             }
             else
             {
@@ -39,12 +38,12 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] BikeAndOrder BikeAndOrder)
         {
-            _context.postBikeAndOrder(BikeAndOrder);
             if(BikeAndOrder == null){
-                return BadRequest();
+                return BadRequest("Invalid order");
             }
             else
             {
+                _context.postBikeAndOrder(BikeAndOrder);
                 return Ok("Data created");
             }
         }

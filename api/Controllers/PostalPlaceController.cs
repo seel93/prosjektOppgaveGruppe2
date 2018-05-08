@@ -23,31 +23,31 @@ namespace api.Controllers
             return Ok(_context.GetPostalPlace());  
         }  
 
-        [HttpPost]
-        public IActionResult Create([FromBody] PostalPlace PostalPlace)
-        {
-            _context.postPostalPlace(PostalPlace);
-            if(PostalPlace == null){
-                return BadRequest();
-            }
-            else
-            {
-                return Ok("Data created");
-            }
-        }
-
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetPostalPlace(id);
             if(_context.GetPostalPlace(id) == null){
-                return BadRequest();
+                return BadRequest("No postal place found by that id");
             }
             else
             {
                 return Ok(_context.GetPostalPlace(id));
             }
         }
+        
+        [HttpPost]
+        public IActionResult Create([FromBody] PostalPlace PostalPlace)
+        {
+            if(PostalPlace == null){
+                return BadRequest();
+            }
+            else
+            {
+                _context.postPostalPlace(PostalPlace);
+                return Ok("Data created");
+            }
+        }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)

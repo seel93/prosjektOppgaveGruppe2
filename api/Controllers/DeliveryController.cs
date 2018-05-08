@@ -26,9 +26,8 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetDeliveryById(id);
-            if(_context.GetDeliveryById(id) == null){
-                return BadRequest();
+            if(_context.GetDeliveryById(id).Count() == 0){
+                return BadRequest("No data by that Id found");
             }
             else
             {
@@ -39,12 +38,12 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Delivery Delivery)
         {
-            _context.postDelivery(Delivery);
             if(Delivery == null){
-                return BadRequest();
+                return BadRequest("Invalid Delivery");
             }
             else
             {
+                _context.postDelivery(Delivery);
                 return Ok("Data created");
             }
         }

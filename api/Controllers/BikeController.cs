@@ -22,6 +22,19 @@ namespace api.Controllers
             return Ok(_context.GetBike());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            if (_context.GetBike(id).Count() == 0)
+            {
+                return BadRequest("No Data found");
+            }
+            else
+            {
+                return Ok(_context.GetBike(id));
+            }
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] Bike Bike)
         {
@@ -33,20 +46,6 @@ namespace api.Controllers
             else
             {
                 return Ok("Data created");
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            _context.GetBike(id);
-            if (_context.GetBike(id) == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(_context.GetBike(id));
             }
         }
 

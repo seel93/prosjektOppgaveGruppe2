@@ -26,9 +26,8 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            _context.GetEmployeeById(id);
-            if(_context.GetEmployeeById(id) == null){
-                return BadRequest();
+            if(_context.GetEmployeeById(id).Count() == 0){
+                return BadRequest("No data by that Id found");
             }
             else
             {
@@ -38,12 +37,12 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Employee Employee)
         {
-            _context.postEmployee(Employee);
             if(Employee == null){
-                return BadRequest();
+                return BadRequest("Invalid Employee");
             }
             else
             {
+                _context.postEmployee(Employee);
                 return Ok("Data created");
             }
         }

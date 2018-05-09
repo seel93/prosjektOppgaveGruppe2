@@ -152,28 +152,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `AS_sykkelUtleie`.`Levering`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`Levering` (
-  `bestilling_bestilling_id` INT NOT NULL,
-  `leveringsdato` DATETIME NULL,
-  `leveringssted` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`bestilling_bestilling_id`),
-  INDEX `fk_Levering_steder1_idx` (`leveringssted` ASC),
-  CONSTRAINT `fk_Levering_bestilling1`
-    FOREIGN KEY (`bestilling_bestilling_id`)
-    REFERENCES `AS_sykkelUtleie`.`bestilling` (`bestilling_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Levering_steder1`
-    FOREIGN KEY (`leveringssted`)
-    REFERENCES `AS_sykkelUtleie`.`steder` (`sted_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `AS_sykkelUtleie`.`Utstyr_has_bestilling`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AS_sykkelUtleie`.`Utstyr_has_bestilling` (

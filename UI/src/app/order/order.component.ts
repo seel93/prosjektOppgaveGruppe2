@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
 import {CommonApiCalls} from '../services/commonApiCalls.service';
 import { environment } from '../../environments/environment';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-order',
@@ -19,6 +20,7 @@ export class OrderComponent implements OnInit {
   public personModel: string = "1";
   public daysModel: string = "1";
   public hourModel: string = "1";
+  public dateModel: Date;
   public groups: boolean;
   public hours: boolean;
   public days: boolean;
@@ -109,6 +111,15 @@ export class OrderComponent implements OnInit {
     this.hourModel = numOfHours.toString();
     this.determineDate();
     return numOfHours;
+  }
+
+  setOrderDate(dateModel){
+    console.log(dateModel);
+    console.log(this.dateModel);
+  }
+
+  onSubmit(f: NgForm) {
+    console.log(f.value);
   }
 
   daysOrHours(choice) {
@@ -205,13 +216,17 @@ export class OrderComponent implements OnInit {
   }
 
 
-  determineDate(){
+  determineDate(): Date{
+    let orderDate = new Date();
+    console.log(orderDate);
     if(this.hours){
-      console.log(new Date().setHours(parseInt(this.hourModel)));
-      return new Date().setHours(parseInt(this.hourModel));
+      orderDate.setUTCHours(orderDate.getHours() + parseInt(this.hourModel));
+      console.log(orderDate);
+      return orderDate;
     }else{
-      console.log(new Date( + parseInt(this.daysModel)));
-      return new Date( + parseInt(this.daysModel));
+      orderDate.setDate(orderDate.getDate() + parseInt(this.daysModel));
+      console.log(orderDate);
+      return orderDate;
     }
   }
 

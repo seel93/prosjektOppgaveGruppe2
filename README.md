@@ -13,7 +13,7 @@
 # Dependencies:
 1. .Net sdk
 2. Angular
-3. Npm
+3. Npm/Node
 4. Node
 5. Mysql
 
@@ -49,6 +49,14 @@ Setup for Database:
 ```
 The password should be: "password123" which is the password we have set in appsettings.json
 
+#Adding data to the database:
+Navigate to /db, then run:
+
+```shell
+    mysql -u <your-username> -p < dummyData.sql
+```
+
+
 # Running the App: 
 UI:
 
@@ -77,3 +85,5 @@ There should appear a folder containing all the files for the app including a .e
 
 # Known issues:
 The date handling for creating orders is not working as intended
+
+The electron application, does currentlety not suppoert refresh

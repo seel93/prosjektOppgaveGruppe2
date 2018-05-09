@@ -1,11 +1,11 @@
 <div class="row">
 
     <div class="orderInputFields col-md-6">
-        
+
         <p>Er det fler som skal ha utstyr?</p>
         <button type="button" class="btn btn-primary waves-light" (click)="multiplePeople('yes')" mdbWavesEffect>Ja</button>
         <button type="button" class="btn btn-primary waves-light" (click)="multiplePeople('no')" mdbWavesEffect>Nei</button>
-        
+
         <h5 *ngIf="groups">Antall Personer:</h5>
         <div class="btn-group" *ngIf="groups">
             <label class="btn btn-primary waves-light" [(ngModel)]="personModel" (click)="addPerson(1)" mdbRadio="1" mdbWavesEffect>
@@ -27,17 +27,25 @@
                 6
             </label>
         </div>
-        
+        <br/>
+        <br/>
+        <div>
+                <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                    <p>Dato for bestilling:</p>
+                    <input mdbInputDirective type="date" id="form1" name="dateModel" mdbActive ngModel (change)="setOrderDate(dateModel)" class="form-control">
+                </form>
+        </div>
+
         <br/>
         <br/>
         <p>Skal dere leie i timer eller dager?</p>
         <button type="button" class="btn btn-primary waves-light" (click)="daysOrHours('hours')" mdbWavesEffect>Timer</button>
         <button type="button" class="btn btn-primary waves-light" (click)="daysOrHours('days')" mdbWavesEffect>Dager</button>
-        
+
         <br/>
         <br/>
         <div *ngIf="days">
-            
+
             <h5>Antall dager:</h5>
             <div class="btn-group">
                 <label class="btn btn-primary waves-light" [(ngModel)]="dayModel" (click)="addDays(1)" mdbRadio="1" mdbWavesEffect>
@@ -86,13 +94,13 @@
         <br />
         <br />
         <div class="btn-group" dropdown>
-            <button dropdownToggle type="button"  class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Type sykkel
             </button>
-            
+
             <div class="dropdown-menu dropdown-primary">
-                <a class="dropdown-item" *ngFor="let bike of bikeEquipmnet" (click)="addEquipOrBike(bike, 'bike')" >{{bike.name}}</a>
+                <a class="dropdown-item" *ngFor="let bike of bikeEquipmnet" (click)="addEquipOrBike(bike, 'bike')">{{bike.name}}</a>
             </div>
         </div>
         <div class="btn-group" dropdown>
@@ -100,16 +108,16 @@
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Type utstyr for denne sykkelen
             </button>
-            
+
             <div class="dropdown-menu dropdown-primary">
                 <a class="dropdown-item" *ngFor="let equipment of nonBikeEquipment" (click)="addEquipOrBike(equipment, 'equipment')">{{equipment.name}}</a>
             </div>
         </div>
     </div>
-    
-    
-    
-    
+
+
+
+
     <!--Panel-->
     <div class="card card-body col-md-5 orderSummary">
         <h4 class="card-title">Nåværende bestilling</h4>
@@ -118,11 +126,17 @@
         <p *ngIf="days">bestilling for: {{dayModel}} dager</p>
         <p>Utstyr:</p>
         <ul *ngFor="let equipment of selectedEquipment">
-            <li>{{equipment.name}}, {{equipment.type}}, <span *ngIf="days">pris: {{equipment.dailyPrice}}</span> <span *ngIf="hours">pris: {{equipment.hourPrice}}</span></li>
+            <li>{{equipment.name}}, {{equipment.type}},
+                <span *ngIf="days">pris: {{equipment.dailyPrice}}</span>
+                <span *ngIf="hours">pris: {{equipment.hourPrice}}</span>
+            </li>
         </ul>
         <p>Sykkel:</p>
         <ul *ngFor="let bike of selectedBike">
-            <li>{{bike.name}}, {{bike.type}}, <span *ngIf="days">pris: {{bike.dailyPrice}}</span> <span *ngIf="hours">pris: {{bike.hourPrice}}</span></li>
+            <li>{{bike.name}}, {{bike.type}},
+                <span *ngIf="days">pris: {{bike.dailyPrice}}</span>
+                <span *ngIf="hours">pris: {{bike.hourPrice}}</span>
+            </li>
         </ul>
         <br/>
         <p>Total pris:</p>

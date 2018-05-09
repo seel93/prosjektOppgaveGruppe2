@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron')
   const path = require('path')
   const url = require('url')
   //const {getCurrentWindow, globalShortcut} = require('electron').remote;
@@ -50,7 +50,10 @@ const {app, BrowserWindow, ipcMain} = require('electron')
     if (win === null) {
       createWindow()
     }
-    new Notification('hello'); console.log('Hello')
+    globalShortcut.register('CommandOrControl+R', () => {
+      // Do stuff when Y and either Command/Control is pressed.
+      createWindow();
+    })
   })
 
   

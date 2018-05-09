@@ -20,9 +20,9 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Order> OrderReader(string command)
+        private List<Order> OrderReaderForQuerry(string command)
         {
-           List<Order> list = new List<Order>();
+            List<Order> list = new List<Order>();
 
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
@@ -52,31 +52,51 @@ namespace api.Models
             return list;
         }
 
+        private void AddOrderParamtersForQuerry(string command, Order Order)
+        {
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = command;
+                cmd.Parameters.AddWithValue("@Order.Order_id", Order.Order_id);
+                cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
+                cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
+                cmd.Parameters.AddWithValue("@Order.Customer_id", Order.Customer_id);
+                cmd.Parameters.AddWithValue("@Order.Employee_id", Order.Employee_id);
+                cmd.Parameters.AddWithValue("@Order.OrderDate", Order.OrderDate);
+                cmd.Parameters.AddWithValue("@Order.IsAvailableFrom", Order.IsAvailableFrom);
+                cmd.Parameters.AddWithValue("@Order.MustBeDeliveredBefore", Order.MustBeDeliveredBefore);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
         public List<Order> GetOrders()
         {
-            List<Order> list = OrderReader("select * from bestilling;");
+            List<Order> list = OrderReaderForQuerry("select * from bestilling;");
             return list;
         }
 
         public List<Order> GetActiveOrder()
         {
-            List<Order> list = OrderReader("select * from bestilling where maa_leveres_foer >= NOW() AND kan_hentes <= NOW();");
+            List<Order> list = OrderReaderForQuerry("select * from bestilling where maa_leveres_foer >= NOW() AND kan_hentes <= NOW();");
             return list;
         }
 
         public List<Order> GetLatestOrderId()
         {
-            List<Order> list = OrderReader("SELECT * FROM bestilling ORDER BY bestilling_id  DESC LIMIT 0, 1");
+            List<Order> list = OrderReaderForQuerry("SELECT * FROM bestilling ORDER BY bestilling_id  DESC LIMIT 0, 1");
             return list;
         }
         public List<Order> GetOrderById(int id)
         {
-            List<Order> list = OrderReader("select * from bestilling where bestilling_id =" + id.ToString() + ";");
+            List<Order> list = OrderReaderForQuerry("select * from bestilling where bestilling_id =" + id.ToString() + ";");
             return list;
         }
         public List<Order> GetOrdersForEmployee(int id)
         {
-            List<Order> list = OrderReader("select * from bestilling where ansatt_ansatt_id =" + id.ToString() + ";");
+            List<Order> list = OrderReaderForQuerry("select * from bestilling where ansatt_ansatt_id =" + id.ToString() + ";");
             return list;
         }
         public List<int> getOrderByUserId(OrderByUser order)
@@ -105,51 +125,20 @@ namespace api.Models
 
         public void postOrder(Order Order)
         {
-            if (Order == null)
-            {
-                throw new ArgumentNullException(nameof(Order));
-            }
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into bestilling(bestilling_id, pris, gruppe,kunde_kunde_id,ansatt_ansatt_id,bestillingsdato,kan_hentes,maa_leveres_foer) values(@Order.Order_id, @Order.Price, @Order.IsGroupOrder,@Order.Customer_id,@Order.Employee_id,@Order.OrderDate,@Order.IsAvailableFrom,@Order.MustBeDeliveredBefore);";
-                cmd.Parameters.AddWithValue("@Order.Order_id", Order.Order_id);
-                cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
-                cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
-                cmd.Parameters.AddWithValue("@Order.Customer_id", Order.Customer_id);
-                cmd.Parameters.AddWithValue("@Order.Employee_id", Order.Employee_id);
-                cmd.Parameters.AddWithValue("@Order.OrderDate", Order.OrderDate);
-                cmd.Parameters.AddWithValue("@Order.IsAvailableFrom", Order.IsAvailableFrom);
-                cmd.Parameters.AddWithValue("@Order.MustBeDeliveredBefore", Order.MustBeDeliveredBefore);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+            AddOrderParamtersForQuerry(
+                "insert into bestilling(bestilling_id, pris, gruppe,kunde_kunde_id,ansatt_ansatt_id,bestillingsdato,kan_hentes,maa_leveres_foer) values(@Order.Order_id, @Order.Price, @Order.IsGroupOrder,@Order.Customer_id,@Order.Employee_id,@Order.OrderDate,@Order.IsAvailableFrom,@Order.MustBeDeliveredBefore);",
+                Order
+            );
         }
 
 
         public void UpdateOrder(int id, Order Order)
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Order.Order_id", Order.Order_id);
-                cmd.Parameters.AddWithValue("@Order.Price", Order.Price);
-                cmd.Parameters.AddWithValue("@Order.IsGroupOrder", Order.IsGroupOrder);
-                cmd.Parameters.AddWithValue("@Order.Customer_id", Order.Customer_id);
-                cmd.Parameters.AddWithValue("@Order.Employee_id", Order.Employee_id);
-                cmd.Parameters.AddWithValue("@Order.OrderDate", Order.OrderDate);
-                cmd.Parameters.AddWithValue("@Order.IsAvailableFrom", Order.IsAvailableFrom);
-                cmd.Parameters.AddWithValue("@Order.MustBeDeliveredBefore", Order.MustBeDeliveredBefore);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+            AddOrderParamtersForQuerry(
+                "update Bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=" + id.ToString() + ";",
+                Order
+            );
         }
-
 
         public void deleteOrder(int id)
         {

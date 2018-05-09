@@ -18,7 +18,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<PostalPlace> GetPostalPlace()
+        private List<PostalPlace> PostalPlaceReaderForQuerry(string command)
         {
             List<PostalPlace> list = new List<PostalPlace>();
 
@@ -26,9 +26,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd;
-                var command = "select * from poststed;";
                 cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
                 
                 using(var reader = cmd.ExecuteReader())
                 {
@@ -46,18 +44,13 @@ namespace api.Models
             return list;
         }
 
-        public void postPostalPlace(PostalPlace PostalPlace)
+        private void AddPostalPlaceForQuerry(string command, PostalPlace PostalPlace)
         {
-            if (PostalPlace == null)
-            {
-                throw new ArgumentNullException(nameof(PostalPlace));
-            }
-
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into poststed(poststed, postnr) values(@PostalPlace.PostalPlace, @PostalPlace.PostalNumber);";
+                cmd.CommandText = command;
                 cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostPlace);
                 cmd.Parameters.AddWithValue("@PostalPlace.PostalNumber", PostalPlace.PostalNumber);
                 cmd.ExecuteNonQuery();
@@ -65,29 +58,30 @@ namespace api.Models
             }
         }
 
+        public List<PostalPlace> GetPostalPlace()
+        {
+            List<PostalPlace> list = PostalPlaceReaderForQuerry("select * from poststed;");
+            return list;
+        }
+
         public List<PostalPlace> GetPostalPlace(int id)
         {
-            List<PostalPlace> list = new List<PostalPlace>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from poststed where postnr = @id;";
-                 cmd.Parameters.AddWithValue("@id", id);
-                using(var reader = cmd.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        list.Add(new PostalPlace
-                        {
-                            PostPlace = reader["poststed"].ToString(),
-                            PostalNumber = Convert.ToInt32(reader["postnr"])
-                        });
-                    }
-                }
-                 conn.Close();
-            }
+            List<PostalPlace> list = PostalPlaceReaderForQuerry("select * from poststed where postnr =" + id.ToString() + ";");
             return list;
+        }
+        public void postPostalPlace(PostalPlace PostalPlace)
+        {
+            AddPostalPlaceForQuerry(
+                "insert into poststed(poststed, postnr) values(@PostalPlace.PostalPlace, @PostalPlace.PostalNumber);",
+                PostalPlace
+            );
+        }
+        public void UpdatePostalPlace(int id, PostalPlace PostalPlace)
+        {
+            AddPostalPlaceForQuerry(
+                "update poststed set poststed=@PostalPlace.PostalPlace where postnr=" + id.ToString() + ";",
+                PostalPlace
+            );
         }
 
         public void deletePostalPlace(int id)
@@ -103,19 +97,6 @@ namespace api.Models
             }
         }
 
-        public void UpdatePostalPlace(int id, PostalPlace PostalPlace)
-        {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update poststed set poststed=@PostalPlace.PostalPlace where postnr=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@PostalPlace.PostalPlace", PostalPlace.PostPlace);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
 
         
     }    

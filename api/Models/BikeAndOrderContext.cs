@@ -20,7 +20,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<BikeAndOrder> BikeAndOrderReader(string command)
+        private List<BikeAndOrder> BikeAndOrderReaderForQuerry(string command)
         {
             List<BikeAndOrder> list = new List<BikeAndOrder>();
             try
@@ -51,35 +51,15 @@ namespace api.Models
             return list;
         }
 
-        public List<BikeAndOrder> GetBikeAndOrders()
+        private void AddBikeAndOrderParametersForQuerry(string command, BikeAndOrder BikeAndOrder)
         {
-            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling");
-            return list;
-        }
-
-        public List<BikeAndOrder> GetBikeAndOrderById(int id)
-        {
-            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling where bestilling_bestilling_id = " + id.ToString() + ";");
-            return list;
-        }
-        public List<BikeAndOrder> GetEquipmentByOrder(int id)
-        {
-            List<BikeAndOrder> list = BikeAndOrderReader("select * from Utstyr_has_bestilling where bestilling_bestilling_id=" + id.ToString() + ";");
-            return list;
-        }
-        public void postBikeAndOrder(BikeAndOrder BikeAndOrder)
-        {
-            if (BikeAndOrder == null)
-            {
-                throw new ArgumentNullException(nameof(BikeAndOrder));
-            }
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Open();
                     MySqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "insert into Utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);";
+                    cmd.CommandText = command;
                     cmd.Parameters.AddWithValue("@BikeAndOrder.Bike_id", BikeAndOrder.Bike_id);
                     cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
                     cmd.ExecuteNonQuery();
@@ -93,8 +73,39 @@ namespace api.Models
             }
         }
 
+        public List<BikeAndOrder> GetBikeAndOrders()
+        {
+            List<BikeAndOrder> list = BikeAndOrderReaderForQuerry("select * from Utstyr_has_bestilling;");
+            return list;
+        }
 
-        //Delete all data with given Order_id
+        public List<BikeAndOrder> GetBikeAndOrderById(int id)
+        {
+            List<BikeAndOrder> list = BikeAndOrderReaderForQuerry("select * from Utstyr_has_bestilling where bestilling_bestilling_id = " + id.ToString() + ";");
+            return list;
+        }
+        public List<BikeAndOrder> GetEquipmentByOrder(int id)
+        {
+            List<BikeAndOrder> list = BikeAndOrderReaderForQuerry("select * from Utstyr_has_bestilling where bestilling_bestilling_id=" + id.ToString() + ";");
+            return list;
+        }
+        public void postBikeAndOrder(BikeAndOrder BikeAndOrder)
+        {
+            AddBikeAndOrderParametersForQuerry(
+                "insert into Utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);",
+                BikeAndOrder
+            );
+        }
+
+
+        public void UpdateBikeAndOrder(int bikeId, BikeAndOrder BikeAndOrder)
+        {
+            AddBikeAndOrderParametersForQuerry(
+                "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where bestilling_bestilling_id=" + bikeId.ToString() + ";",
+                BikeAndOrder
+            );
+        }
+
         public void deleteBikeAndOrder(int orderId)
         {
             try
@@ -117,27 +128,6 @@ namespace api.Models
         }
 
         //please note that this function updates ALL bike_ids given specific order_id. ANother similar function may be needed
-        public void UpdateBikeAndOrder(int bikeId, BikeAndOrder BikeAndOrder)
-        {
-            try
-            {
-
-                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    MySqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where bestilling_bestilling_id=@id";
-                    cmd.Parameters.AddWithValue("@id", bikeId);
-                    cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-            catch (MySqlException e)
-            {
-                throw e;
-            }
-        }
 
 
         // //maybe this will be useful later

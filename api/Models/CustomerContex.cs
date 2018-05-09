@@ -1,122 +1,135 @@
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace api.Models
 {
     public class CustomerContext
     {
-        
-        public string ConnectionString {get; set;}
+
+        public string ConnectionString { get; set; }
 
         public CustomerContext(string connectionString)
         {
-            this.ConnectionString =  connectionString;
+            this.ConnectionString = connectionString;
         }
 
-        private MySqlConnection GetConnection(){
+        private MySqlConnection GetConnection()
+        {
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Customer> CustomerReader(string command)
+        private List<Customer> CustomerReaderForQuerry(string command)
         {
             List<Customer> list = new List<Customer>();
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd = new MySqlCommand(command, conn);
-                //cmd.ExecuteNonQuery();
-                
-                using(var reader = cmd.ExecuteReader())
+
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
-                    while(reader.Read())
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd = new MySqlCommand(command, conn);
+                    //cmd.ExecuteNonQuery();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        list.Add(new Customer
+                        while (reader.Read())
                         {
-                            Customer_id = Convert.ToInt32(reader["kunde_id"]),
-                            FirstName = reader["fnavn"].ToString(),
-                            LastName = reader["enavn"].ToString(),
-                            Phone = reader["mob_nr"].ToString(),
-                            Email = reader["epost"].ToString(),
-                            Location = Convert.ToInt32(reader["steder_sted_id"]),
-                            Password = reader["kunde_password"].ToString()
-                        });
+                            list.Add(new Customer
+                            {
+                                Customer_id = Convert.ToInt32(reader["kunde_id"]),
+                                FirstName = reader["fnavn"].ToString(),
+                                LastName = reader["enavn"].ToString(),
+                                Phone = reader["mob_nr"].ToString(),
+                                Email = reader["epost"].ToString(),
+                                Location = Convert.ToInt32(reader["steder_sted_id"]),
+                                Password = reader["kunde_password"].ToString()
+                            });
+                        }
                     }
+                    conn.Close();
                 }
-                conn.Close();
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
             return list;
         }
 
+        private void AddCustomerParamtersForQuerry(string command, Customer Customer)
+        {
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = command;
+                    cmd.Parameters.AddWithValue("@Customer.Customer_id", Customer.Customer_id);
+                    cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
+                    cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
+                    cmd.Parameters.AddWithValue("@Customer.Phone", Customer.Phone);
+                    cmd.Parameters.AddWithValue("@Customer.Email", Customer.Email);
+                    cmd.Parameters.AddWithValue("@Customer.Password", Customer.Password);
+                    cmd.Parameters.AddWithValue("@Customer.Location", Customer.Location);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
+            }
+        }
+
         public List<Customer> GetCustomer()
         {
-            List<Customer> list = CustomerReader("select * from kunde;");
+            List<Customer> list = CustomerReaderForQuerry("select * from kunde;");
             return list;
         }
 
         public List<Customer> GetCustomerById(int id)
         {
-            List<Customer> list = CustomerReader("select * from kunde where kunde_id =" + id.ToString() + ";");
+            List<Customer> list = CustomerReaderForQuerry("select * from kunde where kunde_id =" + id.ToString() + ";");
             return list;
         }
         public void postCustomer(Customer Customer)
         {
-            if (Customer == null)
-            {
-                throw new ArgumentNullException(nameof(Customer));
-            }
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into kunde(kunde_id, fnavn, enavn,mob_nr,epost, kunde_password, steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email, @Customer.Password, @Customer.Location);";
-                cmd.Parameters.AddWithValue("@Customer.Customer_id", Customer.Customer_id);
-                cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
-                cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
-                cmd.Parameters.AddWithValue("@Customer.Phone", Customer.Phone);
-                cmd.Parameters.AddWithValue("@Customer.Email", Customer.Email);
-                cmd.Parameters.AddWithValue("@Customer.Password", Customer.Password);
-                cmd.Parameters.AddWithValue("@Customer.Location", Customer.Location);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-
-        public void deleteCustomer(int id)
-        {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from kunde where kunde_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+            AddCustomerParamtersForQuerry(
+                "insert into kunde(kunde_id, fnavn, enavn,mob_nr,epost, kunde_password, steder_sted_id) values(@Customer.Customer_id, @Customer.FirstName, @Customer.LastName,@Customer.Phone,@Customer.Email, @Customer.Password, @Customer.Location);",
+                Customer
+            );
         }
 
         public void UpdateCustomer(int id, Customer Customer)
         {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update kunde set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email, kunde_password=@Customer.password,steder_sted_id=@Customer.Location where kunde_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Customer.FirstName", Customer.FirstName);
-                cmd.Parameters.AddWithValue("@Customer.LastName", Customer.LastName);
-                cmd.Parameters.AddWithValue("@Customer.Phone", Customer.Phone);
-                cmd.Parameters.AddWithValue("@Customer.Email", Customer.Email);
-                cmd.Parameters.AddWithValue("@Customer.Password", Customer.Password);
-                cmd.Parameters.AddWithValue("@Customer.Location", Customer.Location);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+            AddCustomerParamtersForQuerry(
+                "update kunde set fnavn=@Customer.FirstName, enavn=@Customer.LastName, mob_nr=@Customer.Phone, epost=@Customer.Email, kunde_password=@Customer.password,steder_sted_id=@Customer.Location where kunde_id=" + id.ToString() + ";",
+                Customer
+            );
         }
 
-       
-    }    
+        public void deleteCustomer(int id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "delete from kunde where kunde_id=@id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
+            }
+        }
+    }
 }

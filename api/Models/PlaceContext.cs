@@ -18,7 +18,7 @@ namespace api.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Place> PlaceReader(string command)
+        private List<Place> PlaceReaderForQuerry(string command)
         {
             List<Place> list = new List<Place>();
 
@@ -45,29 +45,13 @@ namespace api.Models
             return list;
         }
 
-        public List<Place> GetPlace()
+        private void AddPlaceParametersForQuerry(string command, Place Place)
         {
-            List<Place> list = PlaceReader("select * from steder;");
-            return list;
-        }
-
-        public List<Place> GetPlaceById(int id)
-        {
-            List<Place> list = PlaceReader("select * from steder where sted_id =" + id.ToString() + ";");
-            return list;
-        }
-        public void postPlace(Place Place)
-        {
-            if (Place == null)
-            {
-                throw new ArgumentNullException(nameof(Place));
-            }
-
             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into steder(sted_id, stedsnavn, poststed_postnr) values(@Place.Place_id, @Place.Name, @Place.PostalCode);";
+                cmd.CommandText = command;
                 cmd.Parameters.AddWithValue("@Place.Place_id", Place.Place_id);
                 cmd.Parameters.AddWithValue("@Place.Name", Place.Name);
                 cmd.Parameters.AddWithValue("@Place.PostalCode", Place.PostalCode);
@@ -76,6 +60,31 @@ namespace api.Models
             }
         }
 
+        public List<Place> GetPlace()
+        {
+            List<Place> list = PlaceReaderForQuerry("select * from steder;");
+            return list;
+        }
+
+        public List<Place> GetPlaceById(int id)
+        {
+            List<Place> list = PlaceReaderForQuerry("select * from steder where sted_id =" + id.ToString() + ";");
+            return list;
+        }
+        public void postPlace(Place Place)
+        {
+            AddPlaceParametersForQuerry(
+                "insert into steder(sted_id, stedsnavn, poststed_postnr) values(@Place.Place_id, @Place.Name, @Place.PostalCode);",
+                Place
+            );
+        }
+        public void UpdatePlace(int id, Place Place)
+        {
+            AddPlaceParametersForQuerry(
+                "update steder set stedsnavn=@Place.Name, poststed_postnr=@Place.PostalCode where sted_id=" + id.ToString() + ";",
+                Place
+            );
+        }
 
         public void deletePlace(int id)
         {
@@ -89,22 +98,5 @@ namespace api.Models
                 conn.Close();
             }
         }
-
-        public void UpdatePlace(int id, Place Place)
-        {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update steder set stedsnavn=@Place.Name, poststed_postnr=@Place.PostalCode where sted_id=@id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Place.Name", Place.Name);
-                cmd.Parameters.AddWithValue("@Place.PostalCode", Place.PostalCode);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-        
     }    
 }

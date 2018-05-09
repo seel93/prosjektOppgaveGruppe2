@@ -72,8 +72,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var AdminComponent = /** @class */ (function () {
+    /*  httpOptions = { // http-headers for API
+       headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         'Authorization': "{'firstName':'John', 'lastName':'Doe'}"
+       })
+     }; */
     function AdminComponent(httpClient, authService) {
         this.httpClient = httpClient;
         this.authService = authService;
@@ -90,12 +95,6 @@ var AdminComponent = /** @class */ (function () {
         this.auth = false;
         this.authId = 0;
         this.listSorted = false;
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': "{'firstName':'John', 'lastName':'Doe'}"
-            })
-        };
     }
     AdminComponent.prototype.ngOnInit = function () {
         console.log(this.authService.getHash());
@@ -128,7 +127,7 @@ var AdminComponent = /** @class */ (function () {
             IsEmployee: this.employee
         };
         console.log(payload);
-        this.httpClient.post(loggInnUrl, payload, this.httpOptions) // http-post
+        this.httpClient.post(loggInnUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions) // http-post
             .subscribe(function (data) {
             console.log(data);
             _this.authId = data['creds_id'];
@@ -148,7 +147,7 @@ var AdminComponent = /** @class */ (function () {
     AdminComponent.prototype.fetchEquipment = function () {
         var _this = this;
         var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/bike";
-        this.httpClient.get(equipmentEndpoint, this.httpOptions)
+        this.httpClient.get(equipmentEndpoint, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.equipmentList = data;
         }, function (error) {
@@ -160,7 +159,7 @@ var AdminComponent = /** @class */ (function () {
     AdminComponent.prototype.fetchOrders = function () {
         var _this = this;
         var orderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/order";
-        this.httpClient.get(orderUrl, this.httpOptions)
+        this.httpClient.get(orderUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.orderList = data;
             _this.listSorted = false;
@@ -169,7 +168,7 @@ var AdminComponent = /** @class */ (function () {
     AdminComponent.prototype.fetchPlaces = function () {
         var _this = this;
         var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/place";
-        this.httpClient.get(placesUrl, this.httpOptions)
+        this.httpClient.get(placesUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
             _this.placesList = data;
@@ -207,7 +206,7 @@ var AdminComponent = /** @class */ (function () {
         var updateBikeUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/bike" + "/" + this.selectedEquipment['bike_id'];
         var payload = Object.assign({}, this.selectedEquipment);
         console.log(payload);
-        this.httpClient.put(updateBikeUrl, payload, this.httpOptions)
+        this.httpClient.put(updateBikeUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
         });
@@ -222,7 +221,7 @@ var AdminComponent = /** @class */ (function () {
         var _this = this;
         var orderForEmployeeUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ApiUrl + "/status";
         var payload = { criteria: "employee", id: this.authId };
-        this.httpClient.post(orderForEmployeeUrl, payload, this.httpOptions)
+        this.httpClient.post(orderForEmployeeUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.orderList = data;
             _this.listSorted = true;
@@ -464,7 +463,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var EquipmentComponent = /** @class */ (function () {
     function EquipmentComponent(authService, notificationService, httpClient) {
         this.authService = authService;
@@ -473,12 +471,6 @@ var EquipmentComponent = /** @class */ (function () {
         this.selectedPlace = {};
         this.selectedEquipmentName = "";
         this.userName = "Gjest";
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': 'my-auth-token'
-            })
-        };
         this.subscription = this.authService.getMessage().subscribe(function (message) {
             if (message.status) {
                 console.log(message);
@@ -491,7 +483,7 @@ var EquipmentComponent = /** @class */ (function () {
     EquipmentComponent.prototype.fetchPlaces = function () {
         var _this = this;
         var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/place";
-        this.httpClient.get(placesUrl, this.httpOptions)
+        this.httpClient.get(placesUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
             _this.placesList = data;
@@ -506,7 +498,7 @@ var EquipmentComponent = /** @class */ (function () {
     EquipmentComponent.prototype.fetchEquipment = function () {
         var _this = this;
         var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike";
-        this.httpClient.get(equipmentEndpoint, this.httpOptions)
+        this.httpClient.get(equipmentEndpoint, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
             _this.equipmentList = data;
@@ -536,7 +528,7 @@ var EquipmentComponent = /** @class */ (function () {
         else {
             payload = { criteria: "invalidStatus" };
         }
-        this.httpClient.post(url, payload, this.httpOptions)
+        this.httpClient.post(url, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.equipmentList = data;
         });
@@ -612,7 +604,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(httpClient, authService, router, notificationService) {
         this.httpClient = httpClient;
@@ -621,11 +612,6 @@ var HomeComponent = /** @class */ (function () {
         this.notificationService = notificationService;
         this.employee = false;
         this.auth = false; // sjekker om bruker er logget inn (false by default)
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            })
-        };
     }
     HomeComponent.prototype.ngOnInit = function () {
         Notification.requestPermission().then(function (result) {
@@ -656,7 +642,7 @@ var HomeComponent = /** @class */ (function () {
         };
         console.log(payload);
         var authUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].ApiUrl + "/auth";
-        this.httpClient.post(authUrl, payload, this.httpOptions)
+        this.httpClient.post(authUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].httpOptions)
             .subscribe(function (data) {
             if (data['creds_id'] && data['password'] && data['username']) {
                 _this.auth = true;
@@ -748,8 +734,12 @@ var NavbarComponent = /** @class */ (function () {
     NavbarComponent.prototype.ngOnInit = function () {
     };
     NavbarComponent.prototype.loggOff = function () {
-        console.log(window);
-        //window.location.reload();
+        if (window['process']) {
+            console.log("running electron");
+        }
+        else {
+            window.location.reload();
+        }
     };
     NavbarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -773,7 +763,7 @@ var NavbarComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n\n    <div class=\"orderInputFields col-md-6\">\n        \n        <p>Er det fler som skal ha utstyr?</p>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"multiplePeople('yes')\" mdbWavesEffect>Ja</button>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"multiplePeople('no')\" mdbWavesEffect>Nei</button>\n        \n        <h5 *ngIf=\"groups\">Antall Personer:</h5>\n        <div class=\"btn-group\" *ngIf=\"groups\">\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                1\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                2\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                3\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                4\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                5\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                6\n            </label>\n        </div>\n        \n        <br/>\n        <br/>\n        <p>Skal dere leie i timer eller dager?</p>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"daysOrHours('hours')\" mdbWavesEffect>Timer</button>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"daysOrHours('days')\" mdbWavesEffect>Dager</button>\n        \n        <br/>\n        <br/>\n        <div *ngIf=\"days\">\n            \n            <h5>Antall dager:</h5>\n            <div class=\"btn-group\">\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                    1\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                    2\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                    3\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                    4\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                    5\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                    6\n                </label>\n            </div>\n        </div>\n        <div *ngIf=\"hours\">\n            <h5>Antall timer:</h5>\n            <div class=\"btn-group\">\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                    1\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                    2\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                    3\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                    4\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                    5\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                    6\n                </label>\n            </div>\n        </div>\n        <br />\n        <br />\n        <div class=\"btn-group\" dropdown>\n            <button dropdownToggle type=\"button\"  class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>\n                Type sykkel\n            </button>\n            \n            <div class=\"dropdown-menu dropdown-primary\">\n                <a class=\"dropdown-item\" *ngFor=\"let bike of bikeEquipmnet\" (click)=\"addEquipOrBike(bike, 'bike')\" >{{bike.name}}</a>\n            </div>\n        </div>\n        <div class=\"btn-group\" dropdown>\n            <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>\n                Type utstyr for denne sykkelen\n            </button>\n            \n            <div class=\"dropdown-menu dropdown-primary\">\n                <a class=\"dropdown-item\" *ngFor=\"let equipment of nonBikeEquipment\" (click)=\"addEquipOrBike(equipment, 'equipment')\">{{equipment.name}}</a>\n            </div>\n        </div>\n    </div>\n    \n    \n    \n    \n    <!--Panel-->\n    <div class=\"card card-body col-md-5 orderSummary\">\n        <h4 class=\"card-title\">Nåværende bestilling</h4>\n        <p>bestilling for: {{personModel}} person(er)</p>\n        <p *ngIf=\"hours\">bestilling for: {{hourModel}} timer</p>\n        <p *ngIf=\"days\">bestilling for: {{dayModel}} dager</p>\n        <p>Utstyr:</p>\n        <ul *ngFor=\"let equipment of selectedEquipment\">\n            <li>{{equipment.name}}, {{equipment.type}}, <span *ngIf=\"days\">pris: {{equipment.dailyPrice}}</span> <span *ngIf=\"hours\">pris: {{equipment.hourPrice}}</span></li>\n        </ul>\n        <p>Sykkel:</p>\n        <ul *ngFor=\"let bike of selectedBike\">\n            <li>{{bike.name}}, {{bike.type}}, <span *ngIf=\"days\">pris: {{bike.dailyPrice}}</span> <span *ngIf=\"hours\">pris: {{bike.hourPrice}}</span></li>\n        </ul>\n        <br/>\n        <p>Total pris:</p>\n        <p>{{totalPrice}}</p>\n    </div>\n    <!--/.Panel-->\n    <hr>\n    <button class=\"btn btn-primary orderSubmit\" (click)=\"submitOrder()\"> Sende bestilling </button>\n</div>"
+module.exports = "<h4>Husk å fylle ut alle feltene før du sender bestillingen</h4>\n<div class=\"row\">\n    <div class=\"orderInputFields col-md-6\">\n\n        <p>Er det fler som skal ha utstyr?</p>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"multiplePeople('yes')\" mdbWavesEffect>Ja</button>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"multiplePeople('no')\" mdbWavesEffect>Nei</button>\n\n        <h5 *ngIf=\"groups\">Antall Personer:</h5>\n        <div class=\"btn-group\" *ngIf=\"groups\">\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                1\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                2\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                3\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                4\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                5\n            </label>\n            <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"personModel\" (click)=\"addPerson(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                6\n            </label>\n        </div>\n        <br/>\n        <br/>\n        <div>\n            <p>Dato for bestilling:</p>\n            <input mdbInputDirective type=\"date\" id=\"form1\" [(ngModel)]=\"dateModel\" mdbActive  (change)=\"setOrderDate()\" class=\"form-control\">\n        </div>\n\n        <br/>\n        <br/>\n        <p>Skal dere leie i timer eller dager?</p>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"daysOrHours('hours')\" mdbWavesEffect>Timer</button>\n        <button type=\"button\" class=\"btn btn-primary waves-light\" (click)=\"daysOrHours('days')\" mdbWavesEffect>Dager</button>\n\n        <br/>\n        <br/>\n        <div *ngIf=\"days\">\n\n            <h5>Antall dager:</h5>\n            <div class=\"btn-group\">\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                    1\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                    2\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                    3\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                    4\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                    5\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"dayModel\" (click)=\"addDays(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                    6\n                </label>\n            </div>\n        </div>\n        <div *ngIf=\"hours\">\n            <h5>Antall timer:</h5>\n            <div class=\"btn-group\">\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(1)\" mdbRadio=\"1\" mdbWavesEffect>\n                    1\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(2)\" mdbRadio=\"2\" mdbWavesEffect>\n                    2\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(3)\" mdbRadio=\"3\" mdbWavesEffect>\n                    3\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(4)\" mdbRadio=\"4\" mdbWavesEffect>\n                    4\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(5)\" mdbRadio=\"5\" mdbWavesEffect>\n                    5\n                </label>\n                <label class=\"btn btn-primary waves-light\" [(ngModel)]=\"hourModel\" (click)=\"addHour(6)\" mdbRadio=\"6\" mdbWavesEffect>\n                    6\n                </label>\n            </div>\n        </div>\n        <br />\n        <br />\n        <div class=\"btn-group\" dropdown>\n            <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>\n                Type sykkel\n            </button>\n\n            <div class=\"dropdown-menu dropdown-primary\">\n                <a class=\"dropdown-item\" *ngFor=\"let bike of bikeEquipmnet\" (click)=\"addEquipOrBike(bike, 'bike')\">{{bike.name}}</a>\n            </div>\n        </div>\n        <div class=\"btn-group\" dropdown>\n            <button dropdownToggle type=\"button\" class=\"btn btn-primary dropdown-toggle waves-light\" mdbWavesEffect>\n                <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>\n                Type utstyr for denne sykkelen\n            </button>\n\n            <div class=\"dropdown-menu dropdown-primary\">\n                <a class=\"dropdown-item\" *ngFor=\"let equipment of nonBikeEquipment\" (click)=\"addEquipOrBike(equipment, 'equipment')\">{{equipment.name}}</a>\n            </div>\n        </div>\n    </div>\n\n\n\n\n    <!--Panel-->\n    <div class=\"card card-body col-md-5 orderSummary\">\n        <h4 class=\"card-title\">Nåværende bestilling</h4>\n        <p>bestilling for: {{personModel}} person(er)</p>\n        <p *ngIf=\"hours\">bestilling for: {{hourModel}} timer</p>\n        <p *ngIf=\"days\">bestilling for: {{dayModel}} dager</p>\n        <p>Utstyr:</p>\n        <ul *ngFor=\"let equipment of selectedEquipment\">\n            <li>{{equipment.name}}, {{equipment.type}},\n                <span *ngIf=\"days\">pris: {{equipment.dailyPrice}}</span>\n                <span *ngIf=\"hours\">pris: {{equipment.hourPrice}}</span>\n            </li>\n        </ul>\n        <p>Sykkel:</p>\n        <ul *ngFor=\"let bike of selectedBike\">\n            <li>{{bike.name}}, {{bike.type}},\n                <span *ngIf=\"days\">pris: {{bike.dailyPrice}}</span>\n                <span *ngIf=\"hours\">pris: {{bike.hourPrice}}</span>\n            </li>\n        </ul>\n        <br/>\n        <p>Total pris:</p>\n        <p>{{totalPrice}}</p>\n    </div>\n    <!--/.Panel-->\n    <hr>\n    <button class=\"btn btn-primary orderSubmit\" (click)=\"submitOrder()\"> Sende bestilling </button>\n</div>"
 
 /***/ }),
 
@@ -802,7 +792,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/services/auth.service.ts");
 /* harmony import */ var _services_notification_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/notification.service */ "./src/app/services/notification.service.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _services_commonApiCalls_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/commonApiCalls.service */ "./src/app/services/commonApiCalls.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -819,9 +810,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var OrderComponent = /** @class */ (function () {
-    function OrderComponent(authService, notificationService, httpClient) {
+    function OrderComponent(authService, notificationService, commonApiCalls, httpClient) {
         this.authService = authService;
         this.notificationService = notificationService;
+        this.commonApiCalls = commonApiCalls;
         this.httpClient = httpClient;
         //scope variables
         this.personModel = "1";
@@ -832,24 +824,19 @@ var OrderComponent = /** @class */ (function () {
         this.selectedBike = Array();
         this.totalPrice = 0;
         this.userName = "Gjest";
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': 'my-auth-token'
-            })
-        };
     }
     OrderComponent.prototype.ngOnInit = function () {
         this.fetchEquipment();
         this.getEmployees();
         this.userId = this.authService.getId();
+        this.serviceDataTest = this.commonApiCalls.fetchEquipment();
+        console.log(this.serviceDataTest);
     };
     OrderComponent.prototype.fetchEquipment = function () {
         var _this = this;
-        var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike";
-        this.httpClient.get(equipmentEndpoint, this.httpOptions)
+        var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/bike";
+        this.httpClient.get(equipmentEndpoint, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
             .subscribe(function (data) {
-            console.log(data);
             _this.equipmentList = data;
         }, function (error) { return function () {
         }; }, function () {
@@ -866,8 +853,8 @@ var OrderComponent = /** @class */ (function () {
     };
     OrderComponent.prototype.getEmployees = function () {
         var _this = this;
-        var EmploymentUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/employee";
-        this.httpClient.get(EmploymentUrl, this.httpOptions)
+        var EmploymentUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/employee";
+        this.httpClient.get(EmploymentUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.employess = data;
         }, function (error) { return function () {
@@ -882,12 +869,16 @@ var OrderComponent = /** @class */ (function () {
     };
     OrderComponent.prototype.addDays = function (numOfDays) {
         this.daysModel = numOfDays.toString();
+        this.determineDate();
         return numOfDays;
     };
     OrderComponent.prototype.addHour = function (numOfHours) {
         this.hourModel = numOfHours.toString();
         this.determineDate();
         return numOfHours;
+    };
+    OrderComponent.prototype.setOrderDate = function () {
+        console.log(this.dateModel);
     };
     OrderComponent.prototype.daysOrHours = function (choice) {
         if (choice == 'hours') {
@@ -910,6 +901,10 @@ var OrderComponent = /** @class */ (function () {
         }
     };
     OrderComponent.prototype.addEquipOrBike = function (item, dropdown) {
+        if (this.selectedBike.includes(item) || this.selectedEquipment.includes(item)) {
+            this.notificationService.notifyInvalidEquipmentAdded();
+            return;
+        }
         if (dropdown == 'bike') {
             this.selectedBike.push(item);
         }
@@ -945,11 +940,29 @@ var OrderComponent = /** @class */ (function () {
             console.log(e);
         }
     };
+    OrderComponent.prototype.determineDate = function () {
+        var orderDate = new Date();
+        console.log(this.dateModel);
+        console.log(orderDate);
+        if (this.hours) {
+            orderDate.setUTCHours(orderDate.getHours() + parseInt(this.hourModel));
+            console.log(orderDate);
+            return orderDate;
+        }
+        else {
+            orderDate.setDate(orderDate.getDate() + parseInt(this.daysModel));
+            console.log(orderDate);
+            return orderDate;
+        }
+    };
     OrderComponent.prototype.submitOrder = function () {
         var _this = this;
-        var createOrderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/order";
+        if (this.selectedBike.length == 0) {
+            this.notificationService.notifyInvalidOrderData();
+            return;
+        }
+        var createOrderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/order";
         this.checkCredentials();
-        console.log(this.userName);
         if (this.userName == 'Gjest' || !this.userName) {
             this.notificationService.notifyInvalidOrder();
         }
@@ -961,12 +974,12 @@ var OrderComponent = /** @class */ (function () {
                 IsGroupOrder: this.groups ? 1 : 0,
                 Customer_id: this.userId,
                 Employee_id: this.employee,
-                OrderDate: new Date(),
-                IsAvailableFrom: new Date(),
-                MustBeDeliveredBefore: this.determineDate() // denne må avgjøres basert på valg av timer eller dagr
+                OrderDate: this.dateModel,
+                IsAvailableFrom: this.dateModel,
+                MustBeDeliveredBefore: this.determineDate()
             };
             console.log(payload);
-            this.httpClient.post(createOrderUrl, payload, this.httpOptions)
+            this.httpClient.post(createOrderUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
                 .subscribe(function (data) {
                 _this.orderId = data[0].order_id;
                 console.log(_this.orderId);
@@ -974,25 +987,15 @@ var OrderComponent = /** @class */ (function () {
             });
         }
     };
-    OrderComponent.prototype.determineDate = function () {
-        if (this.hours) {
-            console.log(parseInt(this.hourModel));
-            return new Date().setHours(parseInt(this.hourModel));
-        }
-        else {
-            console.log(parseInt(this.daysModel));
-            return new Date(+parseInt(this.daysModel));
-        }
-    };
     OrderComponent.prototype.linkEquipmentToOrder = function () {
         var _this = this;
-        var equipmentAndOrderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bikeandorder";
+        var equipmentAndOrderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/bikeandorder";
         this.selectedBike.forEach(function (element) {
             var payload = {
                 Bike_Id: element['bike_id'],
                 Order_Id: _this.orderId
             };
-            _this.httpClient.post(equipmentAndOrderUrl, payload, _this.httpOptions)
+            _this.httpClient.post(equipmentAndOrderUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
                 .subscribe(function (data) {
                 console.log(data);
             });
@@ -1002,7 +1005,7 @@ var OrderComponent = /** @class */ (function () {
                 Bike_Id: element['bike_id'],
                 Order_Id: _this.orderId
             };
-            _this.httpClient.post(equipmentAndOrderUrl, payload, _this.httpOptions)
+            _this.httpClient.post(equipmentAndOrderUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
                 .subscribe(function (data) {
                 console.log(data);
             });
@@ -1013,7 +1016,7 @@ var OrderComponent = /** @class */ (function () {
     OrderComponent.prototype.updateStatusOfRentedEquipment = function () {
         var _this = this;
         this.selectedEquipment.forEach(function (element) {
-            var updateUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike" + "/" + element['bike_id'];
+            var updateUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/bike" + "/" + element['bike_id'];
             element['status'] = "utleid";
             var payload = {
                 Bike_id: element['bike_id'],
@@ -1028,11 +1031,40 @@ var OrderComponent = /** @class */ (function () {
                 Frame: element['frame'],
                 STATUS: element['status']
             };
-            _this.httpClient.put(updateUrl, payload, _this.httpOptions)
+            _this.httpClient.put(updateUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
                 .subscribe(function (data) {
                 console.log(data);
             });
         });
+        this.selectedBike.forEach(function (element) {
+            var updateUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].ApiUrl + "/bike" + "/" + element['bike_id'];
+            element['status'] = "utleid";
+            var payload = {
+                Bike_id: element['bike_id'],
+                Name: element['name'],
+                Type: element['type'],
+                DailyPrice: element['dailyPrice'],
+                HourPrice: element['hourPrice'],
+                EquipmentCode: element['equipmentCode'],
+                LastSeenOnPlace: element['lastSeenOnPlace'],
+                BelongsToPlace: element['belongsToPlace'],
+                WheelSize: element['wheelSize'],
+                Frame: element['frame'],
+                STATUS: element['status']
+            };
+            _this.httpClient.put(updateUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].httpOptions)
+                .subscribe(function (data) {
+                console.log(data);
+            });
+        });
+        this.wipeProcessedOrderSelections();
+    };
+    OrderComponent.prototype.wipeProcessedOrderSelections = function () {
+        this.selectedBike = [];
+        this.selectedEquipment = [];
+        this.hours = false;
+        this.days = false;
+        this.groups = false;
     };
     OrderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1040,7 +1072,7 @@ var OrderComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./order.component.html */ "./src/app/order/order.component.html"),
             styles: [__webpack_require__(/*! ./order.component.scss */ "./src/app/order/order.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], _services_notification_service__WEBPACK_IMPORTED_MODULE_3__["NotificationService"], _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], _services_notification_service__WEBPACK_IMPORTED_MODULE_3__["NotificationService"], _services_commonApiCalls_service__WEBPACK_IMPORTED_MODULE_4__["CommonApiCalls"], _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], OrderComponent);
     return OrderComponent;
 }());
@@ -1098,18 +1130,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(httpClient, notificationService) {
         this.httpClient = httpClient;
         this.notificationService = notificationService;
         this.date = new Date();
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': 'my-auth-token'
-            })
-        };
     }
     RegisterComponent.prototype.ngOnInit = function () {
         this.fetchPlaces();
@@ -1117,7 +1142,7 @@ var RegisterComponent = /** @class */ (function () {
     RegisterComponent.prototype.fetchPlaces = function () {
         var _this = this;
         var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].ApiUrl + "/place";
-        this.httpClient.get(placesUrl, this.httpOptions)
+        this.httpClient.get(placesUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
             _this.placesList = data;
@@ -1140,7 +1165,7 @@ var RegisterComponent = /** @class */ (function () {
         }
         else {
             //Todo: legg til notification-service
-            console.log("password mismatch");
+            this.notificationService.notifyInvalidUserCreation();
         }
     };
     RegisterComponent.prototype.preparePayload = function (formData) {
@@ -1158,7 +1183,7 @@ var RegisterComponent = /** @class */ (function () {
     RegisterComponent.prototype.submitCustomer = function (payload) {
         var _this = this;
         var newCustomerUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].ApiUrl + "/customer";
-        this.httpClient.post(newCustomerUrl, payload, this.httpOptions)
+        this.httpClient.post(newCustomerUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].httpOptions)
             .subscribe(function (data) {
             console.log(data);
         }, function (error) { return function () {
@@ -1253,6 +1278,71 @@ var AuthService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/commonApiCalls.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/services/commonApiCalls.service.ts ***!
+  \****************************************************/
+/*! exports provided: CommonApiCalls */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommonApiCalls", function() { return CommonApiCalls; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CommonApiCalls = /** @class */ (function () {
+    function CommonApiCalls(httpClient) {
+        this.httpClient = httpClient;
+        this.equipmentList = new Array();
+        this.placesList = new Array();
+    }
+    CommonApiCalls.prototype.fetchEquipment = function () {
+        var _this = this;
+        var equipmentEndpoint = _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ApiUrl + "/bike";
+        this.httpClient.get(equipmentEndpoint, _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].httpOptions)
+            .subscribe(function (data) {
+            _this.equipmentList.push(data);
+        });
+        console.log(this.equipmentList);
+        return this.equipmentList;
+    };
+    CommonApiCalls.prototype.fetchPlaces = function () {
+        var _this = this;
+        var placesUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ApiUrl + "/place";
+        this.httpClient.get(placesUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].httpOptions)
+            .subscribe(function (data) {
+            console.log(data);
+            _this.placesList.push(data);
+        });
+        console.log(this.placesList);
+        return this.placesList;
+    };
+    CommonApiCalls = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], CommonApiCalls);
+    return CommonApiCalls;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/notification.service.ts":
 /*!**************************************************!*\
   !*** ./src/app/services/notification.service.ts ***!
@@ -1319,6 +1409,13 @@ var NotificationService = /** @class */ (function () {
         });
         setTimeout(validCreation.close.bind(validCreation), 8000);
     };
+    NotificationService.prototype.notifyInvalidUserCreation = function () {
+        var validCreation = new Notification("Ugyldig registrering", {
+            body: "passordene stemmer ikke over ens",
+            icon: '../assets/icons/bike-21-512.png'
+        });
+        setTimeout(validCreation.close.bind(validCreation), 8000);
+    };
     NotificationService.prototype.alertApiError = function (error) {
         var errorMessage = new Notification("Feil:", {
             body: "" + error.toString(),
@@ -1331,6 +1428,20 @@ var NotificationService = /** @class */ (function () {
             icon: '../assets/icons/bike-21-512.png'
         });
         setTimeout(orderRecords.close.bind(orderRecords), 8000);
+    };
+    NotificationService.prototype.notifyInvalidEquipmentAdded = function () {
+        var inValidCreation = new Notification("Feil i bestillling", {
+            body: "Du har allerede lagt til denne sykkelen eller utstyret",
+            icon: '../assets/icons/bike-21-512.png'
+        });
+        setTimeout(inValidCreation.close.bind(inValidCreation), 8000);
+    };
+    NotificationService.prototype.notifyInvalidOrderData = function () {
+        var inValidOrderData = new Notification("Feil i bestillling", {
+            body: "Du må ha med minimum en sykkel i bestillingen din",
+            icon: '../assets/icons/bike-21-512.png'
+        });
+        setTimeout(inValidOrderData.close.bind(inValidOrderData), 8000);
     };
     NotificationService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -1431,7 +1542,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var UserComponent = /** @class */ (function () {
     function UserComponent(authService, notificationService, httpClient) {
         this.authService = authService;
@@ -1440,12 +1550,6 @@ var UserComponent = /** @class */ (function () {
         this.orderRecords = Array();
         this.equipmentRecordForOrder = Array();
         this.date = new Date();
-        this.httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': 'my-auth-token'
-            })
-        };
     }
     UserComponent.prototype.ngOnInit = function () {
         if (this.authService.getId()) {
@@ -1456,7 +1560,7 @@ var UserComponent = /** @class */ (function () {
         var _this = this;
         var iDUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/orderbyuser";
         var payload = { id: this.authService.getId() };
-        this.httpClient.post(iDUrl, payload, this.httpOptions)
+        this.httpClient.post(iDUrl, payload, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
             .subscribe(function (data) {
             _this.orderIdForUser = data;
             console.log(_this.orderIdForUser);
@@ -1470,7 +1574,7 @@ var UserComponent = /** @class */ (function () {
         var _this = this;
         this.orderIdForUser.forEach(function (element) {
             var orderUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + '/order' + '/' + element;
-            _this.httpClient.get(orderUrl, _this.httpOptions)
+            _this.httpClient.get(orderUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
                 .subscribe(function (data) {
                 _this.orderRecords.push(data[0]);
             }, function (error) {
@@ -1484,7 +1588,7 @@ var UserComponent = /** @class */ (function () {
         var _this = this;
         var selectedOrderRecord = Array();
         var orderEquipmentUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/orderbyuser" + "/" + this.orderRecords[index]['order_id'];
-        this.httpClient.get(orderEquipmentUrl, this.httpOptions)
+        this.httpClient.get(orderEquipmentUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
             .subscribe(function (data) {
             selectedOrderRecord = data;
             _this.fetchEquipmentInfoForSelectedOrderId(selectedOrderRecord);
@@ -1494,7 +1598,7 @@ var UserComponent = /** @class */ (function () {
         var _this = this;
         orderRecord.forEach(function (element) {
             var equipmentInfoUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ApiUrl + "/bike" + "/" + element['bike_id'];
-            _this.httpClient.get(equipmentInfoUrl, _this.httpOptions)
+            _this.httpClient.get(equipmentInfoUrl, _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpOptions)
                 .subscribe(function (data) {
                 console.log(data);
                 _this.equipmentRecordForOrder.push(data[0]);
@@ -1529,13 +1633,21 @@ var UserComponent = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+
 var environment = {
     production: false,
     ApiUrl: "http://localhost:5000/api",
+    httpOptions: {
+        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'Authorization': "{'firstName':'John', 'lastName':'Doe'}"
+        })
+    }
 };
 
 

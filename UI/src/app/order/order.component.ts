@@ -314,5 +314,6 @@ export class OrderComponent implements OnInit {
     this.hours = false;
     this.days = false;
     this.groups = false;
+    this.fetchEquipment();
   }
 }

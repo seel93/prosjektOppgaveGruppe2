@@ -38,13 +38,13 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Bike Bike)
         {
-            _context.postBike(Bike);
             if (Bike == null)
             {
                 return BadRequest();
             }
             else
             {
+                _context.postBike(Bike);
                 return Ok("Data created");
             }
         }

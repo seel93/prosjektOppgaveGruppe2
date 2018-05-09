@@ -1,44 +1,52 @@
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace api.Models
 {
     public class BikeAndOrderContext
     {
-        
-        public string ConnectionString {get; set;}
+
+        public string ConnectionString { get; set; }
 
         public BikeAndOrderContext(string connectionString)
         {
-            this.ConnectionString =  connectionString;
+            this.ConnectionString = connectionString;
         }
 
-        private MySqlConnection GetConnection(){
+        private MySqlConnection GetConnection()
+        {
             return new MySqlConnection(ConnectionString);
         }
 
         public List<BikeAndOrder> BikeAndOrderReader(string command)
         {
             List<BikeAndOrder> list = new List<BikeAndOrder>();
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd = new MySqlCommand(command, conn);
-                
-                using(var reader = cmd.ExecuteReader())
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
-                    while(reader.Read())
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd = new MySqlCommand(command, conn);
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        list.Add(new BikeAndOrder
+                        while (reader.Read())
                         {
-                            Bike_id = Convert.ToInt32(reader["utstyr_utstyr_id"]),
-                            Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"])
-                        });
+                            list.Add(new BikeAndOrder
+                            {
+                                Bike_id = Convert.ToInt32(reader["utstyr_utstyr_id"]),
+                                Order_id = Convert.ToInt32(reader["bestilling_bestilling_id"])
+                            });
+                        }
                     }
+                    conn.Close();
                 }
-                conn.Close();
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
             return list;
         }
@@ -65,16 +73,23 @@ namespace api.Models
             {
                 throw new ArgumentNullException(nameof(BikeAndOrder));
             }
-
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into Utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);";
-                cmd.Parameters.AddWithValue("@BikeAndOrder.Bike_id", BikeAndOrder.Bike_id);
-                cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "insert into Utstyr_has_bestilling(utstyr_utstyr_id, bestilling_bestilling_id) values(@BikeAndOrder.Bike_id, @BikeAndOrder.Order_id);";
+                    cmd.Parameters.AddWithValue("@BikeAndOrder.Bike_id", BikeAndOrder.Bike_id);
+                    cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
         }
 
@@ -82,29 +97,45 @@ namespace api.Models
         //Delete all data with given Order_id
         public void deleteBikeAndOrder(int orderId)
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Utstyr_has_bestilling where bestilling_bestilling_id=@id";
-                cmd.Parameters.AddWithValue("@id", orderId);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "delete from Utstyr_has_bestilling where bestilling_bestilling_id=@id";
+                    cmd.Parameters.AddWithValue("@id", orderId);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
         }
 
         //please note that this function updates ALL bike_ids given specific order_id. ANother similar function may be needed
         public void UpdateBikeAndOrder(int bikeId, BikeAndOrder BikeAndOrder)
         {
-             using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where bestilling_bestilling_id=@id";
-                cmd.Parameters.AddWithValue("@id", bikeId);
-                cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
+
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "update Utstyr_has_bestilling set bestilling_bestilling_id=@BikeAndOrder.Order_id where bestilling_bestilling_id=@id";
+                    cmd.Parameters.AddWithValue("@id", bikeId);
+                    cmd.Parameters.AddWithValue("@BikeAndOrder.Order_id", BikeAndOrder.Order_id);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
         }
 
@@ -124,6 +155,6 @@ namespace api.Models
         //     }
         // }
 
-        
-    }    
+
+    }
 }

@@ -53,7 +53,6 @@ export class OrderComponent implements OnInit {
     this.httpClient.get(equipmentEndpoint, environment.httpOptions)
       .subscribe(
         (data: any[]) => {
-          console.log(data);
           this.equipmentList = data;
         },
         error => () => {
@@ -96,6 +95,7 @@ export class OrderComponent implements OnInit {
 
   addDays(numOfDays) {
     this.daysModel = numOfDays.toString();
+    this.determineDate();
     return numOfDays;
   }
 
@@ -125,6 +125,10 @@ export class OrderComponent implements OnInit {
   }
 
   addEquipOrBike(item, dropdown) {
+    if(this.selectedBike.includes(item) || this.selectedEquipment.includes(item)){
+      this.notificationService.notifyInvalidEquipmentAdded();
+      return;
+    }
     if (dropdown == 'bike') {
       this.selectedBike.push(item);
     } else {
@@ -164,7 +168,6 @@ export class OrderComponent implements OnInit {
   submitOrder() {
     let createOrderUrl = environment.ApiUrl + "/order";
     this.checkCredentials();
-    console.log(this.userName);
     if (this.userName == 'Gjest' || !this.userName) {
       this.notificationService.notifyInvalidOrder();
     } else {
@@ -191,12 +194,13 @@ export class OrderComponent implements OnInit {
     }
   }
 
+
   determineDate(){
     if(this.hours){
-      console.log(parseInt(this.hourModel));
+      console.log(new Date().setHours(parseInt(this.hourModel)));
       return new Date().setHours(parseInt(this.hourModel));
     }else{
-      console.log(parseInt(this.daysModel));
+      console.log(new Date( + parseInt(this.daysModel)));
       return new Date( + parseInt(this.daysModel));
     }
   }
@@ -234,6 +238,29 @@ export class OrderComponent implements OnInit {
 
   updateStatusOfRentedEquipment(){
     this.selectedEquipment.forEach(element => {
+      let updateUrl = environment.ApiUrl + "/bike" + "/" + element['bike_id'];
+      element['status'] = "utleid";
+      let payload = {
+        Bike_id: element['bike_id'],
+        Name: element['name'],
+        Type: element['type'],
+        DailyPrice: element['dailyPrice'],
+        HourPrice: element['hourPrice'],
+        EquipmentCode: element['equipmentCode'],
+        LastSeenOnPlace: element['lastSeenOnPlace'],
+        BelongsToPlace: element['belongsToPlace'],
+        WheelSize: element['wheelSize'],
+        Frame: element['frame'],
+        STATUS: element['status']
+      }
+      this.httpClient.put(updateUrl, payload, environment.httpOptions)
+        .subscribe(
+          (data: any []) =>{
+            console.log(data);
+          }
+        )
+    });
+    this.selectedBike.forEach(element => {
       let updateUrl = environment.ApiUrl + "/bike" + "/" + element['bike_id'];
       element['status'] = "utleid";
       let payload = {

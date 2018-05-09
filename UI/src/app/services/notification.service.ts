@@ -78,4 +78,12 @@ export class NotificationService {
     setTimeout(orderRecords.close.bind(orderRecords), 8000);
   }
 
+  notifyInvalidEquipmentAdded(){
+    let validCreation = new Notification("Feil i bestillling", {
+      body: "Du har allerede lagt til denne sykkelen eller utstyret",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(validCreation.close.bind(validCreation), 8000);
+  }
+
 }

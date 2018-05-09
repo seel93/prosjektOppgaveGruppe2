@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
+import {CommonApiCalls} from '../services/commonApiCalls.service';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -31,6 +32,8 @@ export class OrderComponent implements OnInit {
   public employess: any[];
   public orderId: any;
 
+  public serviceDataTest: any[];
+
   //payload variables for creating order:
   public selectedEquipment: any[] = Array();
   public selectedBike: any[] = Array();
@@ -40,12 +43,15 @@ export class OrderComponent implements OnInit {
   subscription: Subscription;
 
 
-  constructor(private authService: AuthService, private notificationService: NotificationService, private httpClient: HttpClient) { }
+  constructor(private authService: AuthService, private notificationService: NotificationService, private commonApiCalls: CommonApiCalls, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.fetchEquipment();
     this.getEmployees();
     this.userId = this.authService.getId();
+    this.serviceDataTest = this.commonApiCalls.fetchEquipment();
+    console.log(this.serviceDataTest);
+
   }
 
   fetchEquipment() {
@@ -166,6 +172,10 @@ export class OrderComponent implements OnInit {
   }
 
   submitOrder() {
+    if(this.selectedBike.length == 0){
+      this.notificationService.notifyInvalidOrderData();
+      return;
+    }
     let createOrderUrl = environment.ApiUrl + "/order";
     this.checkCredentials();
     if (this.userName == 'Gjest' || !this.userName) {
@@ -283,5 +293,14 @@ export class OrderComponent implements OnInit {
           }
         )
     });
+    this.wipeProcessedOrderSelections();
+  }
+
+  wipeProcessedOrderSelections(){
+    this.selectedBike = [];
+    this.selectedEquipment = [];
+    this.hours = false;
+    this.days = false;
+    this.groups = false;
   }
 }

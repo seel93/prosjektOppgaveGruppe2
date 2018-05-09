@@ -79,11 +79,19 @@ export class NotificationService {
   }
 
   notifyInvalidEquipmentAdded(){
-    let validCreation = new Notification("Feil i bestillling", {
+    let inValidCreation = new Notification("Feil i bestillling", {
       body: "Du har allerede lagt til denne sykkelen eller utstyret",
       icon: '../assets/icons/bike-21-512.png'
     });
-    setTimeout(validCreation.close.bind(validCreation), 8000);
+    setTimeout(inValidCreation.close.bind(inValidCreation), 8000);
+  }
+
+  notifyInvalidOrderData(){
+    let inValidOrderData = new Notification("Feil i bestillling", {
+      body: "Du må ha med minimum en sykkel i bestillingen din",
+      icon: '../assets/icons/bike-21-512.png'
+    });
+    setTimeout(inValidOrderData.close.bind(inValidOrderData), 8000);
   }
 
 }

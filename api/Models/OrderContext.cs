@@ -135,7 +135,7 @@ namespace api.Models
         public void UpdateOrder(int id, Order Order)
         {
             AddOrderParamtersForQuerry(
-                "update Bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=" + id.ToString() + ";",
+                "update bestilling set pris=@Order.Price, gruppe=@Order.IsGroupOrder, kunde_kunde_id=@Order.Customer_id,ansatt_ansatt_id=@Order.Employee_id,bestillingsdato=@Order.OrderDate,kan_hentes=@Order.IsAvailableFrom,maa_leveres_foer=@Order.MustBeDeliveredBefore where bestilling_id=" + id.ToString() + ";",
                 Order
             );
         }
@@ -146,7 +146,7 @@ namespace api.Models
             {
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "delete from Bestilling where bestilling_id=@id";
+                cmd.CommandText = "delete from bestilling where bestilling_id=@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
                 conn.Close();

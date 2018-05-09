@@ -113,13 +113,8 @@ export class OrderComponent implements OnInit {
     return numOfHours;
   }
 
-  setOrderDate(dateModel){
-    console.log(dateModel);
+  setOrderDate(){
     console.log(this.dateModel);
-  }
-
-  onSubmit(f: NgForm) {
-    console.log(f.value);
   }
 
   daysOrHours(choice) {
@@ -182,6 +177,21 @@ export class OrderComponent implements OnInit {
     
   }
 
+  determineDate(): Date{
+    let orderDate = new Date();
+    console.log(this.dateModel);
+    console.log(orderDate);
+    if(this.hours){
+      orderDate.setUTCHours(orderDate.getHours() + parseInt(this.hourModel));
+      console.log(orderDate);
+      return orderDate;
+    }else{
+      orderDate.setDate(orderDate.getDate() + parseInt(this.daysModel));
+      console.log(orderDate);
+      return orderDate;
+    }
+  }
+
   submitOrder() {
     if(this.selectedBike.length == 0){
       this.notificationService.notifyInvalidOrderData();
@@ -199,9 +209,9 @@ export class OrderComponent implements OnInit {
         IsGroupOrder: this.groups ? 1 : 0,
         Customer_id: this.userId,
         Employee_id: this.employee,
-        OrderDate: new Date(),
-        IsAvailableFrom: new Date(),
-        MustBeDeliveredBefore: new Date() // denne må avgjøres basert på valg av timer eller dagr
+        OrderDate: this.dateModel,
+        IsAvailableFrom: this.dateModel,
+        MustBeDeliveredBefore: this.determineDate()
       }
       console.log(payload);
       this.httpClient.post(createOrderUrl, payload, environment.httpOptions)
@@ -216,19 +226,6 @@ export class OrderComponent implements OnInit {
   }
 
 
-  determineDate(): Date{
-    let orderDate = new Date();
-    console.log(orderDate);
-    if(this.hours){
-      orderDate.setUTCHours(orderDate.getHours() + parseInt(this.hourModel));
-      console.log(orderDate);
-      return orderDate;
-    }else{
-      orderDate.setDate(orderDate.getDate() + parseInt(this.daysModel));
-      console.log(orderDate);
-      return orderDate;
-    }
-  }
 
   linkEquipmentToOrder(){
     let equipmentAndOrderUrl = environment.ApiUrl + "/bikeandorder";

@@ -1,5 +1,5 @@
+<h4>Husk å fylle ut alle feltene før du sender bestillingen</h4>
 <div class="row">
-
     <div class="orderInputFields col-md-6">
 
         <p>Er det fler som skal ha utstyr?</p>
@@ -30,10 +30,8 @@
         <br/>
         <br/>
         <div>
-                <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-                    <p>Dato for bestilling:</p>
-                    <input mdbInputDirective type="date" id="form1" name="dateModel" mdbActive ngModel (change)="setOrderDate(dateModel)" class="form-control">
-                </form>
+            <p>Dato for bestilling:</p>
+            <input mdbInputDirective type="date" id="form1" [(ngModel)]="dateModel" mdbActive  (change)="setOrderDate()" class="form-control">
         </div>
 
         <br/>

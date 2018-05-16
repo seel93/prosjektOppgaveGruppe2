@@ -84,6 +84,5 @@ Api:
 There should appear a folder containing all the files for the app including a .exe or similar file for other plattforms
 
 # Known issues:
-The date handling for creating orders is not working as intended
 
 The electron application, does currentlety not suppoert refresh
